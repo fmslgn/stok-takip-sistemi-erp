@@ -11,4 +11,5 @@ public class Kullanici
     public string AdSoyad { get; set; } = string.Empty;
     public string Rol { get; set; } = string.Empty;
     public bool AktifMi { get; set; } = true;
+    public DateTime OlusturmaTarihi { get; set; } = DateTime.Now;
 }

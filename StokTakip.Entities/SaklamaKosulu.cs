@@ -7,7 +7,10 @@ public class SaklamaKosulu
 {
     public int Id { get; set; }
     public string KosulAdi { get; set; } = string.Empty;
-    public string SicaklikAraligi { get; set; } = string.Empty;
-    public string NemAraligi { get; set; } = string.Empty;
-    public string Aciklama { get; set; } = string.Empty;
+    public string KategoriAnahtarKelime { get; set; } = string.Empty;
+    public string OnerilenSicaklik { get; set; } = string.Empty;
+    public string NemOrani { get; set; } = string.Empty;
+    public string SaklamaAciklamasi { get; set; } = string.Empty;
+    public bool AktifMi { get; set; } = true;
+    public DateTime OlusturmaTarihi { get; set; } = DateTime.Now;
 }

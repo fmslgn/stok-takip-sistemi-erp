@@ -11,8 +11,11 @@ public class Urun
     public string UrunAdi { get; set; } = string.Empty;
     public string Barkod { get; set; } = string.Empty;
     public string Birim { get; set; } = string.Empty;
-    public decimal BirimFiyat { get; set; }
-    public int MevcutStok { get; set; }
+    public int StokMiktari { get; set; }
     public int KritikStokSeviyesi { get; set; }
+    public decimal AlisFiyati { get; set; }
+    public decimal SatisFiyati { get; set; }
+    public string Aciklama { get; set; } = string.Empty;
     public bool AktifMi { get; set; } = true;
+    public DateTime OlusturmaTarihi { get; set; } = DateTime.Now;
 }

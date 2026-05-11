@@ -28,11 +28,11 @@ public class FrmRaporlama : Form
         StartPosition = FormStartPosition.CenterParent;
         ClientSize = new Size(520, 300);
 
-        var lblBaslik = new Label { Text = "Temel Stok Raporlari", Location = new Point(24, 24), AutoSize = true, Font = new Font(FontFamily.GenericSansSerif, 12, FontStyle.Bold) };
-        var lblToplamUrun = new Label { Text = "Toplam Urun Sayisi", Location = new Point(24, 82), AutoSize = true };
-        var lblKritikStok = new Label { Text = "Kritik Stoktaki Urun Sayisi", Location = new Point(24, 122), AutoSize = true };
-        var lblToplamStok = new Label { Text = "Toplam Stok Miktari", Location = new Point(24, 162), AutoSize = true };
-        var btnYenile = new Button { Text = "Raporlari Getir / Yenile", Location = new Point(210, 210), Size = new Size(170, 32) };
+        var lblBaslik = new Label { Text = "Temel Stok Raporları", Location = new Point(24, 24), AutoSize = true, Font = new Font(FontFamily.GenericSansSerif, 12, FontStyle.Bold) };
+        var lblToplamUrun = new Label { Text = "Toplam Ürün Sayısı", Location = new Point(24, 82), AutoSize = true };
+        var lblKritikStok = new Label { Text = "Kritik Stoktaki Ürün Sayısı", Location = new Point(24, 122), AutoSize = true };
+        var lblToplamStok = new Label { Text = "Toplam Stok Miktarı", Location = new Point(24, 162), AutoSize = true };
+        var btnYenile = new Button { Text = "Raporları Getir / Yenile", Location = new Point(210, 210), Size = new Size(170, 32) };
 
         ConfigureReadOnlyTextBox(_txtToplamUrun, 240, 78);
         ConfigureReadOnlyTextBox(_txtKritikStok, 240, 118);

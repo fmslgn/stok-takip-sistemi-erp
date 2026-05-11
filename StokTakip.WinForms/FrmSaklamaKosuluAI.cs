@@ -23,14 +23,14 @@ public class FrmSaklamaKosuluAI : Form
     /// </summary>
     private void InitializeComponent()
     {
-        Text = "Saklama Kosulu Oneri";
+        Text = "Saklama Koşulu Öneri";
         StartPosition = FormStartPosition.CenterParent;
         ClientSize = new Size(680, 430);
 
-        var lblUrunAdi = new Label { Text = "Urun Adi", Location = new Point(24, 28), AutoSize = true };
-        var lblKategoriAdi = new Label { Text = "Kategori Adi", Location = new Point(24, 68), AutoSize = true };
-        var lblOneri = new Label { Text = "Oneri Sonucu", Location = new Point(24, 150), AutoSize = true };
-        var btnOneri = new Button { Text = "Oneri Al", Location = new Point(140, 104), Size = new Size(100, 32) };
+        var lblUrunAdi = new Label { Text = "Ürün Adı", Location = new Point(24, 28), AutoSize = true };
+        var lblKategoriAdi = new Label { Text = "Kategori Adı", Location = new Point(24, 68), AutoSize = true };
+        var lblOneri = new Label { Text = "Öneri Sonucu", Location = new Point(24, 150), AutoSize = true };
+        var btnOneri = new Button { Text = "Öneri Al", Location = new Point(140, 104), Size = new Size(100, 32) };
         var btnTemizle = new Button { Text = "Temizle", Location = new Point(250, 104), Size = new Size(90, 32) };
 
         _txtUrunAdi.Location = new Point(140, 24);

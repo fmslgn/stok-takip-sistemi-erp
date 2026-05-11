@@ -37,20 +37,20 @@ public class FrmUrunYonetimi : Form
     /// </summary>
     private void InitializeComponent()
     {
-        Text = "Urun Yonetimi";
+        Text = "Ürün Yönetimi";
         StartPosition = FormStartPosition.CenterParent;
         ClientSize = new Size(1080, 660);
 
         AddLabel("Kategori", 24, 24);
-        AddLabel("Saklama Kosulu", 24, 64);
-        AddLabel("Urun Adi", 24, 104);
+        AddLabel("Saklama Koşulu", 24, 64);
+        AddLabel("Ürün Adı", 24, 104);
         AddLabel("Barkod", 24, 144);
         AddLabel("Birim", 24, 184);
         AddLabel("Stok", 430, 24);
         AddLabel("Kritik Stok", 430, 64);
-        AddLabel("Alis Fiyati", 430, 104);
-        AddLabel("Satis Fiyati", 430, 144);
-        AddLabel("Aciklama", 430, 184);
+        AddLabel("Alış Fiyatı", 430, 104);
+        AddLabel("Satış Fiyatı", 430, 144);
+        AddLabel("Açıklama", 430, 184);
 
         _cmbKategori.Location = new Point(150, 20);
         _cmbKategori.Size = new Size(240, 27);
@@ -77,7 +77,7 @@ public class FrmUrunYonetimi : Form
         _chkAktif.Checked = true;
 
         var btnEkle = new Button { Text = "Ekle", Location = new Point(24, 230), Size = new Size(90, 32) };
-        var btnGuncelle = new Button { Text = "Guncelle", Location = new Point(124, 230), Size = new Size(90, 32) };
+        var btnGuncelle = new Button { Text = "Güncelle", Location = new Point(124, 230), Size = new Size(90, 32) };
         var btnSil = new Button { Text = "Sil", Location = new Point(224, 230), Size = new Size(90, 32) };
         var btnTemizle = new Button { Text = "Temizle", Location = new Point(324, 230), Size = new Size(90, 32) };
         var btnListele = new Button { Text = "Listele / Yenile", Location = new Point(424, 230), Size = new Size(130, 32) };
@@ -114,7 +114,7 @@ public class FrmUrunYonetimi : Form
         try
         {
             _urunManager.Add(FormdanUrunOlustur());
-            WinFormsUiHelper.ShowInfo("Urun basariyla eklendi.");
+            WinFormsUiHelper.ShowInfo("Ürün başarıyla eklendi.");
             Temizle();
             Listele();
         }
@@ -133,14 +133,14 @@ public class FrmUrunYonetimi : Form
         {
             if (_seciliId <= 0)
             {
-                WinFormsUiHelper.ShowError("Guncellemek icin bir urun seciniz.");
+                WinFormsUiHelper.ShowError("Güncellemek için bir ürün seçiniz.");
                 return;
             }
 
             var urun = FormdanUrunOlustur();
             urun.Id = _seciliId;
             _urunManager.Update(urun);
-            WinFormsUiHelper.ShowInfo("Urun basariyla guncellendi.");
+            WinFormsUiHelper.ShowInfo("Ürün başarıyla güncellendi.");
             Temizle();
             Listele();
         }
@@ -159,7 +159,7 @@ public class FrmUrunYonetimi : Form
         {
             if (_seciliId <= 0)
             {
-                WinFormsUiHelper.ShowError("Silmek icin bir urun seciniz.");
+                WinFormsUiHelper.ShowError("Silmek için bir ürün seçiniz.");
                 return;
             }
 
@@ -169,7 +169,7 @@ public class FrmUrunYonetimi : Form
             }
 
             _urunManager.Delete(_seciliId);
-            WinFormsUiHelper.ShowInfo("Urun basariyla silindi.");
+            WinFormsUiHelper.ShowInfo("Ürün başarıyla silindi.");
             Temizle();
             Listele();
         }
@@ -238,7 +238,7 @@ public class FrmUrunYonetimi : Form
         try
         {
             var kosullar = _saklamaKosuluManager.GetAll();
-            kosullar.Insert(0, new SaklamaKosulu { Id = 0, KosulAdi = "Secilmedi" });
+            kosullar.Insert(0, new SaklamaKosulu { Id = 0, KosulAdi = "Seçilmedi" });
             _cmbSaklamaKosulu.DataSource = kosullar;
             _cmbSaklamaKosulu.DisplayMember = nameof(SaklamaKosulu.KosulAdi);
             _cmbSaklamaKosulu.ValueMember = nameof(SaklamaKosulu.Id);

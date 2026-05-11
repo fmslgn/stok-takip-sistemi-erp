@@ -17,7 +17,7 @@ internal static class FormScreenBuilder
         form.ClientSize = new Size(520, 320);
 
         var lblTitle = new Label { Text = title, Location = new Point(24, 24), AutoSize = true, Font = new Font(FontFamily.GenericSansSerif, 13, FontStyle.Bold) };
-        var lblInfo = new Label { Text = "Bu ekran icin CRUD kodlari sonraki asamada eklenecek.", Location = new Point(24, 70), AutoSize = true };
+        var lblInfo = new Label { Text = "Bu ekran için CRUD kodları sonraki aşamada eklenecek.", Location = new Point(24, 70), AutoSize = true };
         var btnKapat = new Button { Text = "Kapat", Location = new Point(24, 120), Size = new Size(100, 32) };
 
         btnKapat.Click += (_, _) =>

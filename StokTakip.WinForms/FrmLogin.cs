@@ -23,17 +23,17 @@ public class FrmLogin : Form
     /// </summary>
     private void InitializeComponent()
     {
-        Text = "SYA Stok Takip Sistemi - Giris";
+        Text = "SYA Stok Takip Sistemi - Giriş";
         StartPosition = FormStartPosition.CenterScreen;
         ClientSize = new Size(380, 250);
         FormBorderStyle = FormBorderStyle.FixedDialog;
         MaximizeBox = false;
 
         var lblBaslik = new Label { Text = "SYA Stok Takip Sistemi", Location = new Point(30, 24), AutoSize = true, Font = new Font(FontFamily.GenericSansSerif, 14, FontStyle.Bold) };
-        var lblKullaniciAdi = new Label { Text = "Kullanici Adi", Location = new Point(30, 82), AutoSize = true };
-        var lblSifre = new Label { Text = "Sifre", Location = new Point(30, 122), AutoSize = true };
-        var btnGiris = new Button { Text = "Giris Yap", Location = new Point(140, 166), Size = new Size(100, 32) };
-        var btnCikis = new Button { Text = "Cikis", Location = new Point(250, 166), Size = new Size(80, 32) };
+        var lblKullaniciAdi = new Label { Text = "Kullanıcı Adı", Location = new Point(30, 82), AutoSize = true };
+        var lblSifre = new Label { Text = "Şifre", Location = new Point(30, 122), AutoSize = true };
+        var btnGiris = new Button { Text = "Giriş Yap", Location = new Point(140, 166), Size = new Size(100, 32) };
+        var btnCikis = new Button { Text = "Çıkış", Location = new Point(250, 166), Size = new Size(80, 32) };
 
         _txtKullaniciAdi.Location = new Point(140, 78);
         _txtKullaniciAdi.Size = new Size(190, 27);
@@ -58,14 +58,14 @@ public class FrmLogin : Form
         {
             if (string.IsNullOrWhiteSpace(_txtKullaniciAdi.Text) || string.IsNullOrWhiteSpace(_txtSifre.Text))
             {
-                WinFormsUiHelper.ShowError("Kullanici adi ve sifre bos birakilamaz.");
+                WinFormsUiHelper.ShowError("Kullanıcı adı ve şifre boş bırakılamaz.");
                 return;
             }
 
             Kullanici? kullanici = _kullaniciManager.LoginKontrol(_txtKullaniciAdi.Text, _txtSifre.Text);
             if (kullanici is null)
             {
-                WinFormsUiHelper.ShowError("Kullanici adi veya sifre hatali.");
+                WinFormsUiHelper.ShowError("Kullanıcı adı veya şifre hatalı.");
                 return;
             }
 

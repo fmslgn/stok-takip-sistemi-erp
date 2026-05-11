@@ -26,7 +26,7 @@ public class FrmKritikStok : Form
         StartPosition = FormStartPosition.CenterParent;
         ClientSize = new Size(900, 500);
 
-        var lblBaslik = new Label { Text = "Kritik Stoktaki Urunler", Location = new Point(24, 24), AutoSize = true, Font = new Font(FontFamily.GenericSansSerif, 12, FontStyle.Bold) };
+        var lblBaslik = new Label { Text = "Kritik Stoktaki Ürünler", Location = new Point(24, 24), AutoSize = true, Font = new Font(FontFamily.GenericSansSerif, 12, FontStyle.Bold) };
         var btnListele = new Button { Text = "Listele / Yenile", Location = new Point(24, 62), Size = new Size(130, 32) };
         _grid.Location = new Point(24, 112);
         _grid.Size = new Size(850, 340);
@@ -62,7 +62,7 @@ public class FrmKritikStok : Form
 
             if (liste.Count == 0)
             {
-                WinFormsUiHelper.ShowInfo("Kritik stok seviyesinde urun bulunmamaktadir.");
+                WinFormsUiHelper.ShowInfo("Kritik stok seviyesinde ürün bulunmamaktadır.");
             }
         }
         catch (Exception ex)

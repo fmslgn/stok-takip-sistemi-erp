@@ -27,14 +27,14 @@ public class FrmKategori : Form
     /// </summary>
     private void InitializeComponent()
     {
-        Text = "Kategori Yonetimi";
+        Text = "Kategori Yönetimi";
         StartPosition = FormStartPosition.CenterParent;
         ClientSize = new Size(860, 520);
 
-        var lblKategoriAdi = new Label { Text = "Kategori Adi", Location = new Point(24, 26), AutoSize = true };
-        var lblAciklama = new Label { Text = "Aciklama", Location = new Point(24, 66), AutoSize = true };
+        var lblKategoriAdi = new Label { Text = "Kategori Adı", Location = new Point(24, 26), AutoSize = true };
+        var lblAciklama = new Label { Text = "Açıklama", Location = new Point(24, 66), AutoSize = true };
         var btnEkle = new Button { Text = "Ekle", Location = new Point(24, 140), Size = new Size(90, 32) };
-        var btnGuncelle = new Button { Text = "Guncelle", Location = new Point(124, 140), Size = new Size(90, 32) };
+        var btnGuncelle = new Button { Text = "Güncelle", Location = new Point(124, 140), Size = new Size(90, 32) };
         var btnSil = new Button { Text = "Sil", Location = new Point(224, 140), Size = new Size(90, 32) };
         var btnTemizle = new Button { Text = "Temizle", Location = new Point(324, 140), Size = new Size(90, 32) };
         var btnListele = new Button { Text = "Listele / Yenile", Location = new Point(424, 140), Size = new Size(130, 32) };
@@ -77,7 +77,7 @@ public class FrmKategori : Form
         try
         {
             _kategoriManager.Add(FormdanKategoriOlustur());
-            WinFormsUiHelper.ShowInfo("Kategori basariyla eklendi.");
+            WinFormsUiHelper.ShowInfo("Kategori başarıyla eklendi.");
             Temizle();
             Listele();
         }
@@ -96,14 +96,14 @@ public class FrmKategori : Form
         {
             if (_seciliId <= 0)
             {
-                WinFormsUiHelper.ShowError("Guncellemek icin bir kategori seciniz.");
+                WinFormsUiHelper.ShowError("Güncellemek için bir kategori seçiniz.");
                 return;
             }
 
             var kategori = FormdanKategoriOlustur();
             kategori.Id = _seciliId;
             _kategoriManager.Update(kategori);
-            WinFormsUiHelper.ShowInfo("Kategori basariyla guncellendi.");
+            WinFormsUiHelper.ShowInfo("Kategori başarıyla güncellendi.");
             Temizle();
             Listele();
         }
@@ -122,7 +122,7 @@ public class FrmKategori : Form
         {
             if (_seciliId <= 0)
             {
-                WinFormsUiHelper.ShowError("Silmek icin bir kategori seciniz.");
+                WinFormsUiHelper.ShowError("Silmek için bir kategori seçiniz.");
                 return;
             }
 
@@ -132,7 +132,7 @@ public class FrmKategori : Form
             }
 
             _kategoriManager.Delete(_seciliId);
-            WinFormsUiHelper.ShowInfo("Kategori basariyla silindi.");
+            WinFormsUiHelper.ShowInfo("Kategori başarıyla silindi.");
             Temizle();
             Listele();
         }

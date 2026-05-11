@@ -60,42 +60,47 @@ public class SaklamaKosuluManager
     /// </summary>
     public string SaklamaKosuluOner(string urunAdi, string kategoriAdi)
     {
-        var urun = (urunAdi ?? string.Empty).Trim().ToLowerInvariant();
-        var kategori = (kategoriAdi ?? string.Empty).Trim().ToLowerInvariant();
+        var urun = NormalizeText(urunAdi);
+        var kategori = NormalizeText(kategoriAdi);
         var metin = $"{urun} {kategori}";
 
-        // Sut ve benzeri hassas gidalarda soguk zincir onerilir.
+        // Sut ve benzeri hassas gidalarda kategori ne olursa olsun soguk zincir onceliklidir.
         if (Icerir(metin, "sut", "yogurt", "peynir"))
         {
-            return "Soguk zincir onerilir. Urun 0-4 C araliginda, buzdolabi kosullarinda saklanmalidir.";
+            return "Bu ürün soğuk zincirde saklanmalıdır. 0-4°C aralığında, güneş ışığından uzak şekilde muhafaza edilmelidir.";
         }
 
         if (Icerir(metin, "et", "tavuk", "balik"))
         {
-            return "Dondurucu veya soguk zincir onerilir. Urun cozundurulmeden ve hijyenik kosullarda saklanmalidir.";
+            return "Bu ürün dondurucu veya soğuk zincir koşullarında saklanmalıdır. Çözündürülmeden ve hijyenik şekilde muhafaza edilmelidir.";
         }
 
-        if (Icerir(metin, "kuru gida", "gida", "biskuvi", "un", "makarna", "pirinc"))
+        if (Icerir(metin, "soguk"))
         {
-            return "Serin, kuru ve gunes almayan ortam onerilir. Ambalaj kapali tutulmalidir.";
+            return "Bu ürün soğuk zincirde saklanmalıdır. 0-4°C aralığında, güneş ışığından uzak şekilde muhafaza edilmelidir.";
         }
 
         if (Icerir(metin, "temizlik", "deterjan", "camasir", "kimyasal"))
         {
-            return "Cocuklardan uzak, serin ve kuru ortam onerilir. Gida urunleriyle ayni alanda saklanmamalidir.";
+            return "Temizlik ürünleri çocuklardan uzak, serin ve kuru bir ortamda saklanmalıdır. Gıda ürünleriyle aynı alanda tutulmamalıdır.";
         }
 
         if (Icerir(metin, "elektronik", "sarj", "telefon", "kablo"))
         {
-            return "Nemden, sudan ve yuksek sicakliktan uzak ortam onerilir.";
+            return "Elektronik ürünler nemden, sudan ve yüksek sıcaklıktan uzak bir ortamda saklanmalıdır.";
         }
 
         if (Icerir(metin, "kirtasiye", "kalem", "kagit", "defter"))
         {
-            return "Kuru ve temiz ortam onerilir. Urunler duzenli raf sisteminde saklanmalidir.";
+            return "Kırtasiye ürünleri kuru, temiz ve düzenli raf sisteminde saklanmalıdır.";
         }
 
-        return "Genel saklama onerisi: Urun kuru, temiz, havalandirilmis ve dogrudan gunes almayan bir ortamda saklanmalidir.";
+        if (Icerir(metin, "kuru gida", "gida", "biskuvi", "un", "makarna", "pirinc"))
+        {
+            return "Kuru gıda ürünleri serin, kuru ve güneş almayan bir ortamda saklanmalıdır. Ambalaj kapalı tutulmalıdır.";
+        }
+
+        return "Genel saklama önerisi: Ürün kuru, temiz, havalandırılmış ve doğrudan güneş almayan bir ortamda saklanmalıdır.";
     }
 
     /// <summary>
@@ -132,6 +137,29 @@ public class SaklamaKosuluManager
     private static bool Icerir(string metin, params string[] anahtarKelimeler)
     {
         return anahtarKelimeler.Any(metin.Contains);
+    }
+
+    /// <summary>
+    /// Karsilastirma oncesi Turkce karakterleri sadelestirir ve metni kucuk harfe cevirir.
+    /// </summary>
+    private static string NormalizeText(string text)
+    {
+        return (text ?? string.Empty)
+            .Trim()
+            .Replace('İ', 'i')
+            .Replace('I', 'i')
+            .Replace('Ğ', 'g')
+            .Replace('Ü', 'u')
+            .Replace('Ş', 's')
+            .Replace('Ö', 'o')
+            .Replace('Ç', 'c')
+            .ToLowerInvariant()
+            .Replace('ğ', 'g')
+            .Replace('ü', 'u')
+            .Replace('ş', 's')
+            .Replace('ı', 'i')
+            .Replace('ö', 'o')
+            .Replace('ç', 'c');
     }
 
     private static void IdKontrol(int id)

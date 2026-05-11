@@ -73,6 +73,17 @@ dotnet restore
 dotnet build
 ```
 
+## Test Edilen Modüller
+
+- Login işlemi admin / 1234 ile test edildi.
+- Kategori CRUD işlemleri test edildi.
+- Ürün CRUD işlemleri test edildi.
+- Stok giriş işleminde stok miktarının arttığı test edildi.
+- Stok çıkış işleminde stok miktarının azaldığı ve yetersiz stok kontrolünün çalıştığı test edildi.
+- Kritik stok listeleme test edildi.
+- Saklama koşulu öneri ekranı test edildi.
+- Raporlama ekranı test edildi.
+
 ## Ekran Goruntuleri
 
 Final asamasinda uygulama ekran goruntuleri bu bolume eklenecektir.

@@ -29,14 +29,14 @@ public class FrmStokGiris : Form
     /// </summary>
     private void InitializeComponent()
     {
-        Text = "Stok Giris";
+        Text = "Stok Giriş";
         StartPosition = FormStartPosition.CenterParent;
         ClientSize = new Size(850, 520);
 
-        var lblUrun = new Label { Text = "Urun", Location = new Point(24, 28), AutoSize = true };
+        var lblUrun = new Label { Text = "Ürün", Location = new Point(24, 28), AutoSize = true };
         var lblMiktar = new Label { Text = "Miktar", Location = new Point(24, 68), AutoSize = true };
-        var lblAciklama = new Label { Text = "Aciklama", Location = new Point(24, 108), AutoSize = true };
-        var btnGiris = new Button { Text = "Stok Girisi Yap", Location = new Point(150, 145), Size = new Size(130, 32) };
+        var lblAciklama = new Label { Text = "Açıklama", Location = new Point(24, 108), AutoSize = true };
+        var btnGiris = new Button { Text = "Stok Girişi Yap", Location = new Point(150, 145), Size = new Size(130, 32) };
         var btnTemizle = new Button { Text = "Temizle", Location = new Point(290, 145), Size = new Size(90, 32) };
         var btnListele = new Button { Text = "Listele / Yenile", Location = new Point(390, 145), Size = new Size(130, 32) };
 
@@ -85,7 +85,7 @@ public class FrmStokGiris : Form
                 GirisTarihi = DateTime.Now
             });
 
-            WinFormsUiHelper.ShowInfo("Stok girisi basariyla yapildi.");
+            WinFormsUiHelper.ShowInfo("Stok girişi başarıyla yapıldı.");
             Temizle();
             UrunleriYukle();
             Listele();

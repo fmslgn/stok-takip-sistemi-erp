@@ -27,19 +27,19 @@ public class FrmAnaMenu : Form
 
         var lblBaslik = new Label { Text = "SYA Stok Takip Sistemi", Location = new Point(24, 20), AutoSize = true, Font = new Font(FontFamily.GenericSansSerif, 15, FontStyle.Bold) };
         var kullaniciAdi = _aktifKullanici?.KullaniciAdi ?? "admin";
-        var lblKullanici = new Label { Text = $"Hos geldiniz: {kullaniciAdi}", Location = new Point(24, 58), AutoSize = true };
+        var lblKullanici = new Label { Text = $"Hoş geldiniz: {kullaniciAdi}", Location = new Point(24, 58), AutoSize = true };
 
         Controls.AddRange(new Control[] { lblBaslik, lblKullanici });
 
-        AddMenuButton("Kullanici Yonetimi", 24, 105, (_, _) => OpenForm(new FrmKullaniciYonetimi()));
-        AddMenuButton("Kategori Yonetimi", 214, 105, (_, _) => OpenForm(new FrmKategori()));
-        AddMenuButton("Urun Yonetimi", 404, 105, (_, _) => OpenForm(new FrmUrunYonetimi()));
-        AddMenuButton("Stok Giris", 24, 160, (_, _) => OpenForm(new FrmStokGiris(_aktifKullanici?.Id ?? 1)));
-        AddMenuButton("Stok Cikis", 214, 160, (_, _) => OpenForm(new FrmStokCikis(_aktifKullanici?.Id ?? 1)));
+        AddMenuButton("Kullanıcı Yönetimi", 24, 105, (_, _) => OpenForm(new FrmKullaniciYonetimi()));
+        AddMenuButton("Kategori Yönetimi", 214, 105, (_, _) => OpenForm(new FrmKategori()));
+        AddMenuButton("Ürün Yönetimi", 404, 105, (_, _) => OpenForm(new FrmUrunYonetimi()));
+        AddMenuButton("Stok Giriş", 24, 160, (_, _) => OpenForm(new FrmStokGiris(_aktifKullanici?.Id ?? 1)));
+        AddMenuButton("Stok Çıkış", 214, 160, (_, _) => OpenForm(new FrmStokCikis(_aktifKullanici?.Id ?? 1)));
         AddMenuButton("Kritik Stok", 404, 160, (_, _) => OpenForm(new FrmKritikStok()));
         AddMenuButton("Raporlama", 24, 215, (_, _) => OpenForm(new FrmRaporlama()));
-        AddMenuButton("Saklama Kosulu Oneri", 214, 215, (_, _) => OpenForm(new FrmSaklamaKosuluAI()));
-        AddMenuButton("Cikis", 404, 215, (_, _) => Close());
+        AddMenuButton("Saklama Koşulu Öneri", 214, 215, (_, _) => OpenForm(new FrmSaklamaKosuluAI()));
+        AddMenuButton("Çıkış", 404, 215, (_, _) => Close());
     }
 
     /// <summary>

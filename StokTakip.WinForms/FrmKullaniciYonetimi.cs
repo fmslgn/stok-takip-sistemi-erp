@@ -9,6 +9,6 @@ public class FrmKullaniciYonetimi : Form
 {
     public FrmKullaniciYonetimi()
     {
-        FormScreenBuilder.BuildEmptyModule(this, "Kullanici Yonetimi");
+        FormScreenBuilder.BuildEmptyModule(this, "Kullanıcı Yönetimi");
     }
 }

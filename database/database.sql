@@ -1,6 +1,8 @@
+SET client_encoding = 'UTF8';
+
 -- ============================================================
 -- StokTakipSistemi PostgreSQL veritabani kurulum dosyasi
--- Bu dosya tabloları, iliskileri, kontrolleri ve ornek verileri olusturur.
+-- Bu dosya tablolari, iliskileri, kontrolleri ve ornek verileri olusturur.
 -- ============================================================
 
 -- Once iliskili alt tablolar silinir, sonra ana tablolar silinir.
@@ -165,71 +167,72 @@ CREATE TABLE ai_sorgu_gecmisi (
 
 -- ============================================================
 -- Ornek veriler: final projesini ilk acilista tanitmak icin kullanilir.
+-- Turkce karakter kaynakli kodlama sorunlarini onlemek icin ASCII metin kullanildi.
 -- ============================================================
 
 INSERT INTO kullanicilar (ad_soyad, kullanici_adi, sifre, rol)
-VALUES ('Sistem Yöneticisi', 'admin', '1234', 'Yonetici');
+VALUES ('Sistem Yoneticisi', 'admin', '1234', 'Yonetici');
 
 INSERT INTO kategoriler (kategori_adi, aciklama)
 VALUES
-    ('Gıda', 'Gıda ürünleri kategorisi'),
-    ('İçecek', 'İçecek ürünleri kategorisi'),
-    ('Temizlik', 'Temizlik ürünleri kategorisi'),
-    ('Elektronik', 'Elektronik ürünler kategorisi'),
-    ('Kırtasiye', 'Kırtasiye ürünleri kategorisi'),
-    ('Soğuk Zincir', 'Soğuk zincir ile saklanması gereken ürünler');
+    ('Gida', 'Gida urunleri kategorisi'),
+    ('Icecek', 'Icecek urunleri kategorisi'),
+    ('Temizlik', 'Temizlik urunleri kategorisi'),
+    ('Elektronik', 'Elektronik urunler kategorisi'),
+    ('Kirtasiye', 'Kirtasiye urunleri kategorisi'),
+    ('Soguk Zincir', 'Soguk zincir ile saklanmasi gereken urunler');
 
 INSERT INTO saklama_kosullari
     (kosul_adi, kategori_anahtar_kelime, onerilen_sicaklik, nem_orani, saklama_aciklamasi)
 VALUES
-    ('Kuru Gıda Saklama', 'Gıda', '18-24 °C', '%40-%60', 'Kuru ve güneş almayan ortamda saklanmalıdır.'),
-    ('Soğuk Zincir Saklama', 'Soğuk Zincir', '0-4 °C', '%50-%70', 'Soğuk zincir bozulmadan buzdolabı koşullarında saklanmalıdır.'),
-    ('Temizlik Ürünleri Saklama', 'Temizlik', '15-25 °C', '%30-%60', 'Kimyasal ürünler gıdalardan ayrı ve kapalı alanda saklanmalıdır.'),
-    ('Elektronik Ürün Saklama', 'Elektronik', '10-30 °C', '%30-%50', 'Nemden ve doğrudan ısıdan korunmalıdır.'),
-    ('Kırtasiye Ürünleri Saklama', 'Kırtasiye', '15-25 °C', '%35-%60', 'Kuru ve düzenli raf sisteminde saklanmalıdır.');
+    ('Kuru Gida Saklama', 'Gida', '18-24 C', '%40-%60', 'Kuru ve gunes almayan ortamda saklanmalidir.'),
+    ('Soguk Zincir Saklama', 'Soguk Zincir', '0-4 C', '%50-%70', 'Soguk zincir bozulmadan buzdolabi kosullarinda saklanmalidir.'),
+    ('Temizlik Urunleri Saklama', 'Temizlik', '15-25 C', '%30-%60', 'Kimyasal urunler gidalardan ayri ve kapali alanda saklanmalidir.'),
+    ('Elektronik Urun Saklama', 'Elektronik', '10-30 C', '%30-%50', 'Nemden ve dogrudan isidan korunmalidir.'),
+    ('Kirtasiye Urunleri Saklama', 'Kirtasiye', '15-25 C', '%35-%60', 'Kuru ve duzenli raf sisteminde saklanmalidir.');
 
 INSERT INTO urunler
     (kategori_id, saklama_kosulu_id, urun_adi, barkod, birim, stok_miktari, kritik_stok_seviyesi, alis_fiyati, satis_fiyati, aciklama)
 VALUES
     (
-        (SELECT id FROM kategoriler WHERE kategori_adi = 'Soğuk Zincir'),
-        (SELECT id FROM saklama_kosullari WHERE kosul_adi = 'Soğuk Zincir Saklama'),
-        'Süt', '869000000001', 'Adet', 50, 10, 18.50, 25.00, 'Soğuk zincir ürünü'
+        (SELECT id FROM kategoriler WHERE kategori_adi = 'Soguk Zincir'),
+        (SELECT id FROM saklama_kosullari WHERE kosul_adi = 'Soguk Zincir Saklama'),
+        'Sut', '869000000001', 'Adet', 50, 10, 18.50, 25.00, 'Soguk zincir urunu'
     ),
     (
-        (SELECT id FROM kategoriler WHERE kategori_adi = 'Soğuk Zincir'),
-        (SELECT id FROM saklama_kosullari WHERE kosul_adi = 'Soğuk Zincir Saklama'),
-        'Yoğurt', '869000000002', 'Adet', 40, 8, 22.00, 30.00, 'Soğuk zincir ürünü'
+        (SELECT id FROM kategoriler WHERE kategori_adi = 'Soguk Zincir'),
+        (SELECT id FROM saklama_kosullari WHERE kosul_adi = 'Soguk Zincir Saklama'),
+        'Yogurt', '869000000002', 'Adet', 40, 8, 22.00, 30.00, 'Soguk zincir urunu'
     ),
     (
-        (SELECT id FROM kategoriler WHERE kategori_adi = 'Kırtasiye'),
-        (SELECT id FROM saklama_kosullari WHERE kosul_adi = 'Kırtasiye Ürünleri Saklama'),
-        'A4 Kağıt', '869000000003', 'Paket', 80, 15, 90.00, 125.00, 'Ofis kağıdı'
+        (SELECT id FROM kategoriler WHERE kategori_adi = 'Kirtasiye'),
+        (SELECT id FROM saklama_kosullari WHERE kosul_adi = 'Kirtasiye Urunleri Saklama'),
+        'A4 Kagit', '869000000003', 'Paket', 80, 15, 90.00, 125.00, 'Ofis kagidi'
     ),
     (
-        (SELECT id FROM kategoriler WHERE kategori_adi = 'Kırtasiye'),
-        (SELECT id FROM saklama_kosullari WHERE kosul_adi = 'Kırtasiye Ürünleri Saklama'),
-        'Kalem', '869000000004', 'Adet', 150, 25, 4.50, 8.00, 'Tükenmez kalem'
+        (SELECT id FROM kategoriler WHERE kategori_adi = 'Kirtasiye'),
+        (SELECT id FROM saklama_kosullari WHERE kosul_adi = 'Kirtasiye Urunleri Saklama'),
+        'Kalem', '869000000004', 'Adet', 150, 25, 4.50, 8.00, 'Tukenmez kalem'
     ),
     (
         (SELECT id FROM kategoriler WHERE kategori_adi = 'Temizlik'),
-        (SELECT id FROM saklama_kosullari WHERE kosul_adi = 'Temizlik Ürünleri Saklama'),
-        'Çamaşır Suyu', '869000000005', 'Adet', 35, 7, 28.00, 42.00, 'Temizlik ürünü'
+        (SELECT id FROM saklama_kosullari WHERE kosul_adi = 'Temizlik Urunleri Saklama'),
+        'Camasir Suyu', '869000000005', 'Adet', 35, 7, 28.00, 42.00, 'Temizlik urunu'
     ),
     (
         (SELECT id FROM kategoriler WHERE kategori_adi = 'Elektronik'),
-        (SELECT id FROM saklama_kosullari WHERE kosul_adi = 'Elektronik Ürün Saklama'),
-        'Telefon Şarj Aleti', '869000000006', 'Adet', 25, 5, 120.00, 190.00, 'Elektronik aksesuar'
+        (SELECT id FROM saklama_kosullari WHERE kosul_adi = 'Elektronik Urun Saklama'),
+        'Telefon Sarj Aleti', '869000000006', 'Adet', 25, 5, 120.00, 190.00, 'Elektronik aksesuar'
     ),
     (
-        (SELECT id FROM kategoriler WHERE kategori_adi = 'İçecek'),
-        (SELECT id FROM saklama_kosullari WHERE kosul_adi = 'Kuru Gıda Saklama'),
-        'Su', '869000000007', 'Adet', 200, 30, 3.00, 7.00, 'Şişe su'
+        (SELECT id FROM kategoriler WHERE kategori_adi = 'Icecek'),
+        (SELECT id FROM saklama_kosullari WHERE kosul_adi = 'Kuru Gida Saklama'),
+        'Su', '869000000007', 'Adet', 200, 30, 3.00, 7.00, 'Sise su'
     ),
     (
-        (SELECT id FROM kategoriler WHERE kategori_adi = 'Gıda'),
-        (SELECT id FROM saklama_kosullari WHERE kosul_adi = 'Kuru Gıda Saklama'),
-        'Bisküvi', '869000000008', 'Paket', 120, 20, 9.50, 15.00, 'Paketli gıda'
+        (SELECT id FROM kategoriler WHERE kategori_adi = 'Gida'),
+        (SELECT id FROM saklama_kosullari WHERE kosul_adi = 'Kuru Gida Saklama'),
+        'Biskuvi', '869000000008', 'Paket', 120, 20, 9.50, 15.00, 'Paketli gida'
     );
 
 INSERT INTO kritik_stoklar (urun_id, stok_miktari, kritik_stok_seviyesi)
@@ -241,11 +244,11 @@ INSERT INTO raporlar (kullanici_id, rapor_turu, rapor_basligi, rapor_aciklama)
 VALUES (
     (SELECT id FROM kullanicilar WHERE kullanici_adi = 'admin'),
     'Genel Stok',
-    'İlk Stok Durum Raporu',
-    'Veritabanı kurulumundan sonra oluşturulan örnek rapor kaydı.'
+    'Ilk Stok Durum Raporu',
+    'Veritabani kurulumundan sonra olusturulan ornek rapor kaydi.'
 );
 
 INSERT INTO ai_sorgu_gecmisi (urun_adi, kategori_adi, gelen_oneri, kaynak)
 VALUES
-    ('Süt', 'Soğuk Zincir', '0-4 °C aralığında ve soğuk zincir bozulmadan saklanmalıdır.', 'Örnek Veri'),
-    ('Telefon Şarj Aleti', 'Elektronik', 'Nemden uzak, kuru ve oda sıcaklığında saklanmalıdır.', 'Örnek Veri');
+    ('Sut', 'Soguk Zincir', '0-4 C araliginda ve soguk zincir bozulmadan saklanmalidir.', 'Ornek Veri'),
+    ('Telefon Sarj Aleti', 'Elektronik', 'Nemden uzak, kuru ve oda sicakliginda saklanmalidir.', 'Ornek Veri');

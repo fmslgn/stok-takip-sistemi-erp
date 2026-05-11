@@ -45,6 +45,15 @@ UI katmani dogrudan SQL sorgusu yazmaz. WinForms sadece Business katmanini cagir
 
 Veritabani olarak PostgreSQL kullanilacaktir. Baglanti islemleri `StokTakip.DataAccess` katmanindaki `DbHelper` sinifi uzerinden yapilacaktir. Projenin bu ilk asamasinda gercek CRUD sorgulari eklenmemistir.
 
+Veritabani tablo yapisi ve ornek veriler `database/database.sql` dosyasinda bulunur. PostgreSQL tarafinda veritabanini olusturmak ve SQL dosyasini calistirmak icin:
+
+```bash
+createdb -U postgres stok_takip_db
+psql -U postgres -d stok_takip_db -f database/database.sql
+```
+
+Detayli aciklama icin `database/README.md` dosyasina bakilabilir.
+
 ## Ekip Uyeleri
 
 - Furkan Mehmet Salgin - 245611029

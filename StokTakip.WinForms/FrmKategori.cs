@@ -27,8 +27,7 @@ public class FrmKategori : Form
     /// </summary>
     private void InitializeComponent()
     {
-        Text = "Kategori Yönetimi";
-        StartPosition = FormStartPosition.CenterParent;
+        WinFormsUiHelper.ApplyFormStyle(this, "Kategori Yönetimi");
         ClientSize = new Size(860, 520);
 
         var lblKategoriAdi = new Label { Text = "Kategori Adı", Location = new Point(24, 26), AutoSize = true };
@@ -58,7 +57,16 @@ public class FrmKategori : Form
         btnListele.Click += BtnListele_Click;
         _grid.CellClick += Grid_CellClick;
 
+        WinFormsUiHelper.StyleInputs(this);
+        WinFormsUiHelper.StyleSuccessButton(btnEkle);
+        WinFormsUiHelper.StylePrimaryButton(btnGuncelle);
+        WinFormsUiHelper.StyleDangerButton(btnSil);
+        WinFormsUiHelper.StyleSecondaryButton(btnTemizle);
+        WinFormsUiHelper.StyleSecondaryButton(btnListele);
+
         Controls.AddRange(new Control[] { lblKategoriAdi, _txtKategoriAdi, lblAciklama, _txtAciklama, _chkAktif, btnEkle, btnGuncelle, btnSil, btnTemizle, btnListele, _grid });
+        WinFormsUiHelper.StyleInputs(this);
+        WinFormsUiHelper.AddHeader(this, "Kategori Yönetimi", "Ürün gruplarını düzenleyin ve aktif kategori listesini yönetin.");
     }
 
     /// <summary>

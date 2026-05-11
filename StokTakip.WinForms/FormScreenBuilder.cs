@@ -12,8 +12,7 @@ internal static class FormScreenBuilder
     /// </summary>
     public static void BuildEmptyModule(Form form, string title)
     {
-        form.Text = $"Stok Takip Sistemi - {title}";
-        form.StartPosition = FormStartPosition.CenterParent;
+        WinFormsUiHelper.ApplyFormStyle(form, $"Stok Takip Sistemi - {title}");
         form.ClientSize = new Size(520, 320);
 
         var lblTitle = new Label { Text = title, Location = new Point(24, 24), AutoSize = true, Font = new Font(FontFamily.GenericSansSerif, 13, FontStyle.Bold) };
@@ -26,6 +25,8 @@ internal static class FormScreenBuilder
             form.Close();
         };
 
+        WinFormsUiHelper.StyleSecondaryButton(btnKapat);
         form.Controls.AddRange(new Control[] { lblTitle, lblInfo, btnKapat });
+        WinFormsUiHelper.AddHeader(form, title, "Bu modül proje akışında yer alır ve sonraki aşamada detaylandırılabilir.");
     }
 }

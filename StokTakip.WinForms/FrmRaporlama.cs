@@ -24,22 +24,19 @@ public class FrmRaporlama : Form
     /// </summary>
     private void InitializeComponent()
     {
-        Text = "Raporlama";
-        StartPosition = FormStartPosition.CenterParent;
-        ClientSize = new Size(520, 300);
+        WinFormsUiHelper.ApplyFormStyle(this, "Raporlama");
+        ClientSize = new Size(760, 360);
 
-        var lblBaslik = new Label { Text = "Temel Stok Raporları", Location = new Point(24, 24), AutoSize = true, Font = new Font(FontFamily.GenericSansSerif, 12, FontStyle.Bold) };
-        var lblToplamUrun = new Label { Text = "Toplam Ürün Sayısı", Location = new Point(24, 82), AutoSize = true };
-        var lblKritikStok = new Label { Text = "Kritik Stoktaki Ürün Sayısı", Location = new Point(24, 122), AutoSize = true };
-        var lblToplamStok = new Label { Text = "Toplam Stok Miktarı", Location = new Point(24, 162), AutoSize = true };
-        var btnYenile = new Button { Text = "Raporları Getir / Yenile", Location = new Point(210, 210), Size = new Size(170, 32) };
+        var toplamUrunCard = CreateReportCard("Toplam Ürün Sayısı", _txtToplamUrun, 24, 34, WinFormsUiHelper.Blue);
+        var kritikCard = CreateReportCard("Kritik Stoktaki Ürün Sayısı", _txtKritikStok, 270, 34, WinFormsUiHelper.Warning);
+        var toplamStokCard = CreateReportCard("Toplam Stok Miktarı", _txtToplamStok, 516, 34, WinFormsUiHelper.Success);
+        var btnYenile = new Button { Text = "Raporları Getir / Yenile", Location = new Point(24, 190), Size = new Size(190, 36) };
 
-        ConfigureReadOnlyTextBox(_txtToplamUrun, 240, 78);
-        ConfigureReadOnlyTextBox(_txtKritikStok, 240, 118);
-        ConfigureReadOnlyTextBox(_txtToplamStok, 240, 158);
         btnYenile.Click += BtnYenile_Click;
+        WinFormsUiHelper.StylePrimaryButton(btnYenile);
 
-        Controls.AddRange(new Control[] { lblBaslik, lblToplamUrun, _txtToplamUrun, lblKritikStok, _txtKritikStok, lblToplamStok, _txtToplamStok, btnYenile });
+        Controls.AddRange(new Control[] { toplamUrunCard, kritikCard, toplamStokCard, btnYenile });
+        WinFormsUiHelper.AddHeader(this, "Raporlama", "Stok durumunu özet kartlarla hızlıca inceleyin.");
     }
 
     /// <summary>
@@ -72,10 +69,35 @@ public class FrmRaporlama : Form
         }
     }
 
-    private static void ConfigureReadOnlyTextBox(TextBox textBox, int x, int y)
+    private static Panel CreateReportCard(string title, TextBox valueBox, int x, int y, Color accentColor)
     {
-        textBox.Location = new Point(x, y);
-        textBox.Size = new Size(140, 27);
-        textBox.ReadOnly = true;
+        var panel = new Panel
+        {
+            Location = new Point(x, y),
+            Size = new Size(220, 120),
+            BackColor = Color.White,
+            BorderStyle = BorderStyle.FixedSingle
+        };
+
+        var accent = new Panel { Dock = DockStyle.Top, Height = 6, BackColor = accentColor };
+        var label = new Label
+        {
+            Text = title,
+            Location = new Point(16, 24),
+            AutoSize = true,
+            ForeColor = Color.FromArgb(71, 85, 105),
+            Font = new Font("Segoe UI", 9F, FontStyle.Bold)
+        };
+
+        valueBox.Location = new Point(16, 58);
+        valueBox.Size = new Size(180, 34);
+        valueBox.ReadOnly = true;
+        valueBox.BorderStyle = BorderStyle.None;
+        valueBox.BackColor = Color.White;
+        valueBox.ForeColor = accentColor;
+        valueBox.Font = new Font("Segoe UI", 18F, FontStyle.Bold);
+
+        panel.Controls.AddRange(new Control[] { accent, label, valueBox });
+        return panel;
     }
 }

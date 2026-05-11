@@ -17,38 +17,107 @@ public class FrmAnaMenu : Form
     }
 
     /// <summary>
-    /// Ana menu butonlarini ve form duzenini hazirlar.
+    /// Sidebar ve modul butonlari ile ana menu duzenini hazirlar.
     /// </summary>
     private void InitializeComponent()
     {
-        Text = "SYA Stok Takip Sistemi";
+        WinFormsUiHelper.ApplyFormStyle(this, "SYA Stok Takip Sistemi");
         StartPosition = FormStartPosition.CenterScreen;
-        ClientSize = new Size(620, 360);
+        ClientSize = new Size(920, 560);
 
-        var lblBaslik = new Label { Text = "SYA Stok Takip Sistemi", Location = new Point(24, 20), AutoSize = true, Font = new Font(FontFamily.GenericSansSerif, 15, FontStyle.Bold) };
+        var sidebar = new Panel
+        {
+            Dock = DockStyle.Left,
+            Width = 245,
+            BackColor = WinFormsUiHelper.Navy
+        };
+
+        var lblBrand = new Label
+        {
+            Text = "SYA",
+            Location = new Point(24, 26),
+            AutoSize = true,
+            ForeColor = Color.White,
+            Font = new Font("Segoe UI", 28F, FontStyle.Bold)
+        };
+
+        var lblSubtitle = new Label
+        {
+            Text = "Stoklarını düzenle,\nişini kolaylaştır.",
+            Location = new Point(28, 94),
+            AutoSize = true,
+            ForeColor = Color.FromArgb(214, 229, 245),
+            Font = new Font("Segoe UI", 10F)
+        };
+
         var kullaniciAdi = _aktifKullanici?.KullaniciAdi ?? "admin";
-        var lblKullanici = new Label { Text = $"Hoş geldiniz: {kullaniciAdi}", Location = new Point(24, 58), AutoSize = true };
+        var lblKullanici = new Label
+        {
+            Text = $"Hoş geldiniz:\n{kullaniciAdi}",
+            Location = new Point(28, 450),
+            AutoSize = true,
+            ForeColor = Color.White,
+            Font = new Font("Segoe UI", 10F, FontStyle.Bold)
+        };
 
-        Controls.AddRange(new Control[] { lblBaslik, lblKullanici });
+        sidebar.Controls.AddRange(new Control[] { lblBrand, lblSubtitle, lblKullanici });
 
-        AddMenuButton("Kullanıcı Yönetimi", 24, 105, (_, _) => OpenForm(new FrmKullaniciYonetimi()));
-        AddMenuButton("Kategori Yönetimi", 214, 105, (_, _) => OpenForm(new FrmKategori()));
-        AddMenuButton("Ürün Yönetimi", 404, 105, (_, _) => OpenForm(new FrmUrunYonetimi()));
-        AddMenuButton("Stok Giriş", 24, 160, (_, _) => OpenForm(new FrmStokGiris(_aktifKullanici?.Id ?? 1)));
-        AddMenuButton("Stok Çıkış", 214, 160, (_, _) => OpenForm(new FrmStokCikis(_aktifKullanici?.Id ?? 1)));
-        AddMenuButton("Kritik Stok", 404, 160, (_, _) => OpenForm(new FrmKritikStok()));
-        AddMenuButton("Raporlama", 24, 215, (_, _) => OpenForm(new FrmRaporlama()));
-        AddMenuButton("Saklama Koşulu Öneri", 214, 215, (_, _) => OpenForm(new FrmSaklamaKosuluAI()));
-        AddMenuButton("Çıkış", 404, 215, (_, _) => Close());
+        var lblBaslik = new Label
+        {
+            Text = "SYA Stok Takip Sistemi",
+            Location = new Point(285, 34),
+            AutoSize = true,
+            ForeColor = WinFormsUiHelper.Navy,
+            Font = new Font("Segoe UI", 20F, FontStyle.Bold)
+        };
+
+        var lblAciklama = new Label
+        {
+            Text = "Modüller üzerinden stok, ürün, rapor ve saklama koşulu süreçlerini yönetin.",
+            Location = new Point(288, 80),
+            AutoSize = true,
+            ForeColor = Color.FromArgb(71, 85, 105),
+            Font = new Font("Segoe UI", 10F)
+        };
+
+        AddMenuButton("Kullanıcı Yönetimi", 290, 140, (_, _) => OpenForm(new FrmKullaniciYonetimi()));
+        AddMenuButton("Kategori Yönetimi", 495, 140, (_, _) => OpenForm(new FrmKategori()));
+        AddMenuButton("Ürün Yönetimi", 700, 140, (_, _) => OpenForm(new FrmUrunYonetimi()));
+        AddMenuButton("Stok Giriş", 290, 215, (_, _) => OpenForm(new FrmStokGiris(_aktifKullanici?.Id ?? 1)));
+        AddMenuButton("Stok Çıkış", 495, 215, (_, _) => OpenForm(new FrmStokCikis(_aktifKullanici?.Id ?? 1)));
+        AddMenuButton("Kritik Stok", 700, 215, (_, _) => OpenForm(new FrmKritikStok()), true);
+        AddMenuButton("Raporlama", 290, 290, (_, _) => OpenForm(new FrmRaporlama()));
+        AddMenuButton("Saklama Koşulu Öneri", 495, 290, (_, _) => OpenForm(new FrmSaklamaKosuluAI()));
+        AddMenuButton("Çıkış", 700, 290, (_, _) => Close(), false, true);
+
+        Controls.AddRange(new Control[] { sidebar, lblBaslik, lblAciklama });
     }
 
     /// <summary>
     /// Ana menude tekrar eden buton olusturma islemini merkezi hale getirir.
     /// </summary>
-    private void AddMenuButton(string text, int x, int y, EventHandler clickHandler)
+    private void AddMenuButton(string text, int x, int y, EventHandler clickHandler, bool warning = false, bool danger = false)
     {
-        var button = new Button { Text = text, Location = new Point(x, y), Size = new Size(165, 38) };
+        var button = new Button { Text = text, Location = new Point(x, y), Size = new Size(165, 52) };
         button.Click += clickHandler;
+
+        if (danger)
+        {
+            WinFormsUiHelper.StyleDangerButton(button);
+        }
+        else if (warning)
+        {
+            button.FlatStyle = FlatStyle.Flat;
+            button.BackColor = WinFormsUiHelper.Warning;
+            button.ForeColor = Color.White;
+            button.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            button.FlatAppearance.BorderColor = WinFormsUiHelper.Warning;
+        }
+        else
+        {
+            WinFormsUiHelper.StylePrimaryButton(button);
+        }
+
         Controls.Add(button);
     }
 

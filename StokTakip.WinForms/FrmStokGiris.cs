@@ -29,8 +29,7 @@ public class FrmStokGiris : Form
     /// </summary>
     private void InitializeComponent()
     {
-        Text = "Stok Giriş";
-        StartPosition = FormStartPosition.CenterParent;
+        WinFormsUiHelper.ApplyFormStyle(this, "Stok Giriş");
         ClientSize = new Size(850, 520);
 
         var lblUrun = new Label { Text = "Ürün", Location = new Point(24, 28), AutoSize = true };
@@ -57,7 +56,14 @@ public class FrmStokGiris : Form
         btnTemizle.Click += BtnTemizle_Click;
         btnListele.Click += BtnListele_Click;
 
+        WinFormsUiHelper.StyleInputs(this);
+        WinFormsUiHelper.StyleSuccessButton(btnGiris);
+        WinFormsUiHelper.StyleSecondaryButton(btnTemizle);
+        WinFormsUiHelper.StyleSecondaryButton(btnListele);
+
         Controls.AddRange(new Control[] { lblUrun, _cmbUrun, lblMiktar, _numMiktar, lblAciklama, _txtAciklama, btnGiris, btnTemizle, btnListele, _grid });
+        WinFormsUiHelper.StyleInputs(this);
+        WinFormsUiHelper.AddHeader(this, "Stok Giriş", "Depoya giren ürün hareketlerini kaydedin ve stok miktarını artırın.");
     }
 
     /// <summary>

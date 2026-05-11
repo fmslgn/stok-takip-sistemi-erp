@@ -23,8 +23,7 @@ public class FrmSaklamaKosuluAI : Form
     /// </summary>
     private void InitializeComponent()
     {
-        Text = "Saklama Koşulu Öneri";
-        StartPosition = FormStartPosition.CenterParent;
+        WinFormsUiHelper.ApplyFormStyle(this, "Saklama Koşulu Öneri");
         ClientSize = new Size(680, 430);
 
         var lblUrunAdi = new Label { Text = "Ürün Adı", Location = new Point(24, 28), AutoSize = true };
@@ -44,7 +43,11 @@ public class FrmSaklamaKosuluAI : Form
         btnOneri.Click += BtnOneri_Click;
         btnTemizle.Click += BtnTemizle_Click;
 
+        WinFormsUiHelper.StylePrimaryButton(btnOneri);
+        WinFormsUiHelper.StyleSecondaryButton(btnTemizle);
         Controls.AddRange(new Control[] { lblUrunAdi, _txtUrunAdi, lblKategoriAdi, _txtKategoriAdi, btnOneri, btnTemizle, lblOneri, _txtOneri });
+        WinFormsUiHelper.StyleInputs(this);
+        WinFormsUiHelper.AddHeader(this, "Saklama Koşulu Öneri", "Ürün bilgisine göre kural tabanlı akıllı saklama önerisi alın.");
     }
 
     /// <summary>

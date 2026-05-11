@@ -37,8 +37,7 @@ public class FrmUrunYonetimi : Form
     /// </summary>
     private void InitializeComponent()
     {
-        Text = "Ürün Yönetimi";
-        StartPosition = FormStartPosition.CenterParent;
+        WinFormsUiHelper.ApplyFormStyle(this, "Ürün Yönetimi");
         ClientSize = new Size(1080, 660);
 
         AddLabel("Kategori", 24, 24);
@@ -93,7 +92,16 @@ public class FrmUrunYonetimi : Form
         btnListele.Click += BtnListele_Click;
         _grid.CellClick += Grid_CellClick;
 
+        WinFormsUiHelper.StyleInputs(this);
+        WinFormsUiHelper.StyleSuccessButton(btnEkle);
+        WinFormsUiHelper.StylePrimaryButton(btnGuncelle);
+        WinFormsUiHelper.StyleDangerButton(btnSil);
+        WinFormsUiHelper.StyleSecondaryButton(btnTemizle);
+        WinFormsUiHelper.StyleSecondaryButton(btnListele);
+
         Controls.AddRange(new Control[] { _cmbKategori, _cmbSaklamaKosulu, _txtUrunAdi, _txtBarkod, _txtBirim, _numStok, _numKritik, _numAlis, _numSatis, _txtAciklama, _chkAktif, btnEkle, btnGuncelle, btnSil, btnTemizle, btnListele, _grid });
+        WinFormsUiHelper.StyleInputs(this);
+        WinFormsUiHelper.AddHeader(this, "Ürün Yönetimi", "Ürün kartlarını, fiyatları ve stok seviyelerini tek ekrandan takip edin.");
     }
 
     /// <summary>

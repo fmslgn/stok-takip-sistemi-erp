@@ -29,8 +29,7 @@ public class FrmStokCikis : Form
     /// </summary>
     private void InitializeComponent()
     {
-        Text = "Stok Çıkış";
-        StartPosition = FormStartPosition.CenterParent;
+        WinFormsUiHelper.ApplyFormStyle(this, "Stok Çıkış");
         ClientSize = new Size(850, 520);
 
         var lblUrun = new Label { Text = "Ürün", Location = new Point(24, 28), AutoSize = true };
@@ -57,7 +56,14 @@ public class FrmStokCikis : Form
         btnTemizle.Click += BtnTemizle_Click;
         btnListele.Click += BtnListele_Click;
 
+        WinFormsUiHelper.StyleInputs(this);
+        WinFormsUiHelper.StylePrimaryButton(btnCikis);
+        WinFormsUiHelper.StyleSecondaryButton(btnTemizle);
+        WinFormsUiHelper.StyleSecondaryButton(btnListele);
+
         Controls.AddRange(new Control[] { lblUrun, _cmbUrun, lblMiktar, _numMiktar, lblAciklama, _txtAciklama, btnCikis, btnTemizle, btnListele, _grid });
+        WinFormsUiHelper.StyleInputs(this);
+        WinFormsUiHelper.AddHeader(this, "Stok Çıkış", "Depodan çıkan ürünleri kontrol edin ve yetersiz stok riskini önleyin.");
     }
 
     /// <summary>

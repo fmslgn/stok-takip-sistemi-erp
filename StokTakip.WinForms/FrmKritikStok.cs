@@ -22,8 +22,7 @@ public class FrmKritikStok : Form
     /// </summary>
     private void InitializeComponent()
     {
-        Text = "Kritik Stok";
-        StartPosition = FormStartPosition.CenterParent;
+        WinFormsUiHelper.ApplyFormStyle(this, "Kritik Stok");
         ClientSize = new Size(900, 500);
 
         var lblBaslik = new Label { Text = "Kritik Stoktaki Ürünler", Location = new Point(24, 24), AutoSize = true, Font = new Font(FontFamily.GenericSansSerif, 12, FontStyle.Bold) };
@@ -33,7 +32,10 @@ public class FrmKritikStok : Form
         WinFormsUiHelper.ConfigureGrid(_grid);
 
         btnListele.Click += BtnListele_Click;
+        WinFormsUiHelper.StyleSecondaryButton(btnListele);
         Controls.AddRange(new Control[] { lblBaslik, btnListele, _grid });
+        WinFormsUiHelper.StyleInputs(this);
+        WinFormsUiHelper.AddHeader(this, "Kritik Stok", "Kritik seviyeye düşen ürünleri hızlıca görün ve önlem alın.");
     }
 
     /// <summary>
@@ -59,6 +61,13 @@ public class FrmKritikStok : Form
             var liste = _urunManager.GetKritikStoktakiler();
             _grid.DataSource = null;
             _grid.DataSource = liste;
+
+            // Kritik stok satirlarini uyarı rengiyle daha gorunur hale getirir.
+            foreach (DataGridViewRow row in _grid.Rows)
+            {
+                row.DefaultCellStyle.BackColor = Color.FromArgb(255, 247, 237);
+                row.DefaultCellStyle.ForeColor = Color.FromArgb(124, 45, 18);
+            }
 
             if (liste.Count == 0)
             {

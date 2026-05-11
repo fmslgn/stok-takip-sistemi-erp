@@ -19,26 +19,78 @@ public class FrmLogin : Form
     }
 
     /// <summary>
-    /// Giris ekranindaki temel kontrolleri hazirlar.
+    /// Profesyonel giris ekranindaki kontrolleri hazirlar.
     /// </summary>
     private void InitializeComponent()
     {
-        Text = "SYA Stok Takip Sistemi - Giriş";
+        WinFormsUiHelper.ApplyFormStyle(this, "SYA Stok Takip Sistemi - Giriş");
         StartPosition = FormStartPosition.CenterScreen;
-        ClientSize = new Size(380, 250);
+        ClientSize = new Size(760, 420);
         FormBorderStyle = FormBorderStyle.FixedDialog;
         MaximizeBox = false;
 
-        var lblBaslik = new Label { Text = "SYA Stok Takip Sistemi", Location = new Point(30, 24), AutoSize = true, Font = new Font(FontFamily.GenericSansSerif, 14, FontStyle.Bold) };
-        var lblKullaniciAdi = new Label { Text = "Kullanıcı Adı", Location = new Point(30, 82), AutoSize = true };
-        var lblSifre = new Label { Text = "Şifre", Location = new Point(30, 122), AutoSize = true };
-        var btnGiris = new Button { Text = "Giriş Yap", Location = new Point(140, 166), Size = new Size(100, 32) };
-        var btnCikis = new Button { Text = "Çıkış", Location = new Point(250, 166), Size = new Size(80, 32) };
+        var brandPanel = new Panel
+        {
+            Dock = DockStyle.Left,
+            Width = 300,
+            BackColor = WinFormsUiHelper.Navy
+        };
 
-        _txtKullaniciAdi.Location = new Point(140, 78);
-        _txtKullaniciAdi.Size = new Size(190, 27);
-        _txtSifre.Location = new Point(140, 118);
-        _txtSifre.Size = new Size(190, 27);
+        var lblBrand = new Label
+        {
+            Text = "SYA",
+            Location = new Point(38, 92),
+            AutoSize = true,
+            ForeColor = Color.White,
+            Font = new Font("Segoe UI", 34F, FontStyle.Bold)
+        };
+
+        var lblTitle = new Label
+        {
+            Text = "Stok Takip Sistemi",
+            Location = new Point(42, 160),
+            AutoSize = true,
+            ForeColor = Color.White,
+            Font = new Font("Segoe UI", 15F, FontStyle.Bold)
+        };
+
+        var lblSlogan = new Label
+        {
+            Text = "Stoklarını düzenle,\nişini kolaylaştır.",
+            Location = new Point(44, 205),
+            AutoSize = true,
+            ForeColor = Color.FromArgb(214, 229, 245),
+            Font = new Font("Segoe UI", 11F)
+        };
+
+        brandPanel.Controls.AddRange(new Control[] { lblBrand, lblTitle, lblSlogan });
+
+        var loginPanel = new Panel
+        {
+            Location = new Point(350, 54),
+            Size = new Size(360, 300),
+            BackColor = Color.White,
+            BorderStyle = BorderStyle.FixedSingle
+        };
+
+        var lblLoginTitle = new Label
+        {
+            Text = "Yönetici Girişi",
+            Location = new Point(28, 24),
+            AutoSize = true,
+            ForeColor = WinFormsUiHelper.Navy,
+            Font = new Font("Segoe UI", 15F, FontStyle.Bold)
+        };
+
+        var lblKullaniciAdi = new Label { Text = "Kullanıcı Adı", Location = new Point(30, 82), AutoSize = true };
+        var lblSifre = new Label { Text = "Şifre", Location = new Point(30, 142), AutoSize = true };
+        var btnGiris = new Button { Text = "Giriş Yap", Location = new Point(30, 215), Size = new Size(140, 38) };
+        var btnCikis = new Button { Text = "Çıkış", Location = new Point(185, 215), Size = new Size(110, 38) };
+
+        _txtKullaniciAdi.Location = new Point(30, 104);
+        _txtKullaniciAdi.Size = new Size(270, 27);
+        _txtSifre.Location = new Point(30, 164);
+        _txtSifre.Size = new Size(270, 27);
         _txtSifre.PasswordChar = '*';
 
         btnGiris.Click += BtnGiris_Click;
@@ -46,7 +98,13 @@ public class FrmLogin : Form
         AcceptButton = btnGiris;
         CancelButton = btnCikis;
 
-        Controls.AddRange(new Control[] { lblBaslik, lblKullaniciAdi, _txtKullaniciAdi, lblSifre, _txtSifre, btnGiris, btnCikis });
+        WinFormsUiHelper.StyleTextBox(_txtKullaniciAdi);
+        WinFormsUiHelper.StyleTextBox(_txtSifre);
+        WinFormsUiHelper.StylePrimaryButton(btnGiris);
+        WinFormsUiHelper.StyleSecondaryButton(btnCikis);
+
+        loginPanel.Controls.AddRange(new Control[] { lblLoginTitle, lblKullaniciAdi, _txtKullaniciAdi, lblSifre, _txtSifre, btnGiris, btnCikis });
+        Controls.AddRange(new Control[] { brandPanel, loginPanel });
     }
 
     /// <summary>

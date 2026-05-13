@@ -2,14 +2,21 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Linq;
 using System.Windows.Forms;
+using StokTakip.Business;
 using StokTakip.Entities;
 
 namespace StokTakip.WinForms;
 
+/// <summary>
+/// Login sonrasinda kullaniciyi karsilayan ana menu ve dashboard ekranini yonetir.
+/// </summary>
 public class FrmAnaMenu : Form
 {
     private readonly Kullanici? _aktifKullanici;
+    private readonly UrunManager _urunManager = new();
+    private readonly SaklamaKosuluManager _saklamaKosuluManager = new();
 
     private Panel _contentPanel = null!;
     private Panel _sidebarPanel = null!;
@@ -162,12 +169,13 @@ public class FrmAnaMenu : Form
             ModernUi.Muted,
             ContentAlignment.MiddleLeft));
 
-        AddMenuItem(sidebar, "Kullanıcı Yönetimi", 205, false, () => OpenForm(new FrmKullaniciYonetimi()));
-        AddMenuItem(sidebar, "Ürün Yönetimi", 248, true, () => OpenForm(new FrmUrunYonetimi()));
-        AddMenuItem(sidebar, "Stok Giriş", 291, false, () => OpenForm(new FrmStokGiris(_aktifKullanici?.Id ?? 1)));
-        AddMenuItem(sidebar, "Stok Çıkış", 334, false, () => OpenForm(new FrmStokCikis(_aktifKullanici?.Id ?? 1)));
-        AddMenuItem(sidebar, "Kritik Stok", 377, false, () => OpenForm(new FrmKritikStok()));
-        AddMenuItem(sidebar, "Raporlama", 420, false, () => OpenForm(new FrmRaporlama()));
+        AddMenuItem(sidebar, "Ana Menü", 205, true, AnaMenuyeDon);
+        AddMenuItem(sidebar, "Kullanıcı Yönetimi", 248, false, () => OpenForm(new FrmKullaniciYonetimi()));
+        AddMenuItem(sidebar, "Ürün Yönetimi", 291, false, () => OpenForm(new FrmUrunYonetimi()));
+        AddMenuItem(sidebar, "Stok Giriş", 334, false, () => OpenForm(new FrmStokGiris(_aktifKullanici?.Id ?? 1)));
+        AddMenuItem(sidebar, "Stok Çıkış", 377, false, () => OpenForm(new FrmStokCikis(_aktifKullanici?.Id ?? 1)));
+        AddMenuItem(sidebar, "Kritik Stok", 420, false, () => OpenForm(new FrmKritikStok()));
+        AddMenuItem(sidebar, "Raporlama", 463, false, () => OpenForm(new FrmRaporlama()));
 
         var divider = new Panel
         {
@@ -244,6 +252,14 @@ public class FrmAnaMenu : Form
         _activeMenuItem.Invalidate();
     }
 
+    /// <summary>
+    /// Ana Menü butonu kullaniciyi dashboard icerigine geri dondurur.
+    /// </summary>
+    private void AnaMenuyeDon()
+    {
+        BuildDashboard();
+    }
+
     private void CikisYap()
     {
         bool onay = WinFormsUiHelper.Confirm(
@@ -282,6 +298,7 @@ public class FrmAnaMenu : Form
     {
         return text switch
         {
+            "Ana Menü" => "⌂",
             "Kullanıcı Yönetimi" => "◎",
             "Ürün Yönetimi" => "▣",
             "Stok Giriş" => "⇩",
@@ -328,12 +345,14 @@ public class FrmAnaMenu : Form
 
         int moduleTop = heroTop + heroHeight + 60;
         int moduleHeight = Math.Max(420, _contentPanel.ClientSize.Height - moduleTop);
+        string kullaniciAdi = _aktifKullanici?.KullaniciAdi ?? "admin";
+        var (toplamUrun, kritikStok, toplamStok, saklamaOnerisi) = DashboardOzetleriniAl();
 
         var hero = CreateRoundedPanel(0, heroTop, w, heroHeight, Color.FromArgb(248, 250, 255), 22);
         _contentPanel.Controls.Add(hero);
 
         hero.Controls.Add(ModernUi.Label(
-            "Stok Yönetim Paneli",
+            "Ana Menü / Dashboard",
             32,
             28,
             300,
@@ -343,7 +362,7 @@ public class FrmAnaMenu : Form
             ModernUi.Accent));
 
         hero.Controls.Add(ModernUi.Label(
-            "SYA ile stok süreçlerini tek ekrandan yönet",
+            "SYA Stok Takip Sistemi",
             32,
             68,
             w - 80,
@@ -353,21 +372,31 @@ public class FrmAnaMenu : Form
             ModernUi.Dark));
 
         hero.Controls.Add(ModernUi.Label(
-            "Ürün yönetimi, stok giriş-çıkış, kritik stok kontrolü ve raporlama işlemlerini modern, anlaşılır ve hızlı bir panelden yönetin.",
+            "Stoklarını düzenle, işini kolaylaştır.",
             55,
             118,
             w - 120,
-            42,
-            9.4f,
+            24,
+            10f,
             FontStyle.Regular,
             ModernUi.Muted));
 
-        int infoGap = 36;
-        int infoW = (w - 64 - (infoGap * 2)) / 3;
+        hero.Controls.Add(ModernUi.Label(
+            $"Giriş yapan kullanıcı: {kullaniciAdi} - yönetici",
+            55,
+            145,
+            w - 120,
+            22,
+            8.8f,
+            FontStyle.Bold,
+            ModernUi.Dark));
+
+        int infoGap = 22;
+        int infoW = (w - 64 - (infoGap * 3)) / 4;
 
         hero.Controls.Add(CreateInfoBox(
-            "Kolay Kullanım",
-            "Sade ve anlaşılır ekran yapısı",
+            "Toplam Ürün",
+            $"{toplamUrun} kayıt",
             32,
             176,
             infoW,
@@ -375,22 +404,31 @@ public class FrmAnaMenu : Form
             ModernUi.Accent));
 
         hero.Controls.Add(CreateInfoBox(
-            "Anlık Stok Takibi",
-            "Giriş ve çıkış hareketleri",
+            "Kritik Stok",
+            $"{kritikStok} ürün",
             32 + infoW + infoGap,
             176,
             infoW,
-            ModernUi.CyanSoft,
-            ModernUi.Cyan));
+            ModernUi.RedSoft,
+            ModernUi.Red));
 
         hero.Controls.Add(CreateInfoBox(
-            "Düzenli Yönetim",
-            "Raporlama ve kritik stok",
+            "Toplam Stok",
+            $"{toplamStok} adet",
             32 + ((infoW + infoGap) * 2),
             176,
             infoW,
             ModernUi.GreenSoft,
             ModernUi.Green));
+
+        hero.Controls.Add(CreateInfoBox(
+            "Saklama Önerisi",
+            $"{saklamaOnerisi} kural",
+            32 + ((infoW + infoGap) * 3),
+            176,
+            infoW,
+            ModernUi.CyanSoft,
+            ModernUi.Cyan));
 
         var modules = CreateRoundedPanel(0, moduleTop, w, moduleHeight, Color.White, 22);
         _contentPanel.Controls.Add(modules);
@@ -486,6 +524,25 @@ public class FrmAnaMenu : Form
             ModernUi.PurpleSoft,
             ModernUi.Purple,
             () => OpenForm(new FrmRaporlama()));
+    }
+
+    private (int ToplamUrun, int KritikStok, int ToplamStok, int SaklamaOnerisi) DashboardOzetleriniAl()
+    {
+        try
+        {
+            var urunler = _urunManager.GetAll();
+            int toplamUrun = urunler.Count;
+            int kritikStok = urunler.Count(urun => urun.StokMiktari <= urun.KritikStokSeviyesi);
+            int toplamStok = urunler.Sum(urun => urun.StokMiktari);
+            int saklamaOnerisi = _saklamaKosuluManager.GetAll().Count;
+
+            return (toplamUrun, kritikStok, toplamStok, saklamaOnerisi);
+        }
+        catch
+        {
+            // Dashboard ozetleri alinamazsa ana menu acilmaya devam eder.
+            return (0, 0, 0, 0);
+        }
     }
 
     private Panel CreateInfoBox(string title, string desc, int x, int y, int width, Color bg, Color accent)

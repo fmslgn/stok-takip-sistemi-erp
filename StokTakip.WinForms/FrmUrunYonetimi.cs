@@ -43,12 +43,13 @@ public class FrmUrunYonetimi : Form
     private Button _btnListele = null!;
     private Button _btnListeBuyut = null!;
     private Button _btnPopupKucult = null!;
+    private Button _btnSaklamaAsistani = null!;
 
     private Label _lblUrunListesiBaslik = null!;
     private Label _lblKategoriFiltresi = null!;
     private Label _lblUrunAdiFiltresi = null!;
 
-    private readonly Rectangle _tableNormalBounds = new(24, 470, 1072, 225);
+    private readonly Rectangle _tableNormalBounds = new(570, 120, 526, 612);
 
     private Rectangle _savedTableBounds;
     private Rectangle _savedGridBounds;
@@ -61,13 +62,6 @@ public class FrmUrunYonetimi : Form
     private Rectangle _savedLblUrunListesiBaslikBounds;
     private Rectangle _savedLblKategoriFiltresiBounds;
     private Rectangle _savedLblUrunAdiFiltresiBounds;
-
-    private Label _lblSuccessTitle = null!;
-    private Label _lblSuccessText = null!;
-    private Label _lblWarningTitle = null!;
-    private Label _lblWarningText = null!;
-    private Label _lblInfoTitle = null!;
-    private Label _lblInfoText = null!;
 
     private int _seciliId;
     private bool _formDolduruluyor;
@@ -85,7 +79,7 @@ public class FrmUrunYonetimi : Form
     /// </summary>
     private void InitializeComponent()
     {
-        ModernUi.ConfigureForm(this, "Ürün Yönetimi", 1120, 720);
+        ModernUi.ConfigureForm(this, "Ürün Yönetimi", 1120, 760);
 
         FormBorderStyle = FormBorderStyle.None;
         MaximizeBox = false;
@@ -98,6 +92,7 @@ public class FrmUrunYonetimi : Form
     {
         Controls.Clear();
 
+        // Ana icerik iki sutuna ayrilir: solda urun formu ve islemler, sagda urun listesi bulunur.
         BuildHeader();
         BuildFormCard();
         BuildActionCard();
@@ -130,6 +125,11 @@ public class FrmUrunYonetimi : Form
             8.2f,
             FontStyle.Regular,
             ModernUi.Muted));
+
+        _btnSaklamaAsistani = ModernUi.Button("💬 Saklama Asistanı", 790, 22, 185, 34, true);
+        _btnSaklamaAsistani.Font = ModernUi.UiFont(8f, FontStyle.Bold);
+        _btnSaklamaAsistani.Click += BtnSaklamaAsistani_Click;
+        headerCard.Controls.Add(_btnSaklamaAsistani);
 
         var badge = ModernUi.CardPanel(1000, 18, 45, 25);
         badge.BackColor = Color.FromArgb(248, 250, 252);
@@ -204,14 +204,17 @@ public class FrmUrunYonetimi : Form
         formCard.Controls.Add(_numSatis);
     }
 
+    /// <summary>
+    /// Urun kaydi icin aktiflik ve CRUD butonlarini sade bir islem kartinda toplar.
+    /// </summary>
     private void BuildActionCard()
     {
-        var actionCard = ModernUi.CardPanel(570, 120, 526, 330);
+        var actionCard = ModernUi.CardPanel(24, 464, 520, 82);
         actionCard.BackColor = Color.White;
         Controls.Add(actionCard);
 
         actionCard.Controls.Add(ModernUi.Label(
-            "İşlem Sonucu",
+            "Ürün İşlemleri",
             22,
             18,
             250,
@@ -220,116 +223,38 @@ public class FrmUrunYonetimi : Form
             FontStyle.Bold,
             ModernUi.Dark));
 
-        var successBox = ModernUi.CardPanel(22, 58, 470, 58);
-        successBox.BackColor = Color.FromArgb(230, 247, 239);
-        actionCard.Controls.Add(successBox);
-
-        _lblSuccessTitle = ModernUi.Label(
-            "Başarı Mesajı",
-            14,
-            8,
-            250,
-            18,
-            8f,
-            FontStyle.Bold,
-            Color.FromArgb(22, 101, 52));
-
-        _lblSuccessText = ModernUi.Label(
-            "Ürün başarıyla kaydedildiğinde liste otomatik yenilenir.",
-            14,
-            29,
-            420,
-            18,
-            7.7f,
-            FontStyle.Regular,
-            Color.FromArgb(22, 101, 52));
-
-        successBox.Controls.Add(_lblSuccessTitle);
-        successBox.Controls.Add(_lblSuccessText);
-
-        var warningBox = ModernUi.CardPanel(22, 130, 470, 58);
-        warningBox.BackColor = Color.FromArgb(254, 232, 232);
-        actionCard.Controls.Add(warningBox);
-
-        _lblWarningTitle = ModernUi.Label(
-            "Uyarı Mesajı",
-            14,
-            8,
-            250,
-            18,
-            8f,
-            FontStyle.Bold,
-            Color.FromArgb(153, 27, 27));
-
-        _lblWarningText = ModernUi.Label(
-            "Kategori, ürün adı, barkod ve birim alanları kontrol edilmelidir.",
-            14,
-            29,
-            420,
-            18,
-            7.7f,
-            FontStyle.Regular,
-            Color.FromArgb(153, 27, 27));
-
-        warningBox.Controls.Add(_lblWarningTitle);
-        warningBox.Controls.Add(_lblWarningText);
-
-        var infoBox = ModernUi.CardPanel(22, 202, 470, 58);
-        infoBox.BackColor = Color.FromArgb(255, 248, 225);
-        actionCard.Controls.Add(infoBox);
-
-        _lblInfoTitle = ModernUi.Label(
-            "Bilgi",
-            14,
-            8,
-            250,
-            18,
-            8f,
-            FontStyle.Bold,
-            Color.FromArgb(92, 65, 0));
-
-        _lblInfoText = ModernUi.Label(
-            "Tablodan bir ürün seçerek güncelleme veya silme işlemi yapabilirsiniz.",
-            14,
-            29,
-            430,
-            18,
-            7.7f,
-            FontStyle.Regular,
-            Color.FromArgb(92, 65, 0));
-
-        infoBox.Controls.Add(_lblInfoTitle);
-        infoBox.Controls.Add(_lblInfoText);
-
         _chkAktif.Text = "Aktif ürün";
-        _chkAktif.Location = new Point(22, 275);
+        _chkAktif.Location = new Point(22, 48);
         _chkAktif.Size = new Size(120, 24);
         _chkAktif.Checked = true;
         _chkAktif.Font = ModernUi.UiFont(8.8f);
         _chkAktif.BackColor = Color.Transparent;
         actionCard.Controls.Add(_chkAktif);
 
-        var btnEkle = ModernUi.Button("Ekle", 160, 270, 78, 34, true);
+        var btnEkle = ModernUi.Button("Ekle", 160, 42, 78, 30, true);
         btnEkle.Font = ModernUi.UiFont(8.2f, FontStyle.Bold);
         btnEkle.Click += BtnEkle_Click;
         actionCard.Controls.Add(btnEkle);
 
-        var btnGuncelle = ModernUi.Button("Güncelle", 248, 270, 90, 34);
+        var btnGuncelle = ModernUi.Button("Güncelle", 248, 42, 90, 30);
         btnGuncelle.Font = ModernUi.UiFont(8.2f, FontStyle.Bold);
         btnGuncelle.Click += BtnGuncelle_Click;
         actionCard.Controls.Add(btnGuncelle);
 
-        var btnSil = ModernUi.Button("Sil", 348, 270, 65, 34);
+        var btnSil = ModernUi.Button("Sil", 348, 42, 65, 30);
         btnSil.Font = ModernUi.UiFont(8.2f, FontStyle.Bold);
         btnSil.Click += BtnSil_Click;
         actionCard.Controls.Add(btnSil);
 
-        var btnTemizle = ModernUi.Button("Temizle", 423, 270, 80, 34);
+        var btnTemizle = ModernUi.Button("Temizle", 423, 42, 80, 30);
         btnTemizle.Font = ModernUi.UiFont(8.2f, FontStyle.Bold);
         btnTemizle.Click += BtnTemizle_Click;
         actionCard.Controls.Add(btnTemizle);
     }
 
+    /// <summary>
+    /// Urun listesini sag sutunda filtreler ve tabloyla birlikte gosterir.
+    /// </summary>
     private void BuildTableCard()
     {
         _tableCard = ModernUi.CardPanel(
@@ -368,7 +293,7 @@ public class FrmUrunYonetimi : Form
 
         _lblUrunAdiFiltresi = ModernUi.Label(
             "Ürün Adı Filtresi",
-            260,
+            270,
             50,
             170,
             18,
@@ -377,25 +302,25 @@ public class FrmUrunYonetimi : Form
             ModernUi.Text);
         _tableCard.Controls.Add(_lblUrunAdiFiltresi);
 
-        ConfigureFilterProductCombo(_cmbFiltreUrunAdi, 260, 72, 220, 30);
+        ConfigureFilterProductCombo(_cmbFiltreUrunAdi, 270, 72, 220, 30);
         _tableCard.Controls.Add(_cmbFiltreUrunAdi);
 
-        _btnFiltrele = ModernUi.Button("Filtrele", 500, 70, 95, 34, true);
+        _btnFiltrele = ModernUi.Button("Filtrele", 22, 118, 105, 32, true);
         _btnFiltrele.Font = ModernUi.UiFont(8.2f, FontStyle.Bold);
         _btnFiltrele.Click += BtnFiltrele_Click;
         _tableCard.Controls.Add(_btnFiltrele);
 
-        _btnFiltreTemizle = ModernUi.Button("Filtre Temizle", 607, 70, 125, 34);
+        _btnFiltreTemizle = ModernUi.Button("Filtre Temizle", 139, 118, 125, 32);
         _btnFiltreTemizle.Font = ModernUi.UiFont(8.2f, FontStyle.Bold);
         _btnFiltreTemizle.Click += BtnFiltreTemizle_Click;
         _tableCard.Controls.Add(_btnFiltreTemizle);
 
-        _btnListele = ModernUi.Button("Listele / Yenile", 805, 70, 130, 34);
+        _btnListele = ModernUi.Button("Listele / Yenile", 276, 118, 130, 32);
         _btnListele.Font = ModernUi.UiFont(8.2f, FontStyle.Bold);
         _btnListele.Click += BtnListele_Click;
         _tableCard.Controls.Add(_btnListele);
 
-        _btnListeBuyut = ModernUi.Button("⛶", 948, 70, 86, 34);
+        _btnListeBuyut = ModernUi.Button("⛶", 418, 118, 72, 32);
         _btnListeBuyut.Font = ModernUi.UiFont(9f, FontStyle.Bold);
         _btnListeBuyut.Click += BtnListeBuyut_Click;
         _tableCard.Controls.Add(_btnListeBuyut);
@@ -406,8 +331,8 @@ public class FrmUrunYonetimi : Form
         _btnPopupKucult.Click += BtnPopupKucult_Click;
         _tableCard.Controls.Add(_btnPopupKucult);
 
-        _grid.Location = new Point(22, 112);
-        _grid.Size = new Size(1028, 92);
+        _grid.Location = new Point(22, 170);
+        _grid.Size = new Size(482, 414);
 
         WinFormsUiHelper.ConfigureGrid(_grid);
         ModernUi.ConfigurePremiumGrid(_grid);
@@ -418,7 +343,8 @@ public class FrmUrunYonetimi : Form
         _grid.Font = ModernUi.UiFont(8.5f);
         _grid.ColumnHeadersHeight = 34;
         _grid.RowTemplate.Height = 32;
-        _grid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+        _grid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
+        _grid.ScrollBars = ScrollBars.Both;
         _grid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
         _grid.MultiSelect = false;
         _grid.ReadOnly = true;
@@ -497,7 +423,7 @@ public class FrmUrunYonetimi : Form
         }
         catch (Exception ex)
         {
-            ShowWarning("Uyarı Mesajı", ex.Message);
+            WinFormsUiHelper.ShowError(ex.Message);
         }
     }
 
@@ -510,15 +436,13 @@ public class FrmUrunYonetimi : Form
         {
             _urunManager.Add(FormdanUrunOlustur());
 
-            ShowSuccess("Başarı Mesajı", "Ürün başarıyla eklendi.");
-            ShowInfo("Bilgi", "Liste otomatik olarak güncellendi.");
+            WinFormsUiHelper.ShowSuccess("Ürün başarıyla eklendi.");
 
             Temizle();
             Listele();
         }
         catch (Exception ex)
         {
-            ShowWarning("Uyarı Mesajı", ex.Message);
             WinFormsUiHelper.ShowError(ex.Message);
         }
     }
@@ -532,7 +456,6 @@ public class FrmUrunYonetimi : Form
         {
             if (_seciliId <= 0)
             {
-                ShowWarning("Uyarı Mesajı", "Güncellemek için bir ürün seçiniz.");
                 WinFormsUiHelper.ShowWarning("Güncellemek için bir ürün seçiniz.");
                 return;
             }
@@ -542,15 +465,13 @@ public class FrmUrunYonetimi : Form
 
             _urunManager.Update(urun);
 
-            ShowSuccess("Başarı Mesajı", "Ürün başarıyla güncellendi.");
-            ShowInfo("Bilgi", "Seçili ürün bilgileri yenilendi.");
+            WinFormsUiHelper.ShowSuccess("Ürün başarıyla güncellendi.");
 
             Temizle();
             Listele();
         }
         catch (Exception ex)
         {
-            ShowWarning("Uyarı Mesajı", ex.Message);
             WinFormsUiHelper.ShowError(ex.Message);
         }
     }
@@ -564,7 +485,6 @@ public class FrmUrunYonetimi : Form
         {
             if (_seciliId <= 0)
             {
-                ShowWarning("Uyarı Mesajı", "Silmek için bir ürün seçiniz.");
                 WinFormsUiHelper.ShowWarning("Silmek için bir ürün seçiniz.");
                 return;
             }
@@ -576,15 +496,13 @@ public class FrmUrunYonetimi : Form
 
             _urunManager.Delete(_seciliId);
 
-            ShowSuccess("Başarı Mesajı", "Ürün başarıyla silindi.");
-            ShowInfo("Bilgi", "Liste otomatik olarak güncellendi.");
+            WinFormsUiHelper.ShowSuccess("Ürün başarıyla silindi.");
 
             Temizle();
             Listele();
         }
         catch (Exception ex)
         {
-            ShowWarning("Uyarı Mesajı", ex.Message);
             WinFormsUiHelper.ShowError(ex.Message);
         }
     }
@@ -595,7 +513,6 @@ public class FrmUrunYonetimi : Form
     private void BtnTemizle_Click(object? sender, EventArgs e)
     {
         Temizle();
-        ShowInfo("Bilgi", "Form alanları temizlendi.");
     }
 
     /// <summary>
@@ -604,7 +521,20 @@ public class FrmUrunYonetimi : Form
     private void BtnListele_Click(object? sender, EventArgs e)
     {
         Listele();
-        ShowInfo("Bilgi", "Ürün listesi yenilendi.");
+    }
+
+    /// <summary>
+    /// Saklama Asistani butonu mevcut urun bilgilerini chat ekranina aktarir.
+    /// </summary>
+    private void BtnSaklamaAsistani_Click(object? sender, EventArgs e)
+    {
+        string urunAdi = _txtUrunAdi.Text.Trim();
+        string kategoriAdi = SeciliKategoriAdiniAl();
+        string barkod = _txtBarkod.Text.Trim();
+        string saklamaKosulu = SeciliSaklamaKosuluAdiniAl();
+
+        using var chatForm = new FrmSaklamaAsistaniChat(urunAdi, kategoriAdi, barkod, saklamaKosulu);
+        chatForm.ShowDialog(this);
     }
 
     private void BtnListeBuyut_Click(object? sender, EventArgs e)
@@ -636,7 +566,6 @@ public class FrmUrunYonetimi : Form
 
         ApplyPopupLayout();
 
-        ShowInfo("Bilgi", "Ürün listesi büyütüldü.");
     }
 
     private void ListeyiPopupKapat()
@@ -655,7 +584,6 @@ public class FrmUrunYonetimi : Form
         _overlayPanel.SendToBack();
         _tableCard.BringToFront();
 
-        ShowInfo("Bilgi", "Ürün listesi eski boyutuna döndü.");
     }
 
     private void SaveNormalListLayout()
@@ -693,6 +621,8 @@ public class FrmUrunYonetimi : Form
         _btnListeBuyut.Bounds = _savedBtnListeBuyutBounds;
 
         _grid.Bounds = _savedGridBounds;
+        _grid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
+        _grid.ScrollBars = ScrollBars.Both;
 
         _btnPopupKucult.Visible = false;
         _btnListeBuyut.Visible = true;
@@ -733,6 +663,7 @@ public class FrmUrunYonetimi : Form
 
         _grid.SetBounds(24, 135, _tableCard.Width - 48, _tableCard.Height - 165);
         _grid.BringToFront();
+        _grid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
     }
 
     private void BtnFiltrele_Click(object? sender, EventArgs e)
@@ -748,7 +679,6 @@ public class FrmUrunYonetimi : Form
         _cmbFiltreUrunAdi.Text = "";
 
         Listele();
-        ShowInfo("Bilgi", "Filtreler temizlendi.");
     }
 
     /// <summary>
@@ -782,7 +712,6 @@ public class FrmUrunYonetimi : Form
             _txtAciklama.Text = urun.Aciklama;
             _chkAktif.Checked = urun.AktifMi;
 
-            ShowInfo("Bilgi", "Seçili ürün forma aktarıldı.");
         }
         finally
         {
@@ -801,7 +730,6 @@ public class FrmUrunYonetimi : Form
         }
         catch (Exception ex)
         {
-            ShowWarning("Uyarı Mesajı", ex.Message);
             WinFormsUiHelper.ShowError(ex.Message);
         }
     }
@@ -825,7 +753,6 @@ public class FrmUrunYonetimi : Form
         }
         catch (Exception ex)
         {
-            ShowWarning("Uyarı Mesajı", ex.Message);
             WinFormsUiHelper.ShowError(ex.Message);
         }
     }
@@ -844,7 +771,6 @@ public class FrmUrunYonetimi : Form
         }
         catch (Exception ex)
         {
-            ShowWarning("Uyarı Mesajı", ex.Message);
             WinFormsUiHelper.ShowError(ex.Message);
         }
     }
@@ -863,7 +789,6 @@ public class FrmUrunYonetimi : Form
         }
         catch (Exception ex)
         {
-            ShowWarning("Uyarı Mesajı", ex.Message);
             WinFormsUiHelper.ShowError(ex.Message);
         }
     }
@@ -899,17 +824,11 @@ public class FrmUrunYonetimi : Form
 
             if (liste.Count == 0)
             {
-                ShowWarning("Uyarı Mesajı", "Seçilen filtrelere uygun ürün bulunamadı.");
                 WinFormsUiHelper.ShowWarning("Seçilen filtrelere uygun ürün bulunamadı.");
-            }
-            else
-            {
-                ShowInfo("Bilgi", $"{liste.Count} ürün listelendi.");
             }
         }
         catch (Exception ex)
         {
-            ShowWarning("Uyarı Mesajı", ex.Message);
             WinFormsUiHelper.ShowError(ex.Message);
         }
     }
@@ -980,10 +899,34 @@ public class FrmUrunYonetimi : Form
             _grid.Columns["Id"].Width = 55;
 
         if (_grid.Columns.Contains("UrunAdi"))
-            _grid.Columns["UrunAdi"].FillWeight = 150;
+            _grid.Columns["UrunAdi"].Width = 150;
+
+        if (_grid.Columns.Contains("Barkod"))
+            _grid.Columns["Barkod"].Width = 140;
+
+        if (_grid.Columns.Contains("Birim"))
+            _grid.Columns["Birim"].Width = 90;
+
+        if (_grid.Columns.Contains("StokMiktari"))
+            _grid.Columns["StokMiktari"].Width = 80;
+
+        if (_grid.Columns.Contains("KritikStokSeviyesi"))
+            _grid.Columns["KritikStokSeviyesi"].Width = 105;
+
+        if (_grid.Columns.Contains("AlisFiyati"))
+            _grid.Columns["AlisFiyati"].Width = 95;
+
+        if (_grid.Columns.Contains("SatisFiyati"))
+            _grid.Columns["SatisFiyati"].Width = 95;
 
         if (_grid.Columns.Contains("Aciklama"))
-            _grid.Columns["Aciklama"].FillWeight = 160;
+            _grid.Columns["Aciklama"].Width = 180;
+
+        if (_grid.Columns.Contains("AktifMi"))
+            _grid.Columns["AktifMi"].Width = 70;
+
+        if (_grid.Columns.Contains("OlusturmaTarihi"))
+            _grid.Columns["OlusturmaTarihi"].Width = 150;
     }
 
     private void SetHeader(string columnName, string headerText)
@@ -1028,6 +971,26 @@ public class FrmUrunYonetimi : Form
         };
     }
 
+    private string SeciliKategoriAdiniAl()
+    {
+        if (_cmbKategori.SelectedItem is Kategori kategori)
+        {
+            return kategori.KategoriAdi;
+        }
+
+        return _cmbKategori.Text.Trim();
+    }
+
+    private string SeciliSaklamaKosuluAdiniAl()
+    {
+        if (_cmbSaklamaKosulu.SelectedItem is SaklamaKosulu saklamaKosulu && saklamaKosulu.Id > 0)
+        {
+            return saklamaKosulu.KosulAdi;
+        }
+
+        return string.Empty;
+    }
+
     private void Temizle()
     {
         _seciliId = 0;
@@ -1062,24 +1025,6 @@ public class FrmUrunYonetimi : Form
 
         Listele();
         _txtUrunAdi.Focus();
-    }
-
-    private void ShowSuccess(string title, string message)
-    {
-        _lblSuccessTitle.Text = title;
-        _lblSuccessText.Text = message;
-    }
-
-    private void ShowWarning(string title, string message)
-    {
-        _lblWarningTitle.Text = title;
-        _lblWarningText.Text = message;
-    }
-
-    private void ShowInfo(string title, string message)
-    {
-        _lblInfoTitle.Text = title;
-        _lblInfoText.Text = message;
     }
 
     private void AddLabel(Control parent, string text, int x, int y, int width)

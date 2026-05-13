@@ -118,46 +118,6 @@ namespace StokTakip.WinForms
             };
         }
 
-        public static Panel MessageBoxPanel(string title, string message, int x, int y, int w, int h, string type = "warning")
-        {
-            Color bg;
-            Color fg;
-            Color border;
-
-            if (type == "success")
-            {
-                bg = SuccessBg;
-                fg = SuccessText;
-                border = Color.FromArgb(134, 239, 172);
-            }
-            else if (type == "danger")
-            {
-                bg = DangerBg;
-                fg = DangerText;
-                border = Color.FromArgb(252, 165, 165);
-            }
-            else
-            {
-                bg = WarningBg;
-                fg = WarningText;
-                border = Color.FromArgb(253, 224, 71);
-            }
-
-            var panel = new RoundedPanel
-            {
-                Location = new Point(x, y),
-                Size = new Size(w, h),
-                BackColor = bg,
-                BorderColor = border,
-                Radius = 16
-            };
-
-            panel.Controls.Add(Label(title, 16, 10, w - 32, 20, 8.8f, FontStyle.Bold, fg));
-            panel.Controls.Add(Label(message, 16, 32, w - 32, h - 36, 8.3f, FontStyle.Regular, fg));
-
-            return panel;
-        }
-
         public static void ConfigureForm(Form form, string title, int w, int h)
         {
             form.Text = title;

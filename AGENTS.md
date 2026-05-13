@@ -1,0 +1,22 @@
+# Proje Kuralları
+
+- Bu proje C# Windows Forms + PostgreSQL ile geliştirilen ERP mantıklı stok takip sistemidir.
+- Katmanlı mimari korunacaktır:
+  - StokTakip.Entities
+  - StokTakip.DataAccess
+  - StokTakip.Business
+  - StokTakip.WinForms
+- Her işlemden önce proje klasör yapısı taranacak.
+- İlgili Entity, DataAccess, Business ve WinForms dosyaları incelenecek.
+- Çalışan login, kategori, ürün, stok giriş, stok çıkış, kritik stok ve raporlama modülleri bozulmayacak.
+- Mevcut UI/UX tasarımı bozulmayacak.
+- WinForms içinde doğrudan SQL sorgusu yazılmayacak.
+- WinForms sadece Business/Manager sınıflarını kullanacak.
+- Business katmanı DataAccess katmanını kullanacak.
+- DataAccess katmanı PostgreSQL bağlantısını yönetecek.
+- SQL sorguları parametreli olacak.
+- Kodlarda Türkçe açıklayıcı yorum satırları olacak.
+- Açıklama satırı olmayan önemli sınıf, metot ve eventlere açıklama eklenecek.
+- Gereksiz yorum kalabalığı yapılmayacak.
+- Yeni form veya buton eklenecekse mevcut tasarımla uyumlu olacak.
+- İşlem sonunda dotnet build başarılı olacak.

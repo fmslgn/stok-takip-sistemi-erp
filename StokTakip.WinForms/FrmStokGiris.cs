@@ -155,39 +155,17 @@ public class FrmStokGiris : Form
             FontStyle.Regular,
             ModernUi.Muted));
 
-        var infoBox = ModernUi.MessageBoxPanel(
-            "Bilgi",
-            "Stok giriş işleminden sonra ürün listesi ve giriş kayıtları otomatik yenilenir.",
-            24,
-            104,
-            470,
-            64,
-            "success");
-
-        infoCard.Controls.Add(infoBox);
-
-        var warningBox = ModernUi.MessageBoxPanel(
-            "Kontrol",
-            "Ürün seçimi ve miktar bilgisi doğru girilmelidir.",
-            24,
-            180,
-            470,
-            58,
-            "warning");
-
-        infoCard.Controls.Add(warningBox);
-
-        var btnGiris = ModernUi.Button("Stok Girişi Yap", 24, 250, 150, 36, true);
+        var btnGiris = ModernUi.Button("Stok Girişi Yap", 24, 116, 150, 36, true);
         btnGiris.Font = ModernUi.UiFont(8.8f, FontStyle.Bold);
         btnGiris.Click += BtnGiris_Click;
         infoCard.Controls.Add(btnGiris);
 
-        var btnTemizle = ModernUi.Button("Temizle", 186, 250, 100, 36);
+        var btnTemizle = ModernUi.Button("Temizle", 186, 116, 100, 36);
         btnTemizle.Font = ModernUi.UiFont(8.8f, FontStyle.Bold);
         btnTemizle.Click += BtnTemizle_Click;
         infoCard.Controls.Add(btnTemizle);
 
-        var btnListele = ModernUi.Button("Listele / Yenile", 298, 250, 140, 36);
+        var btnListele = ModernUi.Button("Listele / Yenile", 298, 116, 140, 36);
         btnListele.Font = ModernUi.UiFont(8.8f, FontStyle.Bold);
         btnListele.Click += BtnListele_Click;
         infoCard.Controls.Add(btnListele);

@@ -41,6 +41,50 @@ UI katmani dogrudan SQL sorgusu yazmaz. WinForms sadece Business katmanini cagir
 - Raporlama
 - Saklama Kosulu AI
 
+## Saklama Koşulu Öneri Modülü
+
+Bu modül, kullanıcı tarafından girilen ürün adı ve kategori bilgisine göre kural tabanlı saklama koşulu önerisi üretir. Gerçek yapay zeka API bağlantısı kullanılmadan, ürün türüne göre akıllı öneri mantığıyla çalışır.
+
+## Ürün Yönetimi İçinde Saklama Koşulu Önerisi
+
+Ürün Yönetimi ekranında ürün adı ve kategori bilgisine göre kural tabanlı saklama koşulu önerisi alınabilir. Bu özellik gerçek API kullanmadan akıllı öneri mantığıyla çalışır.
+
+## Web Veri Destekli Saklama Koşulu Önerisi
+
+Ürün Yönetimi ekranında ürün adı, kategori ve barkod bilgisine göre saklama koşulu önerisi alınabilir. Sistem mümkün olduğunda Open Food Facts gibi açık ürün verisi sağlayan web servislerinden destek alır. Web servisinden veri alınamazsa kural tabanlı öneri sistemi otomatik olarak devreye girer. Bu yapı API key gerektirmez ve uygulamanın çevrimdışı durumda da çalışmasını sağlar.
+
+## Saklama Önerisi Revize Özelliği
+
+Ürün Yönetimi ekranında kullanıcı saklama koşulu önerisi aldıktan sonra öneriyi kısa, detaylı veya güvenlik uyarısı içerecek şekilde revize edebilir. Revize işlemi Business katmanında çalışan kural tabanlı mantıkla yapılır.
+
+## Ana Menü / Dashboard
+
+Login sonrası kullanıcıyı karşılayan Ana Menü ekranında sistem modüllerine hızlı erişim ve temel özet kartları bulunur.
+
+## Ana Menü ve Saklama Önerisi UI Düzenlemesi
+
+Uygulamada login sonrası kullanıcıyı karşılayan Ana Menü / Dashboard ekranı yer alır. Ürün Yönetimi ekranında saklama koşulu önerisi ve öneri revize alanları daha okunabilir şekilde düzenlenmiştir.
+
+## UI/UX Sadeleştirme
+
+Uygulamadaki sabit başarı, uyarı ve bilgi kutuları kaldırılarak daha sade bir arayüz düzeni oluşturulmuştur. İşlem bildirimleri kullanıcıya MessageBox ile gösterilmeye devam eder. Ürün Yönetimi ekranındaki Saklama Koşulu Önerisi alanı daha okunabilir ve düzenli hale getirilmiştir.
+
+## Raporlama Ekranı
+
+Raporlama ekranında toplam ürün sayısı, kritik stoktaki ürün sayısı ve toplam stok miktarı görüntülenebilir. Raporları Getir / Yenile butonu ile değerler güncellenir ve son güncelleme bilgisi ekranda gösterilir.
+
+## Görsel Raporlama
+
+Raporlama ekranında toplam ürün, kritik stok ve toplam stok bilgileri sayısal kartların yanında görsel bar göstergeleriyle de sunulur. Raporları Getir / Yenile butonu ile kartlar ve görsel rapor alanı güncellenir.
+
+## Saklama Asistanı Chatbot
+
+Ürün Yönetimi ekranında yer alan chat ikonu ile Saklama Asistanı açılır. Kullanıcı ürün adı, kategori ve barkod bilgisine göre saklama önerisi alabilir; öneriyi daha kısa, daha detaylı veya güvenlik uyarısı içerecek şekilde chatbot üzerinden tartışabilir. Sistem API key gerektirmeden kural tabanlı akıllı cevap mantığıyla çalışır.
+
+## Ürün Yönetimi Ekranı UI Düzeni
+
+Ürün Yönetimi ekranında ürün bilgi formu ve ürün listesi yan yana konumlandırılarak kullanıcıların ürün ekleme, güncelleme, filtreleme ve listeleme işlemlerini daha kolay takip etmesi sağlanmıştır.
+
 ## Veritabani
 
 Veritabani olarak PostgreSQL kullanilacaktir. Baglanti islemleri `StokTakip.DataAccess` katmanindaki `DbHelper` sinifi uzerinden yapilacaktir. Projenin bu ilk asamasinda gercek CRUD sorgulari eklenmemistir.

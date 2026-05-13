@@ -16,9 +16,17 @@ public class FrmRaporlama : Form
     private readonly Label _lblToplamUrunDeger = new();
     private readonly Label _lblKritikStokDeger = new();
     private readonly Label _lblToplamStokDeger = new();
-
-    private Label _lblDurumBaslik = null!;
-    private Label _lblDurumMesaj = null!;
+    private readonly Label _lblDurumMesaj = new();
+    private readonly Label _lblSonGuncelleme = new();
+    private readonly Label _lblKritikOran = new();
+    private readonly Label _lblNormalDagilim = new();
+    private readonly Label _lblKritikDagilim = new();
+    private readonly Label _lblToplamStokGorsel = new();
+    private readonly Panel _pnlKritikOranBar = new();
+    private readonly Panel _pnlNormalUrunBar = new();
+    private readonly Panel _pnlKritikUrunBar = new();
+    private readonly Panel _pnlToplamStokBar = new();
+    private Button? _btnYenile;
 
     public FrmRaporlama()
     {
@@ -48,6 +56,7 @@ public class FrmRaporlama : Form
         BuildReportCards();
         BuildSummaryPanel();
         BuildInfoPanel();
+        BuildVisualReportPanel();
     }
 
     private void BuildHeader()
@@ -286,36 +295,132 @@ public class FrmRaporlama : Form
             FontStyle.Regular,
             ModernUi.Muted));
 
-        var btnYenile = ModernUi.Button("Raporları Getir / Yenile", 24, 110, 220, 38, true);
-        btnYenile.Font = ModernUi.UiFont(8.8f, FontStyle.Bold);
-        btnYenile.Click += BtnYenile_Click;
-        actionCard.Controls.Add(btnYenile);
+        _btnYenile = ModernUi.Button("Raporları Getir / Yenile", 24, 106, 220, 38, true);
+        _btnYenile.Font = ModernUi.UiFont(8.8f, FontStyle.Bold);
+        _btnYenile.Click += BtnYenile_Click;
+        actionCard.Controls.Add(_btnYenile);
 
-        var statusBox = CreateRoundedPanel(24, 166, 280, 48, Color.FromArgb(238, 242, 255), 14);
-        actionCard.Controls.Add(statusBox);
+        // Durum karti, rapor yenileme sonucunu kullanicinin ekranda net sekilde gormesi icin kullanilir.
+        var statusPanel = CreateRoundedPanel(24, 158, 282, 56, Color.FromArgb(248, 250, 252), 12);
+        actionCard.Controls.Add(statusPanel);
 
-        _lblDurumBaslik = ModernUi.Label(
-            "Bilgi",
-            16,
-            8,
-            220,
-            16,
-            8f,
-            FontStyle.Bold,
-            ModernUi.Accent);
+        var statusLine = new Panel
+        {
+            Location = new Point(0, 9),
+            Size = new Size(4, 38),
+            BackColor = ModernUi.Accent
+        };
+        statusPanel.Controls.Add(statusLine);
 
-        _lblDurumMesaj = ModernUi.Label(
+        ConfigureStatusLabel(
+            _lblDurumMesaj,
             "Raporlar yüklenmeye hazır.",
             16,
-            25,
-            240,
-            16,
-            7.5f,
-            FontStyle.Regular,
-            ModernUi.Muted);
+            8,
+            250,
+            20,
+            ModernUi.Accent,
+            FontStyle.Bold);
+        statusPanel.Controls.Add(_lblDurumMesaj);
 
-        statusBox.Controls.Add(_lblDurumBaslik);
-        statusBox.Controls.Add(_lblDurumMesaj);
+        ConfigureStatusLabel(
+            _lblSonGuncelleme,
+            "Son güncelleme: -",
+            16,
+            31,
+            250,
+            20,
+            ModernUi.Muted,
+            FontStyle.Regular);
+        statusPanel.Controls.Add(_lblSonGuncelleme);
+    }
+
+    /// <summary>
+    /// Standart WinForms kontrolleriyle stok durumunu anlatan gorsel rapor kartini hazirlar.
+    /// </summary>
+    private void BuildVisualReportPanel()
+    {
+        var visualCard = CreateRoundedPanel(0, 540, 960, 160, Color.White, 22);
+        Controls.Add(visualCard);
+
+        visualCard.Controls.Add(ModernUi.Label(
+            "Görsel Rapor",
+            28,
+            15,
+            220,
+            26,
+            13f,
+            FontStyle.Bold,
+            ModernUi.Dark));
+
+        visualCard.Controls.Add(ModernUi.Label(
+            "Stok durumunu ve kritik stok oranını görsel olarak takip edebilirsiniz.",
+            28,
+            43,
+            560,
+            20,
+            8.4f,
+            FontStyle.Regular,
+            ModernUi.Muted));
+
+        visualCard.Controls.Add(ModernUi.Label(
+            "Kritik Stok Oranı",
+            28,
+            72,
+            170,
+            20,
+            8.7f,
+            FontStyle.Bold,
+            ModernUi.Dark));
+        ConfigureVisualLabel(_lblKritikOran, 200, 72, 105, 20, Color.FromArgb(220, 38, 38), FontStyle.Bold);
+        visualCard.Controls.Add(_lblKritikOran);
+
+        var kritikOranTrack = CreateBarTrack(28, 102, 280, 16);
+        ConfigureBarFill(_pnlKritikOranBar, Color.FromArgb(220, 38, 38));
+        kritikOranTrack.Controls.Add(_pnlKritikOranBar);
+        visualCard.Controls.Add(kritikOranTrack);
+
+        visualCard.Controls.Add(ModernUi.Label(
+            "Normal Ürün / Kritik Ürün Dağılımı",
+            345,
+            72,
+            260,
+            20,
+            8.7f,
+            FontStyle.Bold,
+            ModernUi.Dark));
+
+        ConfigureVisualLabel(_lblNormalDagilim, 345, 95, 260, 18, Color.FromArgb(22, 163, 74), FontStyle.Regular);
+        visualCard.Controls.Add(_lblNormalDagilim);
+        var normalTrack = CreateBarTrack(345, 116, 255, 8);
+        ConfigureBarFill(_pnlNormalUrunBar, Color.FromArgb(22, 163, 74));
+        normalTrack.Controls.Add(_pnlNormalUrunBar);
+        visualCard.Controls.Add(normalTrack);
+
+        ConfigureVisualLabel(_lblKritikDagilim, 345, 128, 260, 18, Color.FromArgb(220, 38, 38), FontStyle.Regular);
+        visualCard.Controls.Add(_lblKritikDagilim);
+        var kritikTrack = CreateBarTrack(345, 148, 255, 8);
+        ConfigureBarFill(_pnlKritikUrunBar, Color.FromArgb(220, 38, 38));
+        kritikTrack.Controls.Add(_pnlKritikUrunBar);
+        visualCard.Controls.Add(kritikTrack);
+
+        visualCard.Controls.Add(ModernUi.Label(
+            "Toplam Stok Görseli",
+            660,
+            72,
+            240,
+            20,
+            8.7f,
+            FontStyle.Bold,
+            ModernUi.Dark));
+        ConfigureVisualLabel(_lblToplamStokGorsel, 660, 96, 250, 28, ModernUi.Accent, FontStyle.Bold);
+        _lblToplamStokGorsel.Font = ModernUi.UiFont(12.5f, FontStyle.Bold);
+        visualCard.Controls.Add(_lblToplamStokGorsel);
+
+        var toplamStokTrack = CreateBarTrack(660, 132, 240, 14);
+        ConfigureBarFill(_pnlToplamStokBar, ModernUi.Accent);
+        toplamStokTrack.Controls.Add(_pnlToplamStokBar);
+        visualCard.Controls.Add(toplamStokTrack);
     }
 
     /// <summary>
@@ -327,47 +432,114 @@ public class FrmRaporlama : Form
     }
 
     /// <summary>
-    /// Yenile butonu rapor degerlerini tekrar hesaplar.
+    /// Yenile butonu rapor degerlerini tekrar hesaplar ve ekranda durum bilgisini gunceller.
     /// </summary>
     private void BtnYenile_Click(object? sender, EventArgs e)
     {
-        RaporlariYukle();
+        // Kullanici yenilemeye bastiginda buton gecici olarak pasiflestirilir ve durum alani guncellenir.
+        if (_btnYenile is null)
+        {
+            RaporlariYukle();
+            return;
+        }
+
+        var eskiMetin = _btnYenile.Text;
+
+        try
+        {
+            _btnYenile.Enabled = false;
+            _btnYenile.Text = "Yenileniyor...";
+            _btnYenile.Refresh();
+
+            RaporlariYukle();
+        }
+        finally
+        {
+            _btnYenile.Text = eskiMetin;
+            _btnYenile.Enabled = true;
+        }
     }
 
-    private void RaporlariYukle()
+    /// <summary>
+    /// Rapor kartlarindaki toplam urun, kritik stok ve toplam stok degerlerini Business katmanindan yukler ve durum bilgisini ekrana yazar.
+    /// </summary>
+    private bool RaporlariYukle()
     {
         try
         {
-            _lblToplamUrunDeger.Text = _raporManager.ToplamUrunSayisiGetir().ToString();
-            _lblKritikStokDeger.Text = _raporManager.KritikStokUrunSayisiGetir().ToString();
-            _lblToplamStokDeger.Text = _raporManager.ToplamStokMiktariGetir().ToString();
+            var toplamUrun = _raporManager.ToplamUrunSayisiGetir();
+            var kritikStok = _raporManager.KritikStokUrunSayisiGetir();
+            var toplamStok = _raporManager.ToplamStokMiktariGetir();
 
-            ShowStatus(
-                "Başarılı",
-                "Rapor değerleri güncellendi.",
-                false);
+            _lblToplamUrunDeger.Text = toplamUrun.ToString();
+            _lblKritikStokDeger.Text = kritikStok.ToString();
+            _lblToplamStokDeger.Text = toplamStok.ToString();
+            GorselRaporlariGuncelle(toplamUrun, kritikStok, toplamStok);
+
+            RaporDurumunuGoster("Raporlar başarıyla güncellendi.", false);
+            return true;
         }
-        catch (Exception ex)
+        catch
         {
-            ShowStatus(
-                "Hata",
-                ex.Message,
-                true);
+            _lblToplamUrunDeger.Text = "0";
+            _lblKritikStokDeger.Text = "0";
+            _lblToplamStokDeger.Text = "0";
+            GorselRaporlariGuncelle(0, 0, 0);
+            RaporDurumunuGoster("Raporlar güncellenemedi.", true);
+            WinFormsUiHelper.ShowError("Rapor bilgileri alınırken bir hata oluştu. Lütfen veritabanı bağlantısını kontrol ediniz.");
+            return false;
         }
     }
 
-    private void ShowStatus(string title, string message, bool error)
+    /// <summary>
+    /// Sayisal rapor degerlerinden kritik oran, dagilim ve toplam stok gorsellerini gunceller.
+    /// </summary>
+    private void GorselRaporlariGuncelle(int toplamUrun, int kritikStok, int toplamStok)
     {
-        _lblDurumBaslik.Text = title;
-        _lblDurumMesaj.Text = message;
+        var normalUrun = Math.Max(0, toplamUrun - kritikStok);
 
-        _lblDurumBaslik.ForeColor = error
-            ? Color.FromArgb(185, 28, 28)
-            : ModernUi.Accent;
+        // Toplam urun 0 ise bolme yapmadan oranlari 0 gostererek formun hata vermesi engellenir.
+        var kritikOrani = toplamUrun == 0 ? 0 : (double)kritikStok / toplamUrun;
+        var normalOrani = toplamUrun == 0 ? 0 : (double)normalUrun / toplamUrun;
 
-        _lblDurumMesaj.ForeColor = error
-            ? Color.FromArgb(185, 28, 28)
-            : ModernUi.Muted;
+        _lblKritikOran.Text = $"%{kritikOrani * 100:0.0}";
+        _lblNormalDagilim.Text = $"Normal Ürün: {normalUrun} (%{normalOrani * 100:0.0})";
+        _lblKritikDagilim.Text = $"Kritik Ürün: {kritikStok} (%{kritikOrani * 100:0.0})";
+        _lblToplamStokGorsel.Text = $"Toplam Stok Miktarı: {toplamStok}";
+
+        BarGuncelle(_pnlKritikOranBar, kritikOrani);
+        BarGuncelle(_pnlNormalUrunBar, normalOrani);
+        BarGuncelle(_pnlKritikUrunBar, kritikOrani);
+
+        var toplamStokOrani = toplamStok <= 0 ? 0 : Math.Min(1d, toplamStok / 1000d);
+        BarGuncelle(_pnlToplamStokBar, toplamStokOrani);
+    }
+
+    /// <summary>
+    /// Verilen orana gore panel genisligini ayarlayarak basit bar gorseli olusturur.
+    /// </summary>
+    private static void BarGuncelle(Panel barPanel, double oran)
+    {
+        if (barPanel.Parent is null)
+        {
+            return;
+        }
+
+        var temizOran = Math.Max(0, Math.Min(1, oran));
+        barPanel.Width = (int)Math.Round(barPanel.Parent.ClientSize.Width * temizOran);
+        barPanel.Height = barPanel.Parent.ClientSize.Height;
+        barPanel.Visible = temizOran > 0;
+    }
+
+    private void RaporDurumunuGoster(string mesaj, bool hata)
+    {
+        _lblDurumMesaj.Text = mesaj;
+        _lblDurumMesaj.ForeColor = hata ? Color.FromArgb(185, 28, 28) : ModernUi.Accent;
+        _lblSonGuncelleme.Text = $"Son güncelleme: {DateTime.Now:dd.MM.yyyy HH:mm}";
+        _lblDurumMesaj.Visible = true;
+        _lblSonGuncelleme.Visible = true;
+        _lblDurumMesaj.BringToFront();
+        _lblSonGuncelleme.BringToFront();
     }
 
     private static void ConfigureValueLabel(Label label, int x, int y, int width, int height, Color color)
@@ -379,6 +551,57 @@ public class FrmRaporlama : Form
         label.BackColor = Color.Transparent;
         label.TextAlign = ContentAlignment.MiddleCenter;
         label.AutoSize = false;
+    }
+
+    private static void ConfigureStatusLabel(
+        Label label,
+        string text,
+        int x,
+        int y,
+        int width,
+        int height,
+        Color color,
+        FontStyle style)
+    {
+        label.Location = new Point(x, y);
+        label.Size = new Size(width, height);
+        label.Text = text;
+        label.Font = ModernUi.UiFont(8.2f, style);
+        label.ForeColor = color;
+        label.BackColor = Color.Transparent;
+        label.AutoSize = false;
+        label.TextAlign = ContentAlignment.MiddleLeft;
+        label.Visible = true;
+    }
+
+    private static void ConfigureVisualLabel(
+        Label label,
+        int x,
+        int y,
+        int width,
+        int height,
+        Color color,
+        FontStyle style)
+    {
+        label.Location = new Point(x, y);
+        label.Size = new Size(width, height);
+        label.Font = ModernUi.UiFont(8f, style);
+        label.ForeColor = color;
+        label.BackColor = Color.Transparent;
+        label.TextAlign = ContentAlignment.MiddleLeft;
+        label.AutoSize = false;
+    }
+
+    private Panel CreateBarTrack(int x, int y, int width, int height)
+    {
+        return CreateRoundedPanel(x, y, width, height, Color.FromArgb(229, 231, 235), Math.Max(1, height / 2));
+    }
+
+    private static void ConfigureBarFill(Panel barPanel, Color color)
+    {
+        barPanel.Location = new Point(0, 0);
+        barPanel.Size = new Size(0, 1);
+        barPanel.BackColor = color;
     }
 
     private string GetMetricIcon(string title)

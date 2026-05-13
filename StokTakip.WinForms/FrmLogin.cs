@@ -16,10 +16,6 @@ public class FrmLogin : Form
     private readonly TextBox _txtKullaniciAdi = new();
     private readonly TextBox _txtSifre = new();
 
-    private Panel _messagePanel = null!;
-    private Label _lblMessageTitle = null!;
-    private Label _lblMessageText = null!;
-
     public FrmLogin()
     {
         InitializeComponent();
@@ -201,14 +197,12 @@ public class FrmLogin : Form
         passwordInputPanel.Controls.Add(_txtSifre);
 
         BuildSecurityInfo(loginCard);
-        BuildMessagePanel(loginCard);
-
-        var btnGiris = ModernUi.Button("↪  Giriş Yap", 36, 430, 140, 42, true);
+        var btnGiris = ModernUi.Button("↪  Giriş Yap", 36, 382, 140, 42, true);
         btnGiris.Font = ModernUi.UiFont(9.2f, FontStyle.Bold);
         btnGiris.Click += BtnGiris_Click;
         loginCard.Controls.Add(btnGiris);
 
-        var btnTemizle = ModernUi.Button("Temizle", 190, 430, 120, 42, false);
+        var btnTemizle = ModernUi.Button("Temizle", 190, 382, 120, 42, false);
         btnTemizle.Font = ModernUi.UiFont(9.2f, FontStyle.Bold);
         btnTemizle.Click += BtnTemizle_Click;
         loginCard.Controls.Add(btnTemizle);
@@ -242,36 +236,6 @@ public class FrmLogin : Form
             7.6f,
             FontStyle.Regular,
             ModernUi.Muted));
-    }
-
-    private void BuildMessagePanel(Control parent)
-    {
-        _messagePanel = ModernUi.CardPanel(36, 365, 348, 46);
-        _messagePanel.BackColor = Color.FromArgb(255, 248, 225);
-        parent.Controls.Add(_messagePanel);
-
-        _lblMessageTitle = ModernUi.Label(
-            "Hazır",
-            16,
-            6,
-            300,
-            16,
-            7.8f,
-            FontStyle.Bold,
-            Color.FromArgb(92, 65, 0));
-
-        _lblMessageText = ModernUi.Label(
-            "Giriş yapmak için bilgilerinizi yazınız.",
-            16,
-            24,
-            310,
-            16,
-            7.4f,
-            FontStyle.Regular,
-            Color.FromArgb(92, 65, 0));
-
-        _messagePanel.Controls.Add(_lblMessageTitle);
-        _messagePanel.Controls.Add(_lblMessageText);
     }
 
     private Panel CreateFeatureChip(string icon, string text, int x, int y)
@@ -324,24 +288,6 @@ public class FrmLogin : Form
         textBox.PlaceholderText = placeholder;
     }
 
-    private void ShowLoginMessage(string title, string message, bool error = true)
-    {
-        _messagePanel.BackColor = error
-            ? Color.FromArgb(255, 248, 225)
-            : Color.FromArgb(236, 253, 245);
-
-        _lblMessageTitle.Text = title;
-        _lblMessageText.Text = message;
-
-        _lblMessageTitle.ForeColor = error
-            ? Color.FromArgb(92, 65, 0)
-            : Color.FromArgb(6, 95, 70);
-
-        _lblMessageText.ForeColor = error
-            ? Color.FromArgb(92, 65, 0)
-            : Color.FromArgb(6, 95, 70);
-    }
-
     /// <summary>
     /// Giris butonunda kullanici bilgileri Business katmaninda kontrol edilir.
     /// </summary>
@@ -352,10 +298,6 @@ public class FrmLogin : Form
             if (string.IsNullOrWhiteSpace(_txtKullaniciAdi.Text) ||
                 string.IsNullOrWhiteSpace(_txtSifre.Text))
             {
-                ShowLoginMessage(
-                    "Uyarı",
-                    "Kullanıcı adı ve şifre boş bırakılamaz.");
-
                 WinFormsUiHelper.ShowWarning("Kullanıcı adı ve şifre boş bırakılamaz.");
                 return;
             }
@@ -366,18 +308,9 @@ public class FrmLogin : Form
 
             if (kullanici is null)
             {
-                ShowLoginMessage(
-                    "Hatalı Giriş",
-                    "Kullanıcı adı veya şifre hatalı.");
-
                 WinFormsUiHelper.ShowError("Kullanıcı adı veya şifre hatalı.");
                 return;
             }
-
-            ShowLoginMessage(
-                "Giriş Başarılı",
-                "Ana menüye yönlendiriliyorsunuz.",
-                false);
 
             Hide();
 
@@ -388,10 +321,6 @@ public class FrmLogin : Form
         }
         catch (Exception ex)
         {
-            ShowLoginMessage(
-                "Sistem Hatası",
-                ex.Message);
-
             WinFormsUiHelper.ShowError(ex.Message);
         }
     }
@@ -400,10 +329,6 @@ public class FrmLogin : Form
     {
         _txtKullaniciAdi.Clear();
         _txtSifre.Clear();
-
-        ShowLoginMessage(
-            "Hazır",
-            "Giriş yapmak için bilgilerinizi yazınız.");
 
         _txtKullaniciAdi.Focus();
     }

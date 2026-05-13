@@ -4,7 +4,7 @@ using StokTakip.Business;
 namespace StokTakip.WinForms;
 
 /// <summary>
-/// Kural tabanli saklama kosulu onerilerinin gosterildigi formdur.
+/// Kural tabanlı saklama koşulu önerilerinin gösterildiği formdur.
 /// </summary>
 public class FrmSaklamaKosuluAI : Form
 {
@@ -19,7 +19,7 @@ public class FrmSaklamaKosuluAI : Form
     }
 
     /// <summary>
-    /// Saklama onerisi ekranindaki kontrolleri hazirlar.
+    /// Saklama önerisi ekranındaki kontrolleri hazırlar.
     /// </summary>
     private void InitializeComponent()
     {
@@ -48,12 +48,18 @@ public class FrmSaklamaKosuluAI : Form
     }
 
     /// <summary>
-    /// Oneri al butonu kural tabanli Business metodunu cagirir.
+    /// Öneri Al butonu Business katmanındaki kural tabanlı öneri metodunu çağırır.
     /// </summary>
     private void BtnOneri_Click(object? sender, EventArgs e)
     {
         try
         {
+            if (string.IsNullOrWhiteSpace(_txtUrunAdi.Text) && string.IsNullOrWhiteSpace(_txtKategoriAdi.Text))
+            {
+                WinFormsUiHelper.ShowWarning("Öneri almak için ürün adı veya kategori adı giriniz.");
+                return;
+            }
+
             _txtOneri.Text = _saklamaKosuluManager.SaklamaKosuluOner(_txtUrunAdi.Text, _txtKategoriAdi.Text);
         }
         catch (Exception ex)
@@ -63,7 +69,7 @@ public class FrmSaklamaKosuluAI : Form
     }
 
     /// <summary>
-    /// Temizle butonu form alanlarini sifirlar.
+    /// Temizle butonu form alanlarını sıfırlar.
     /// </summary>
     private void BtnTemizle_Click(object? sender, EventArgs e)
     {

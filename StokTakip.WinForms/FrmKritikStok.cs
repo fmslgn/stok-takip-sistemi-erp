@@ -68,30 +68,7 @@ public class FrmKritikStok : Form
 
         headerCard.Controls.Add(badge);
 
-        var warningCard = ModernUi.CardPanel(24, 120, 690, 150);
-        warningCard.BackColor = Color.White;
-        Controls.Add(warningCard);
-
-        warningCard.Controls.Add(ModernUi.Label(
-            "Kritik Stok Uyarısı",
-            22,
-            18,
-            300,
-            24,
-            12f,
-            FontStyle.Bold,
-            ModernUi.Dark));
-
-        warningCard.Controls.Add(ModernUi.MessageBoxPanel(
-            "Dikkat",
-            "Stok miktarı kritik seviyeye eşit veya kritik seviyenin altına düşen ürünler aşağıdaki listede gösterilir.",
-            22,
-            58,
-            640,
-            65,
-            "warning"));
-
-        var actionCard = ModernUi.CardPanel(740, 120, 356, 150);
+        var actionCard = ModernUi.CardPanel(24, 120, 1072, 130);
         actionCard.BackColor = Color.White;
         Controls.Add(actionCard);
 
@@ -109,17 +86,17 @@ public class FrmKritikStok : Form
             "Listeyi yenileyerek güncel kritik stok durumunu kontrol edebilirsiniz.",
             22,
             50,
-            300,
-            42,
+            720,
+            36,
             8.5f,
             FontStyle.Regular,
             ModernUi.Muted));
 
-        var btnListele = ModernUi.Button("Listele / Yenile", 22, 100, 140, 36, true);
+        var btnListele = ModernUi.Button("Listele / Yenile", 880, 48, 150, 36, true);
         btnListele.Click += BtnListele_Click;
         actionCard.Controls.Add(btnListele);
 
-        var tableCard = ModernUi.CardPanel(24, 300, 1072, 395);
+        var tableCard = ModernUi.CardPanel(24, 270, 1072, 425);
         tableCard.BackColor = Color.White;
         Controls.Add(tableCard);
 
@@ -144,7 +121,7 @@ public class FrmKritikStok : Form
             ModernUi.Muted));
 
         _grid.Location = new Point(22, 82);
-        _grid.Size = new Size(1028, 285);
+        _grid.Size = new Size(1028, 315);
 
         WinFormsUiHelper.ConfigureGrid(_grid);
         ModernUi.ConfigurePremiumGrid(_grid);

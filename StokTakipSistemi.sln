@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StokTakip.Business", "StokT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StokTakip.WinForms", "StokTakip.WinForms\StokTakip.WinForms.csproj", "{30D6335A-15D7-47AE-B73E-4396CD69F62E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StokTakip.Wpf", "StokTakip.Wpf\StokTakip.Wpf.csproj", "{38F53053-C0DF-4CEA-9F8A-92077DD31AB6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,18 @@ Global
 		{30D6335A-15D7-47AE-B73E-4396CD69F62E}.Release|x64.Build.0 = Release|Any CPU
 		{30D6335A-15D7-47AE-B73E-4396CD69F62E}.Release|x86.ActiveCfg = Release|Any CPU
 		{30D6335A-15D7-47AE-B73E-4396CD69F62E}.Release|x86.Build.0 = Release|Any CPU
+		{38F53053-C0DF-4CEA-9F8A-92077DD31AB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38F53053-C0DF-4CEA-9F8A-92077DD31AB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38F53053-C0DF-4CEA-9F8A-92077DD31AB6}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{38F53053-C0DF-4CEA-9F8A-92077DD31AB6}.Debug|x64.Build.0 = Debug|Any CPU
+		{38F53053-C0DF-4CEA-9F8A-92077DD31AB6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{38F53053-C0DF-4CEA-9F8A-92077DD31AB6}.Debug|x86.Build.0 = Debug|Any CPU
+		{38F53053-C0DF-4CEA-9F8A-92077DD31AB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38F53053-C0DF-4CEA-9F8A-92077DD31AB6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38F53053-C0DF-4CEA-9F8A-92077DD31AB6}.Release|x64.ActiveCfg = Release|Any CPU
+		{38F53053-C0DF-4CEA-9F8A-92077DD31AB6}.Release|x64.Build.0 = Release|Any CPU
+		{38F53053-C0DF-4CEA-9F8A-92077DD31AB6}.Release|x86.ActiveCfg = Release|Any CPU
+		{38F53053-C0DF-4CEA-9F8A-92077DD31AB6}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

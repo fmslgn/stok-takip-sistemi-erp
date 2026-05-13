@@ -1,0 +1,68 @@
+<Window x:Class="StokTakip.Wpf.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="SYA Stok Takip Sistemi"
+        Width="900"
+        Height="560"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize">
+    <Grid Background="{StaticResource AppBackgroundBrush}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.1*" />
+            <ColumnDefinition Width="0.9*" />
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Margin="60,70,40,70" VerticalAlignment="Center">
+            <TextBlock Text="SYA Stok Takip Sistemi"
+                       FontSize="32"
+                       FontWeight="Bold"
+                       Foreground="{StaticResource TextDarkBrush}" />
+            <TextBlock Text="Kurumsal stok takip giriş ekranı"
+                       Margin="0,12,0,0"
+                       FontSize="16"
+                       Foreground="{StaticResource TextMutedBrush}" />
+            <Border Style="{StaticResource CardBorderStyle}" Margin="0,36,0,0" Padding="20">
+                <StackPanel>
+                    <TextBlock Text="ERP stok yönetimi"
+                               FontSize="18"
+                               FontWeight="SemiBold"
+                               Foreground="{StaticResource TextDarkBrush}" />
+                    <TextBlock Text="Ürün, stok, kritik seviye ve rapor modüllerine modern masaüstü arayüzünden erişin."
+                               Margin="0,8,0,0"
+                               TextWrapping="Wrap"
+                               Foreground="{StaticResource TextMutedBrush}" />
+                </StackPanel>
+            </Border>
+        </StackPanel>
+
+        <Border Grid.Column="1"
+                Style="{StaticResource CardBorderStyle}"
+                Width="330"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center">
+            <StackPanel>
+                <TextBlock Text="Giriş Yap"
+                           FontSize="24"
+                           FontWeight="Bold"
+                           Foreground="{StaticResource TextDarkBrush}" />
+                <TextBlock Text="Kullanıcı bilgilerinizi giriniz."
+                           Margin="0,6,0,24"
+                           Foreground="{StaticResource TextMutedBrush}" />
+
+                <TextBlock Text="Kullanıcı adı" FontWeight="SemiBold" Foreground="{StaticResource TextDarkBrush}" />
+                <TextBox x:Name="TxtKullaniciAdi" Margin="0,8,0,16" Text="admin" />
+
+                <TextBlock Text="Şifre" FontWeight="SemiBold" Foreground="{StaticResource TextDarkBrush}" />
+                <PasswordBox x:Name="PwdSifre" Margin="0,8,0,22" Password="1234" />
+
+                <Button Content="Giriş Yap"
+                        Style="{StaticResource PrimaryButtonStyle}"
+                        Click="BtnGiris_Click" />
+                <Button Content="Çıkış"
+                        Margin="0,10,0,0"
+                        Style="{StaticResource SecondaryButtonStyle}"
+                        Click="BtnCikis_Click" />
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

@@ -13,6 +13,7 @@ Bu proje, C# Windows Forms ve PostgreSQL kullanarak katmanli mimariye uygun bir 
 - C#
 - .NET 8
 - Windows Forms
+- WPF
 - PostgreSQL
 - Npgsql
 - Katmanli mimari
@@ -25,6 +26,7 @@ Solution dort ana katmandan olusur:
 - `StokTakip.DataAccess`: PostgreSQL baglantisi ve veritabani islemlerinin yazilacagi katman.
 - `StokTakip.Business`: Is kurallari ve kontrollerin yer alacagi katman.
 - `StokTakip.WinForms`: Kullanici arayuzu formlarinin bulundugu katman.
+- `StokTakip.Wpf`: Modern masaustu ERP arayuzu icin eklenen yeni WPF katmani.
 
 UI katmani dogrudan SQL sorgusu yazmaz. WinForms sadece Business katmanini cagirir, Business katmani DataAccess katmanini kullanir, PostgreSQL baglantisi ise DataAccess katmaninda yonetilir.
 
@@ -84,6 +86,14 @@ Raporlama ekranında toplam ürün, kritik stok ve toplam stok bilgileri sayısa
 ## Ürün Yönetimi Ekranı UI Düzeni
 
 Ürün Yönetimi ekranında ürün bilgi formu ve ürün listesi yan yana konumlandırılarak kullanıcıların ürün ekleme, güncelleme, filtreleme ve listeleme işlemlerini daha kolay takip etmesi sağlanmıştır.
+
+## WPF Masaüstü Arayüzü
+
+Projeye modern masaüstü ERP arayüzü için `StokTakip.Wpf` katmanı eklenmiştir. Mevcut Entity, DataAccess ve Business katmanları korunmuş, yeni WPF arayüzünün Business katmanı üzerinden çalışması hedeflenmiştir. WinForms sürümü çalışan eski arayüz olarak projede bırakılmıştır.
+
+## WPF Modül Ekranları
+
+`StokTakip.Wpf` projesine Kullanıcı Yönetimi, Kategori Yönetimi, Stok Giriş, Stok Çıkış, Kritik Stok ve Saklama Asistanı ekranları eklenmiştir. WPF arayüzü Business katmanı üzerinden çalışacak şekilde tasarlanmıştır. WinForms sürümü eski çalışan arayüz olarak korunmuştur.
 
 ## Veritabani
 

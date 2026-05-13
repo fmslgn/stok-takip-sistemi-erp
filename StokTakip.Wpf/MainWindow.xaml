@@ -1,0 +1,90 @@
+<Window x:Class="StokTakip.Wpf.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="SYA Stok Takip Sistemi"
+        Width="1320"
+        Height="820"
+        MinWidth="1120"
+        MinHeight="700"
+        WindowStartupLocation="CenterScreen">
+    <Grid Background="{StaticResource AppBackgroundBrush}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Column="0"
+                Margin="18"
+                Style="{StaticResource CardBorderStyle}">
+            <DockPanel LastChildFill="True">
+                <StackPanel DockPanel.Dock="Top">
+                    <TextBlock Text="SYA"
+                               FontSize="22"
+                               FontWeight="Bold"
+                               Foreground="{StaticResource TextDarkBrush}" />
+                    <TextBlock Text="Stoklarını düzenle, işini kolaylaştır."
+                               Margin="0,4,0,18"
+                               TextWrapping="Wrap"
+                               Foreground="{StaticResource TextMutedBrush}" />
+                </StackPanel>
+
+                <StackPanel DockPanel.Dock="Bottom">
+                    <TextBlock Text="{Binding AktifKullaniciBilgisi}"
+                               Margin="0,0,0,12"
+                               Foreground="{StaticResource TextMutedBrush}"
+                               TextWrapping="Wrap" />
+                    <Button Content="Çıkış" Style="{StaticResource SecondaryButtonStyle}" Click="BtnExit_Click" />
+                </StackPanel>
+
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="0,12,0,12">
+                        <Button Content="Ana Menü" Style="{StaticResource MenuButtonStyle}" Click="BtnDashboard_Click" />
+                        <Button Content="Kullanıcı Yönetimi" Style="{StaticResource MenuButtonStyle}" Click="BtnUsers_Click" />
+                        <Button Content="Kategori Yönetimi" Style="{StaticResource MenuButtonStyle}" Click="BtnCategories_Click" />
+                        <Button Content="Ürün Yönetimi" Style="{StaticResource MenuButtonStyle}" Click="BtnProducts_Click" />
+                        <Button Content="Stok Giriş" Style="{StaticResource MenuButtonStyle}" Click="BtnStockEntry_Click" />
+                        <Button Content="Stok Çıkış" Style="{StaticResource MenuButtonStyle}" Click="BtnStockExit_Click" />
+                        <Button Content="Kritik Stok" Style="{StaticResource MenuButtonStyle}" Click="BtnCriticalStock_Click" />
+                        <Button Content="Raporlama" Style="{StaticResource MenuButtonStyle}" Click="BtnReports_Click" />
+                        <Button Content="Saklama Asistanı" Style="{StaticResource MenuButtonStyle}" Click="BtnStorageAssistant_Click" />
+                    </StackPanel>
+                </ScrollViewer>
+            </DockPanel>
+        </Border>
+
+        <Grid Grid.Column="1" Margin="0,18,18,18">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="86" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Border Style="{StaticResource CardBorderStyle}" Padding="24,18">
+                <DockPanel>
+                    <StackPanel>
+                        <TextBlock x:Name="TxtSayfaBasligi"
+                                   Text="Ana Menü"
+                                   FontSize="24"
+                                   FontWeight="Bold"
+                                   Foreground="{StaticResource TextDarkBrush}" />
+                        <TextBlock Text="Modern masaüstü ERP arayüzü"
+                                   Margin="0,4,0,0"
+                                   Foreground="{StaticResource TextMutedBrush}" />
+                    </StackPanel>
+                    <Border DockPanel.Dock="Right"
+                            Background="{StaticResource PrimarySoftBrush}"
+                            CornerRadius="14"
+                            Padding="14,8"
+                            VerticalAlignment="Center">
+                        <TextBlock Text="WPF"
+                                   FontWeight="Bold"
+                                   Foreground="{StaticResource PrimaryBrush}" />
+                    </Border>
+                </DockPanel>
+            </Border>
+
+            <ContentControl x:Name="ContentHost"
+                            Grid.Row="1"
+                            Margin="0,16,0,0" />
+        </Grid>
+    </Grid>
+</Window>

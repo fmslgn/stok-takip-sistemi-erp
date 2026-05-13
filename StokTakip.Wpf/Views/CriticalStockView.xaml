@@ -1,0 +1,43 @@
+<UserControl x:Class="StokTakip.Wpf.Views.CriticalStockView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Border Style="{StaticResource CardBorderStyle}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <StackPanel>
+                <TextBlock Text="Kritik Stok" FontSize="24" FontWeight="Bold" Foreground="{StaticResource TextDarkBrush}" />
+                <TextBlock Text="Kritik stok seviyesine düşen ürünleri görüntüleyin."
+                           Margin="0,6,0,0"
+                           Foreground="{StaticResource TextMutedBrush}" />
+            </StackPanel>
+
+            <Button Grid.Row="1"
+                    Content="Listele / Yenile"
+                    Margin="0,18,0,14"
+                    HorizontalAlignment="Left"
+                    Style="{StaticResource PrimaryButtonStyle}"
+                    Click="BtnYenile_Click" />
+
+            <DataGrid Grid.Row="2"
+                      ItemsSource="{Binding KritikUrunler}"
+                      AutoGenerateColumns="False"
+                      CanUserAddRows="False"
+                      IsReadOnly="True">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="60" />
+                    <DataGridTextColumn Header="Ürün Adı" Binding="{Binding UrunAdi}" Width="180" />
+                    <DataGridTextColumn Header="Barkod" Binding="{Binding Barkod}" Width="150" />
+                    <DataGridTextColumn Header="Birim" Binding="{Binding Birim}" Width="90" />
+                    <DataGridTextColumn Header="Stok" Binding="{Binding StokMiktari}" Width="90" />
+                    <DataGridTextColumn Header="Kritik Stok" Binding="{Binding KritikStokSeviyesi}" Width="110" />
+                    <DataGridTextColumn Header="Açıklama" Binding="{Binding Aciklama}" Width="*" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </Border>
+</UserControl>

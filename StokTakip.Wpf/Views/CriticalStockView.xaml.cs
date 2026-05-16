@@ -1,5 +1,6 @@
 using System.Windows;
 using System.Windows.Controls;
+using StokTakip.Wpf.Helpers;
 using StokTakip.Wpf.ViewModels;
 
 namespace StokTakip.Wpf.Views;
@@ -15,12 +16,27 @@ public partial class CriticalStockView : UserControl
     {
         InitializeComponent();
         DataContext = _viewModel;
-        _viewModel.Yukle();
+        Loaded += CriticalStockView_Loaded;
     }
 
-    private void BtnYenile_Click(object sender, RoutedEventArgs e)
+    private async void CriticalStockView_Loaded(object sender, RoutedEventArgs e)
     {
-        // Kritik stok listesi Business katmanındaki UrunManager ile yenilenir.
-        _viewModel.Yukle();
+        Loaded -= CriticalStockView_Loaded;
+
+        try
+        {
+            await _viewModel.YukleAsync().ConfigureAwait(true);
+        }
+        catch (Exception ex)
+        {
+            DialogHelper.ShowWarning($"Kritik stok listesi yüklenirken hata: {ex.Message}", "Kritik Stok", Window.GetWindow(this));
+        }
+    }
+
+    /// <summary>Kritik stok listesindeki ürünleri PDF olarak dışa aktarır.</summary>
+    private void BtnKritikStokPdfKaydet_Click(object sender, RoutedEventArgs e)
+    {
+        var owner = Window.GetWindow(this);
+        PdfExportHelper.KritikStokListesiniPdfKaydet(owner!, _viewModel.KritikUrunler, "Kritik stok ekranındaki ürün listesi.");
     }
 }

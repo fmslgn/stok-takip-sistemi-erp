@@ -49,17 +49,28 @@
                            Margin="0,6,0,24"
                            Foreground="{StaticResource TextMutedBrush}" />
 
-                <TextBlock Text="Kullanıcı adı" FontWeight="SemiBold" Foreground="{StaticResource TextDarkBrush}" />
-                <TextBox x:Name="TxtKullaniciAdi" Margin="0,8,0,16" Text="admin" />
+                <TextBlock Text="Kullanıcı adı" Style="{StaticResource FormFieldLabelStyle}" />
+                <TextBox x:Name="TxtKullaniciAdi" Margin="0,0,0,16" Text="admin" />
 
-                <TextBlock Text="Şifre" FontWeight="SemiBold" Foreground="{StaticResource TextDarkBrush}" />
-                <PasswordBox x:Name="PwdSifre" Margin="0,8,0,22" Password="1234" />
+                <TextBlock Text="Şifre" Style="{StaticResource FormFieldLabelStyle}" />
+                <PasswordBox x:Name="PwdSifre" Margin="0,0,0,8" Password="1234" />
 
-                <Button Content="Giriş Yap"
+                <TextBlock x:Name="TxtGirisDurumu"
+                           Text="Giriş yapılıyor, lütfen bekleyin..."
+                           Visibility="Collapsed"
+                           Margin="0,0,0,12"
+                           FontSize="12"
+                           Foreground="{StaticResource PrimaryBrush}" />
+
+                <Button x:Name="BtnGiris"
+                        Content="Giriş Yap"
+                        MinHeight="42"
                         Style="{StaticResource PrimaryButtonStyle}"
                         Click="BtnGiris_Click" />
-                <Button Content="Çıkış"
+                <Button x:Name="BtnCikis"
+                        Content="Çıkış"
                         Margin="0,10,0,0"
+                        MinHeight="38"
                         Style="{StaticResource SecondaryButtonStyle}"
                         Click="BtnCikis_Click" />
             </StackPanel>

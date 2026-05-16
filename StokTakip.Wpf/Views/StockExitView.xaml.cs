@@ -1,6 +1,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using StokTakip.Entities;
+using StokTakip.Wpf.Helpers;
 using StokTakip.Wpf.ViewModels;
 
 namespace StokTakip.Wpf.Views;
@@ -17,27 +18,48 @@ public partial class StockExitView : UserControl
         InitializeComponent();
         DataContext = _viewModel;
         DpTarih.SelectedDate = DateTime.Today;
-        _viewModel.Yukle();
+        Loaded += StockExitView_Loaded;
     }
 
-    private void BtnKaydet_Click(object sender, RoutedEventArgs e)
+    private async void StockExitView_Loaded(object sender, RoutedEventArgs e)
+    {
+        Loaded -= StockExitView_Loaded;
+
+        try
+        {
+            await _viewModel.YukleAsync().ConfigureAwait(true);
+        }
+        catch (Exception ex)
+        {
+            DialogHelper.ShowWarning($"Stok çıkış verileri yüklenirken hata: {ex.Message}", "Stok Çıkış", Window.GetWindow(this));
+        }
+    }
+
+    private async void BtnKaydet_Click(object sender, RoutedEventArgs e)
     {
         try
         {
-            if (!int.TryParse(TxtMiktar.Text, out int miktar))
+            var owner = Window.GetWindow(this);
+
+            if (CmbUrun.SelectedItem is not Urun seciliUrun)
             {
-                MessageBox.Show("Çıkış miktarı sayısal olmalıdır.", "Uyarı", MessageBoxButton.OK, MessageBoxImage.Warning);
+                DialogHelper.ShowWarning("Lütfen ürün seçiniz.", owner: owner);
                 return;
             }
 
-            // Yetersiz stok kontrolü StokCikisManager içinde yapılır.
-            _viewModel.StokCikisiKaydet(CmbUrun.SelectedItem as Urun, miktar, TxtAciklama.Text, DpTarih.SelectedDate ?? DateTime.Now);
-            MessageBox.Show("Stok çıkışı kaydedildi.", "Başarılı", MessageBoxButton.OK, MessageBoxImage.Information);
+            if (!int.TryParse(TxtMiktar.Text, out int miktar))
+            {
+                DialogHelper.ShowWarning("Çıkış miktarı sayısal olmalıdır.", owner: owner);
+                return;
+            }
+
+            await _viewModel.StokCikisiKaydetAsync(seciliUrun, miktar, TxtAciklama.Text, DpTarih.SelectedDate ?? DateTime.Now).ConfigureAwait(true);
+            DialogHelper.ShowSuccess("Stok çıkışı kaydedildi.", owner: Window.GetWindow(this));
             Temizle();
         }
         catch (Exception ex)
         {
-            MessageBox.Show(ex.Message, "Stok Çıkış Hatası", MessageBoxButton.OK, MessageBoxImage.Warning);
+            DialogHelper.ShowWarning(ex.Message, "Stok Çıkış Hatası", Window.GetWindow(this));
         }
     }
 
@@ -52,5 +74,12 @@ public partial class StockExitView : UserControl
         TxtMiktar.Clear();
         TxtAciklama.Clear();
         DpTarih.SelectedDate = DateTime.Today;
+    }
+
+    /// <summary>Stok çıkış hareketleri listesini (DataGrid kaynağı) PDF olarak dışa aktarır.</summary>
+    private void BtnStokCikisHareketleriPdfKaydet_Click(object sender, RoutedEventArgs e)
+    {
+        var owner = Window.GetWindow(this);
+        PdfExportHelper.StokCikisHareketleriniPdfKaydet(owner!, _viewModel.StokCikislari);
     }
 }

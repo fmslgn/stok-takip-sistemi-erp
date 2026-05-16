@@ -1,168 +1,233 @@
 <UserControl x:Class="StokTakip.Wpf.Views.ProductManagementView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:helpers="clr-namespace:StokTakip.Wpf.Helpers">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.45*" MinWidth="420" />
-            <ColumnDefinition Width="16" />
-            <ColumnDefinition Width="0.55*" MinWidth="520" />
-        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
-        <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto">
-            <StackPanel>
-                <Border Style="{StaticResource CardBorderStyle}">
-                    <StackPanel>
-                        <TextBlock Text="Ürün Bilgi Formu"
-                                   FontSize="22"
-                                   FontWeight="Bold"
-                                   Foreground="{StaticResource TextDarkBrush}" />
+        <ProgressBar Grid.Row="0"
+                     Height="4"
+                     Margin="0,0,0,8"
+                     IsIndeterminate="True">
+            <ProgressBar.Style>
+                <Style TargetType="ProgressBar">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsBusy}" Value="True">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ProgressBar.Style>
+        </ProgressBar>
 
-                        <Grid Margin="0,18,0,0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="18" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.44*" MinWidth="400" />
+                <ColumnDefinition Width="16" />
+                <ColumnDefinition Width="0.56*" MinWidth="480" />
+            </Grid.ColumnDefinitions>
 
-                            <StackPanel Grid.Row="0" Grid.Column="0" Margin="0,0,0,14">
-                                <TextBlock Text="Kategori" FontWeight="SemiBold" />
-                                <ComboBox ItemsSource="{Binding Kategoriler}" DisplayMemberPath="KategoriAdi" />
-                            </StackPanel>
-                            <StackPanel Grid.Row="0" Grid.Column="2" Margin="0,0,0,14">
-                                <TextBlock Text="Saklama Koşulu" FontWeight="SemiBold" />
-                                <ComboBox ItemsSource="{Binding SaklamaKosullari}" DisplayMemberPath="KosulAdi" />
-                            </StackPanel>
+            <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto">
+                <StackPanel>
+                    <Border Style="{StaticResource CardBorderStyle}">
+                        <StackPanel>
+                            <TextBlock Text="Ürün Bilgi Formu" Style="{StaticResource SectionTitleTextStyle}" />
 
-                            <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,0,0,14">
-                                <TextBlock Text="Ürün Adı" FontWeight="SemiBold" />
-                                <TextBox />
-                            </StackPanel>
-                            <StackPanel Grid.Row="1" Grid.Column="2" Margin="0,0,0,14">
-                                <TextBlock Text="Barkod" FontWeight="SemiBold" />
-                                <TextBox />
-                            </StackPanel>
+                            <Grid Margin="0,14,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="14" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
 
-                            <StackPanel Grid.Row="2" Grid.Column="0" Margin="0,0,0,14">
-                                <TextBlock Text="Birim" FontWeight="SemiBold" />
-                                <TextBox />
-                            </StackPanel>
-                            <StackPanel Grid.Row="2" Grid.Column="2" Margin="0,0,0,14">
-                                <TextBlock Text="Açıklama" FontWeight="SemiBold" />
-                                <TextBox />
-                            </StackPanel>
+                                <StackPanel Grid.Row="0" Grid.Column="0" Margin="0,0,0,12">
+                                    <TextBlock Text="Kategori" Style="{StaticResource FormFieldLabelStyle}" />
+                                    <ComboBox ItemsSource="{Binding Kategoriler}"
+                                              DisplayMemberPath="KategoriAdi"
+                                              SelectedItem="{Binding SeciliKategori, Mode=TwoWay}"
+                                              helpers:ComboBoxPlaceholderHelper.Text="Kategori seçiniz" />
+                                </StackPanel>
+                                <StackPanel Grid.Row="0" Grid.Column="2" Margin="0,0,0,12">
+                                    <TextBlock Text="Saklama Koşulu" Style="{StaticResource FormFieldLabelStyle}" />
+                                    <ComboBox ItemsSource="{Binding SaklamaKosullari}"
+                                              DisplayMemberPath="KosulAdi"
+                                              SelectedItem="{Binding SeciliSaklamaKosulu, Mode=TwoWay}"
+                                              helpers:ComboBoxPlaceholderHelper.Text="Saklama koşulu seçiniz" />
+                                </StackPanel>
 
-                            <StackPanel Grid.Row="3" Grid.Column="0" Margin="0,0,0,14">
-                                <TextBlock Text="Stok" FontWeight="SemiBold" />
-                                <TextBox />
-                            </StackPanel>
-                            <StackPanel Grid.Row="3" Grid.Column="2" Margin="0,0,0,14">
-                                <TextBlock Text="Kritik Stok" FontWeight="SemiBold" />
-                                <TextBox />
-                            </StackPanel>
+                                <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,0,0,12">
+                                    <TextBlock Text="Ürün Adı" Style="{StaticResource FormFieldLabelStyle}" />
+                                    <TextBox Text="{Binding UrunAdi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                </StackPanel>
+                                <StackPanel Grid.Row="1" Grid.Column="2" Margin="0,0,0,12">
+                                    <TextBlock Text="Barkod" Style="{StaticResource FormFieldLabelStyle}" />
+                                    <TextBox Text="{Binding Barkod, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                </StackPanel>
 
-                            <StackPanel Grid.Row="4" Grid.Column="0">
-                                <TextBlock Text="Alış Fiyatı" FontWeight="SemiBold" />
-                                <TextBox />
-                            </StackPanel>
-                            <StackPanel Grid.Row="4" Grid.Column="2">
-                                <TextBlock Text="Satış Fiyatı" FontWeight="SemiBold" />
-                                <TextBox />
-                            </StackPanel>
-                        </Grid>
-                    </StackPanel>
-                </Border>
+                                <StackPanel Grid.Row="2" Grid.Column="0" Margin="0,0,0,12">
+                                    <TextBlock Text="Birim" Style="{StaticResource FormFieldLabelStyle}" />
+                                    <TextBox Text="{Binding Birim, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                </StackPanel>
+                                <StackPanel Grid.Row="2" Grid.Column="2" Margin="0,0,0,12">
+                                    <TextBlock Text="Açıklama" Style="{StaticResource FormFieldLabelStyle}" />
+                                    <TextBox Text="{Binding Aciklama, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                </StackPanel>
 
-                <Border Style="{StaticResource CardBorderStyle}" Margin="0,16,0,0">
-                    <StackPanel>
-                        <TextBlock Text="Ürün İşlemleri"
-                                   FontSize="22"
-                                   FontWeight="Bold"
-                                   Foreground="{StaticResource TextDarkBrush}" />
-                        <CheckBox Content="Aktif ürün"
-                                  Margin="0,14,0,14"
-                                  IsChecked="True" />
+                                <StackPanel Grid.Row="3" Grid.Column="0" Margin="0,0,0,12">
+                                    <TextBlock Text="Stok" Style="{StaticResource FormFieldLabelStyle}" />
+                                    <TextBox Text="{Binding StokMiktari, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                </StackPanel>
+                                <StackPanel Grid.Row="3" Grid.Column="2" Margin="0,0,0,12">
+                                    <TextBlock Text="Kritik Stok" Style="{StaticResource FormFieldLabelStyle}" />
+                                    <TextBox Text="{Binding KritikStokSeviyesi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                </StackPanel>
 
-                        <UniformGrid Columns="4">
-                            <Button Content="Ekle" Margin="0,0,8,0" Style="{StaticResource PrimaryButtonStyle}" Click="BtnIslemIskeleti_Click" />
-                            <Button Content="Güncelle" Margin="0,0,8,0" Style="{StaticResource SecondaryButtonStyle}" Click="BtnIslemIskeleti_Click" />
-                            <Button Content="Sil" Margin="0,0,8,0" Style="{StaticResource SecondaryButtonStyle}" Click="BtnIslemIskeleti_Click" />
-                            <Button Content="Temizle" Style="{StaticResource SecondaryButtonStyle}" Click="BtnIslemIskeleti_Click" />
-                        </UniformGrid>
+                                <StackPanel Grid.Row="4" Grid.Column="0" Margin="0,0,0,12">
+                                    <TextBlock Text="Alış Fiyatı" Style="{StaticResource FormFieldLabelStyle}" />
+                                    <TextBox Text="{Binding AlisFiyati, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                </StackPanel>
+                                <StackPanel Grid.Row="4" Grid.Column="2">
+                                    <TextBlock Text="Satış Fiyatı" Style="{StaticResource FormFieldLabelStyle}" />
+                                    <TextBox Text="{Binding SatisFiyati, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
 
-                        <Button Content="Saklama Asistanı"
-                                Margin="0,16,0,0"
-                                HorizontalAlignment="Left"
+                    <Border Style="{StaticResource CardBorderStyle}" Margin="0,14,0,0">
+                        <StackPanel>
+                            <TextBlock Text="Ürün İşlemleri" Style="{StaticResource SectionTitleTextStyle}" />
+                            <CheckBox Content="Aktif ürün"
+                                      Margin="0,12,0,12"
+                                      IsChecked="{Binding AktifMi, Mode=TwoWay}" />
+
+                            <UniformGrid Columns="4">
+                                <Button Content="Ekle" Margin="0,0,8,0" Style="{StaticResource PrimaryButtonStyle}" Command="{Binding EkleCommand}" />
+                                <Button Content="Güncelle" Margin="0,0,8,0" Style="{StaticResource SecondaryButtonStyle}" Command="{Binding GuncelleCommand}" />
+                                <Button Content="Sil" Margin="0,0,8,0" Style="{StaticResource DangerSecondaryButtonStyle}" Command="{Binding SilCommand}" />
+                                <Button Content="Temizle" Style="{StaticResource SecondaryButtonStyle}" Command="{Binding TemizleCommand}" />
+                            </UniformGrid>
+
+                            <TextBlock Text="{Binding DurumMesaji}"
+                                       Margin="0,12,0,0"
+                                       Foreground="{StaticResource TextMutedBrush}"
+                                       FontSize="13"
+                                       TextWrapping="Wrap" />
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </ScrollViewer>
+
+            <Border Grid.Column="2" Style="{StaticResource CardBorderStyle}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Ürün Listesi"
+                                   Style="{StaticResource SectionTitleTextStyle}"
+                                   VerticalAlignment="Center" />
+                        <StackPanel Grid.Column="1"
+                                    Orientation="Horizontal"
+                                    VerticalAlignment="Center">
+                            <Button Content="⛶ Büyüt"
+                                    Margin="0,0,8,0"
+                                    MinWidth="100"
+                                    Style="{StaticResource SecondaryButtonStyle}"
+                                    Click="BtnUrunListesiBuyut_Click" />
+                            <Button Content="PDF Kaydet"
+                                    MinWidth="112"
+                                    Style="{StaticResource PrimaryButtonStyle}"
+                                    Click="BtnUrunListesiPdfKaydet_Click" />
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid Grid.Row="1" Margin="0,12,0,12">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="10" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="10" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="8" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="8" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Kategori Filtresi" Style="{StaticResource FormFieldLabelStyle}" />
+                            <ComboBox ItemsSource="{Binding KategoriFiltreleri}"
+                                      DisplayMemberPath="KategoriAdi"
+                                      SelectedItem="{Binding FiltreKategori, Mode=TwoWay}" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="Ürün Adı Filtresi" Style="{StaticResource FormFieldLabelStyle}" />
+                            <TextBox Text="{Binding UrunAdiFiltresi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </StackPanel>
+                        <Button Grid.Column="4"
+                                Content="Filtrele"
+                                VerticalAlignment="Bottom"
+                                MinWidth="96"
                                 Style="{StaticResource PrimaryButtonStyle}"
-                                Click="BtnSaklamaAsistani_Click" />
-                    </StackPanel>
-                </Border>
-            </StackPanel>
-        </ScrollViewer>
+                                Command="{Binding FiltreleCommand}" />
+                        <Button Grid.Column="6"
+                                Content="Filtre Temizle"
+                                VerticalAlignment="Bottom"
+                                MinWidth="112"
+                                Style="{StaticResource SecondaryButtonStyle}"
+                                Command="{Binding FiltreTemizleCommand}" />
+                        <Button Grid.Column="8"
+                                Content="Listele / Yenile"
+                                VerticalAlignment="Bottom"
+                                MinWidth="120"
+                                Style="{StaticResource SecondaryButtonStyle}"
+                                Command="{Binding ListeYenileCommand}" />
+                    </Grid>
 
-        <Border Grid.Column="2" Style="{StaticResource CardBorderStyle}">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-
-                <TextBlock Text="Ürün Listesi"
-                           FontSize="22"
-                           FontWeight="Bold"
-                           Foreground="{StaticResource TextDarkBrush}" />
-
-                <Grid Grid.Row="1" Margin="0,18,0,14">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="14" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="14" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-
-                    <StackPanel Grid.Column="0">
-                        <TextBlock Text="Kategori Filtresi" FontWeight="SemiBold" />
-                        <ComboBox ItemsSource="{Binding Kategoriler}" DisplayMemberPath="KategoriAdi" />
-                    </StackPanel>
-                    <StackPanel Grid.Column="2">
-                        <TextBlock Text="Ürün Adı Filtresi" FontWeight="SemiBold" />
-                        <TextBox />
-                    </StackPanel>
-                    <Button Grid.Column="4"
-                            Content="Listele / Yenile"
-                            VerticalAlignment="Bottom"
-                            Style="{StaticResource PrimaryButtonStyle}"
-                            Click="BtnListeYenile_Click" />
+                    <DataGrid Grid.Row="2"
+                              HorizontalScrollBarVisibility="Disabled"
+                              VerticalScrollBarVisibility="Auto"
+                              ItemsSource="{Binding Urunler}"
+                              SelectedItem="{Binding SeciliUrun, Mode=TwoWay}"
+                              AutoGenerateColumns="False"
+                              CanUserAddRows="False"
+                              IsReadOnly="True"
+                              HeadersVisibility="Column"
+                              GridLinesVisibility="Horizontal">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="48" />
+                            <DataGridTextColumn Header="Ürün Adı" Binding="{Binding UrunAdi}" Width="120" />
+                            <DataGridTextColumn Header="Barkod" Binding="{Binding Barkod}" Width="100" />
+                            <DataGridTextColumn Header="Birim" Binding="{Binding Birim}" Width="56" />
+                            <DataGridTextColumn Header="Stok" Binding="{Binding StokMiktari}" Width="56" />
+                            <DataGridTextColumn Header="Kritik" Binding="{Binding KritikStokSeviyesi}" Width="56" />
+                            <DataGridTextColumn Header="Alış" Binding="{Binding AlisFiyati}" Width="72" />
+                            <DataGridTextColumn Header="Satış" Binding="{Binding SatisFiyati}" Width="72" />
+                            <DataGridCheckBoxColumn Header="Aktif" Binding="{Binding AktifMi}" Width="52" />
+                            <DataGridTextColumn Header="Açıklama" Binding="{Binding Aciklama}" Width="*" MinWidth="80" />
+                        </DataGrid.Columns>
+                    </DataGrid>
                 </Grid>
-
-                <DataGrid Grid.Row="2"
-                          ItemsSource="{Binding Urunler}"
-                          AutoGenerateColumns="False"
-                          CanUserAddRows="False"
-                          IsReadOnly="True"
-                          HeadersVisibility="Column"
-                          GridLinesVisibility="Horizontal">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="60" />
-                        <DataGridTextColumn Header="Ürün Adı" Binding="{Binding UrunAdi}" Width="160" />
-                        <DataGridTextColumn Header="Barkod" Binding="{Binding Barkod}" Width="150" />
-                        <DataGridTextColumn Header="Birim" Binding="{Binding Birim}" Width="90" />
-                        <DataGridTextColumn Header="Stok" Binding="{Binding StokMiktari}" Width="80" />
-                        <DataGridTextColumn Header="Kritik Stok" Binding="{Binding KritikStokSeviyesi}" Width="100" />
-                        <DataGridTextColumn Header="Alış Fiyatı" Binding="{Binding AlisFiyati}" Width="100" />
-                        <DataGridTextColumn Header="Satış Fiyatı" Binding="{Binding SatisFiyati}" Width="100" />
-                        <DataGridTextColumn Header="Açıklama" Binding="{Binding Aciklama}" Width="*" />
-                    </DataGrid.Columns>
-                </DataGrid>
-            </Grid>
-        </Border>
+            </Border>
+        </Grid>
     </Grid>
 </UserControl>

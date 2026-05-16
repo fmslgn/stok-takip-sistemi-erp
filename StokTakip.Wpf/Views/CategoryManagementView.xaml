@@ -3,32 +3,46 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="360" />
+            <ColumnDefinition Width="380" />
             <ColumnDefinition Width="16" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
         <Border Style="{StaticResource CardBorderStyle}">
             <StackPanel>
-                <TextBlock Text="Kategori Yönetimi" FontSize="22" FontWeight="Bold" Foreground="{StaticResource TextDarkBrush}" />
-                <TextBlock Text="Ürün kategorilerini düzenli şekilde yönetin."
-                           Margin="0,6,0,18"
+                <TextBlock Text="Kategori Yönetimi" Style="{StaticResource SectionTitleTextStyle}" />
+                <TextBlock Text="Ürün kategorilerini düzenleyin ve takip edin."
+                           Margin="0,6,0,16"
+                           FontSize="13"
                            Foreground="{StaticResource TextMutedBrush}" />
 
-                <TextBlock Text="Kategori Adı" FontWeight="SemiBold" />
-                <TextBox Margin="0,4,0,12" />
+                <TextBlock Text="Kategori Adı" Style="{StaticResource FormFieldLabelStyle}" />
+                <TextBox Text="{Binding KategoriAdi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,12" />
 
-                <TextBlock Text="Açıklama" FontWeight="SemiBold" />
-                <TextBox Margin="0,4,0,12" Height="90" TextWrapping="Wrap" AcceptsReturn="True" VerticalContentAlignment="Top" />
+                <TextBlock Text="Açıklama" Style="{StaticResource FormFieldLabelStyle}" />
+                <TextBox Text="{Binding Aciklama, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         Margin="0,0,0,12"
+                         Height="88"
+                         TextWrapping="Wrap"
+                         AcceptsReturn="True"
+                         VerticalContentAlignment="Top" />
 
-                <CheckBox Content="Aktif mi?" IsChecked="True" Margin="0,4,0,18" />
+                <CheckBox Content="Aktif mi?"
+                          IsChecked="{Binding AktifMi, Mode=TwoWay}"
+                          Margin="0,4,0,16" />
 
                 <UniformGrid Columns="2">
-                    <Button Content="Ekle" Margin="0,0,8,8" Style="{StaticResource PrimaryButtonStyle}" Click="BtnIslemIskeleti_Click" />
-                    <Button Content="Güncelle" Margin="0,0,0,8" Style="{StaticResource SecondaryButtonStyle}" Click="BtnIslemIskeleti_Click" />
-                    <Button Content="Sil" Margin="0,0,8,0" Style="{StaticResource SecondaryButtonStyle}" Click="BtnIslemIskeleti_Click" />
-                    <Button Content="Temizle" Style="{StaticResource SecondaryButtonStyle}" Click="BtnIslemIskeleti_Click" />
+                    <Button Content="Ekle" Margin="0,0,8,8" Style="{StaticResource PrimaryButtonStyle}" Command="{Binding EkleCommand}" />
+                    <Button Content="Güncelle" Margin="0,0,0,8" Style="{StaticResource SecondaryButtonStyle}" Command="{Binding GuncelleCommand}" />
+                    <Button Content="Sil" Margin="0,0,8,0" Style="{StaticResource DangerSecondaryButtonStyle}" Command="{Binding SilCommand}" />
+                    <Button Content="Temizle" Style="{StaticResource SecondaryButtonStyle}" Command="{Binding TemizleCommand}" />
                 </UniformGrid>
+
+                <TextBlock Text="{Binding DurumMesaji}"
+                           Margin="0,12,0,0"
+                           FontSize="13"
+                           Foreground="{StaticResource TextMutedBrush}"
+                           TextWrapping="Wrap" />
             </StackPanel>
         </Border>
 
@@ -39,19 +53,42 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                <TextBlock Text="Kategori Listesi" FontSize="22" FontWeight="Bold" Foreground="{StaticResource TextDarkBrush}" />
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Kategori Listesi"
+                               Style="{StaticResource SectionTitleTextStyle}"
+                               VerticalAlignment="Center" />
+                    <Button Grid.Column="1"
+                            Content="Listele / Yenile"
+                            Margin="0,0,8,0"
+                            MinWidth="120"
+                            VerticalAlignment="Center"
+                            Style="{StaticResource SecondaryButtonStyle}"
+                            Command="{Binding ListeYenileCommand}" />
+                    <Button Grid.Column="2"
+                            Content="PDF Kaydet"
+                            MinWidth="112"
+                            VerticalAlignment="Center"
+                            Style="{StaticResource PrimaryButtonStyle}"
+                            Click="BtnKategoriListesiPdfKaydet_Click" />
+                </Grid>
                 <DataGrid Grid.Row="1"
-                          Margin="0,16,0,0"
+                          Margin="0,14,0,0"
                           ItemsSource="{Binding Kategoriler}"
+                          SelectedItem="{Binding SeciliKategori, Mode=TwoWay}"
                           AutoGenerateColumns="False"
                           CanUserAddRows="False"
                           IsReadOnly="True">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="60" />
-                        <DataGridTextColumn Header="Kategori Adı" Binding="{Binding KategoriAdi}" Width="180" />
-                        <DataGridTextColumn Header="Açıklama" Binding="{Binding Aciklama}" Width="*" />
-                        <DataGridCheckBoxColumn Header="Aktif" Binding="{Binding AktifMi}" Width="80" />
-                        <DataGridTextColumn Header="Oluşturma Tarihi" Binding="{Binding OlusturmaTarihi}" Width="170" />
+                        <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="52" />
+                        <DataGridTextColumn Header="Kategori Adı" Binding="{Binding KategoriAdi}" Width="160" />
+                        <DataGridTextColumn Header="Açıklama" Binding="{Binding Aciklama}" Width="*" MinWidth="100" />
+                        <DataGridCheckBoxColumn Header="Aktif" Binding="{Binding AktifMi}" Width="64" />
+                        <DataGridTextColumn Header="Oluşturma Tarihi" Binding="{Binding OlusturmaTarihi}" Width="150" />
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>

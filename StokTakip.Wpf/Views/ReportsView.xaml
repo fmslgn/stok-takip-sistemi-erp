@@ -3,95 +3,119 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel>
-            <Border Style="{StaticResource CardBorderStyle}" Margin="0,0,0,16">
+            <ProgressBar Height="4"
+                         Margin="0,0,0,8"
+                         IsIndeterminate="True">
+                <ProgressBar.Style>
+                    <Style TargetType="ProgressBar">
+                        <Setter Property="Visibility" Value="Collapsed" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsBusy}" Value="True">
+                                <Setter Property="Visibility" Value="Visible" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ProgressBar.Style>
+            </ProgressBar>
+            <Border Style="{StaticResource CardBorderStyle}" Margin="0,0,0,12">
                 <StackPanel>
                     <TextBlock Text="Raporlama"
-                               FontSize="24"
-                               FontWeight="Bold"
-                               Foreground="{StaticResource TextDarkBrush}" />
-                    <TextBlock Text="Toplam ürün, kritik stok ve toplam stok bilgilerini takip edin."
+                               Style="{StaticResource SectionTitleTextStyle}" />
+                    <TextBlock Text="Stok durumunu sayısal ve görsel raporlarla takip edin."
                                Margin="0,6,0,0"
+                               FontSize="13"
                                Foreground="{StaticResource TextMutedBrush}" />
                 </StackPanel>
             </Border>
 
-            <UniformGrid Columns="3">
-                <Border Style="{StaticResource CardBorderStyle}" Margin="0,0,12,0">
-                    <StackPanel>
-                        <TextBlock Text="Toplam Ürün" Foreground="{StaticResource TextMutedBrush}" />
-                        <TextBlock Text="{Binding ToplamUrun}" FontSize="32" FontWeight="Bold" Foreground="{StaticResource TextDarkBrush}" />
-                    </StackPanel>
-                </Border>
-                <Border Style="{StaticResource CardBorderStyle}" Margin="0,0,12,0">
-                    <StackPanel>
-                        <TextBlock Text="Kritik Stok" Foreground="{StaticResource TextMutedBrush}" />
-                        <TextBlock Text="{Binding KritikStok}" FontSize="32" FontWeight="Bold" Foreground="{StaticResource DangerBrush}" />
-                    </StackPanel>
-                </Border>
-                <Border Style="{StaticResource CardBorderStyle}">
-                    <StackPanel>
-                        <TextBlock Text="Toplam Stok" Foreground="{StaticResource TextMutedBrush}" />
-                        <TextBlock Text="{Binding ToplamStok}" FontSize="32" FontWeight="Bold" Foreground="{StaticResource TextDarkBrush}" />
-                    </StackPanel>
-                </Border>
-            </UniformGrid>
-
-            <Grid Margin="0,16,0,0">
+            <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0.65*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Border Grid.Column="0" Style="{StaticResource CardBorderStyle}" Padding="16" MinHeight="100" VerticalAlignment="Stretch">
+                    <StackPanel VerticalAlignment="Center">
+                        <TextBlock Text="Toplam Ürün" FontSize="13" Foreground="{StaticResource TextMutedBrush}" />
+                        <TextBlock Text="{Binding ToplamUrun}" Margin="0,6,0,0" FontSize="30" FontWeight="Bold" Foreground="{StaticResource TextDarkBrush}" />
+                    </StackPanel>
+                </Border>
+                <Border Grid.Column="2" Style="{StaticResource CardBorderStyle}" Padding="16" MinHeight="100" VerticalAlignment="Stretch">
+                    <StackPanel VerticalAlignment="Center">
+                        <TextBlock Text="Kritik Stok" FontSize="13" Foreground="{StaticResource TextMutedBrush}" />
+                        <TextBlock Text="{Binding KritikStok}" Margin="0,6,0,0" FontSize="30" FontWeight="Bold" Foreground="{StaticResource DangerBrush}" />
+                    </StackPanel>
+                </Border>
+                <Border Grid.Column="4" Style="{StaticResource CardBorderStyle}" Padding="16" MinHeight="100" VerticalAlignment="Stretch">
+                    <StackPanel VerticalAlignment="Center">
+                        <TextBlock Text="Toplam Stok" FontSize="13" Foreground="{StaticResource TextMutedBrush}" />
+                        <TextBlock Text="{Binding ToplamStok}" Margin="0,6,0,0" FontSize="30" FontWeight="Bold" Foreground="{StaticResource PrimaryBrush}" />
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <Grid Margin="0,12,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.64*" />
                     <ColumnDefinition Width="16" />
-                    <ColumnDefinition Width="0.35*" />
+                    <ColumnDefinition Width="0.36*" />
                 </Grid.ColumnDefinitions>
 
                 <Border Style="{StaticResource CardBorderStyle}">
                     <StackPanel>
                         <TextBlock Text="Görsel Rapor"
-                                   FontSize="22"
-                                   FontWeight="Bold"
-                                   Foreground="{StaticResource TextDarkBrush}" />
-                        <TextBlock Text="Stok durumunu ve kritik stok oranını görsel olarak takip edebilirsiniz."
-                                   Margin="0,6,0,18"
+                                   Style="{StaticResource SectionTitleTextStyle}" />
+                        <TextBlock Text="Kritik stok oranı turuncu; normal ürün dağılımı mor-mavi tonlarıyla gösterilir."
+                                   Margin="0,6,0,16"
+                                   FontSize="13"
+                                   TextWrapping="Wrap"
                                    Foreground="{StaticResource TextMutedBrush}" />
 
-                        <TextBlock Text="Kritik Stok Oranı" FontWeight="SemiBold" />
-                        <Grid Margin="0,6,0,16">
+                        <TextBlock Text="Kritik Stok Oranı" Style="{StaticResource FormFieldLabelStyle}" />
+                        <Grid Margin="0,4,0,14">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="90" />
+                                <ColumnDefinition Width="88" />
                             </Grid.ColumnDefinitions>
-                            <ProgressBar Minimum="0"
+                            <ProgressBar Style="{StaticResource ReportProgressWarningStyle}"
+                                         Minimum="0"
                                          Maximum="100"
-                                         Height="16"
                                          Value="{Binding KritikStokOrani, Mode=OneWay}" />
                             <TextBlock Grid.Column="1"
                                        Text="{Binding KritikStokOraniMetni, Mode=OneWay}"
                                        HorizontalAlignment="Right"
+                                       VerticalAlignment="Center"
+                                       FontSize="13"
                                        Foreground="{StaticResource TextMutedBrush}" />
                         </Grid>
 
-                        <TextBlock Text="Normal Ürün Dağılımı" FontWeight="SemiBold" />
-                        <Grid Margin="0,6,0,16">
+                        <TextBlock Text="Normal Ürün Dağılımı" Style="{StaticResource FormFieldLabelStyle}" />
+                        <Grid Margin="0,4,0,14">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="90" />
+                                <ColumnDefinition Width="88" />
                             </Grid.ColumnDefinitions>
-                            <ProgressBar Minimum="0"
+                            <ProgressBar Style="{StaticResource ReportProgressPrimaryStyle}"
+                                         Minimum="0"
                                          Maximum="100"
-                                         Height="16"
                                          Value="{Binding NormalUrunOrani, Mode=OneWay}" />
                             <TextBlock Grid.Column="1"
                                        Text="{Binding NormalUrunOraniMetni, Mode=OneWay}"
                                        HorizontalAlignment="Right"
+                                       VerticalAlignment="Center"
+                                       FontSize="13"
                                        Foreground="{StaticResource TextMutedBrush}" />
                         </Grid>
 
-                        <TextBlock Text="Toplam Stok Miktarı" FontWeight="SemiBold" />
+                        <TextBlock Text="Toplam Stok Miktarı" Style="{StaticResource FormFieldLabelStyle}" />
                         <Border Background="{StaticResource PrimarySoftBrush}"
                                 CornerRadius="12"
-                                Padding="18"
-                                Margin="0,8,0,0">
+                                Padding="16"
+                                Margin="0,6,0,0">
                             <TextBlock Text="{Binding ToplamStok}"
-                                       FontSize="30"
+                                       FontSize="28"
                                        FontWeight="Bold"
                                        Foreground="{StaticResource PrimaryBrush}" />
                         </Border>
@@ -101,22 +125,29 @@
                 <Border Grid.Column="2" Style="{StaticResource CardBorderStyle}">
                     <StackPanel>
                         <TextBlock Text="İşlem Paneli"
-                                   FontSize="22"
-                                   FontWeight="Bold"
-                                   Foreground="{StaticResource TextDarkBrush}" />
+                                   Style="{StaticResource SectionTitleTextStyle}" />
                         <TextBlock Text="Rapor kartlarını ve görsel göstergeleri güncelleyin."
-                                   Margin="0,6,0,18"
+                                   Margin="0,6,0,16"
+                                   FontSize="13"
                                    TextWrapping="Wrap"
                                    Foreground="{StaticResource TextMutedBrush}" />
                         <Button Content="Raporları Getir / Yenile"
+                                MinHeight="38"
                                 Style="{StaticResource PrimaryButtonStyle}"
                                 Command="{Binding YenileCommand}" />
+                        <Button Content="PDF Kaydet"
+                                Margin="0,10,0,0"
+                                MinHeight="36"
+                                Style="{StaticResource SecondaryButtonStyle}"
+                                Click="BtnRaporOzetiPdfKaydet_Click" />
                         <TextBlock Text="{Binding DurumMesaji}"
-                                   Margin="0,18,0,4"
+                                   Margin="0,16,0,4"
                                    FontWeight="SemiBold"
+                                   FontSize="13"
                                    Foreground="{StaticResource TextDarkBrush}"
                                    TextWrapping="Wrap" />
                         <TextBlock Text="{Binding SonGuncelleme}"
+                                   FontSize="12"
                                    Foreground="{StaticResource TextMutedBrush}"
                                    TextWrapping="Wrap" />
                     </StackPanel>

@@ -1,11 +1,12 @@
 using System.Windows;
 using System.Windows.Controls;
+using StokTakip.Wpf.Helpers;
 using StokTakip.Wpf.ViewModels;
 
 namespace StokTakip.Wpf.Views;
 
 /// <summary>
-/// Kategori kayıtlarını listeleyen ve kategori yönetimi için WPF form iskeleti sunan ekrandır.
+/// Kategori kayıtlarını Business katmanı üzerinden yöneten WPF ekranıdır.
 /// </summary>
 public partial class CategoryManagementView : UserControl
 {
@@ -15,11 +16,27 @@ public partial class CategoryManagementView : UserControl
     {
         InitializeComponent();
         DataContext = _viewModel;
-        _viewModel.Yukle();
+        Loaded += CategoryManagementView_Loaded;
     }
 
-    private void BtnIslemIskeleti_Click(object sender, RoutedEventArgs e)
+    private async void CategoryManagementView_Loaded(object sender, RoutedEventArgs e)
     {
-        MessageBox.Show("Kategori işlemleri WPF tarafında sonraki aşamada Business katmanına bağlanacaktır.", "Bilgi", MessageBoxButton.OK, MessageBoxImage.Information);
+        Loaded -= CategoryManagementView_Loaded;
+
+        try
+        {
+            await _viewModel.YukleAsync().ConfigureAwait(true);
+        }
+        catch (Exception ex)
+        {
+            DialogHelper.ShowWarning($"Kategori listesi yüklenirken hata: {ex.Message}", "Kategori Yönetimi", Window.GetWindow(this));
+        }
+    }
+
+    /// <summary>Kategori listesini PDF olarak dışa aktarır.</summary>
+    private void BtnKategoriListesiPdfKaydet_Click(object sender, RoutedEventArgs e)
+    {
+        var owner = Window.GetWindow(this);
+        PdfExportHelper.KategoriListesiniPdfKaydet(owner!, _viewModel.Kategoriler, "Kategori yönetimi ekranındaki kategori listesi.");
     }
 }

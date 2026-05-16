@@ -3,75 +3,180 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel>
+            <ProgressBar Height="4"
+                         Margin="0,0,0,8"
+                         IsIndeterminate="True">
+                <ProgressBar.Style>
+                    <Style TargetType="ProgressBar">
+                        <Setter Property="Visibility" Value="Collapsed" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsBusy}" Value="True">
+                                <Setter Property="Visibility" Value="Visible" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ProgressBar.Style>
+            </ProgressBar>
             <Border Style="{StaticResource CardBorderStyle}">
                 <StackPanel>
                     <TextBlock Text="Ana Menü"
-                               FontSize="28"
+                               FontSize="26"
                                FontWeight="Bold"
                                Foreground="{StaticResource TextDarkBrush}" />
                     <TextBlock Text="Stoklarını düzenle, işini kolaylaştır."
-                               Margin="0,6,0,20"
-                               FontSize="15"
+                               Margin="0,4,0,14"
+                               FontSize="14"
                                Foreground="{StaticResource TextMutedBrush}" />
 
-                    <UniformGrid Columns="4">
-                        <Border Style="{StaticResource CardBorderStyle}" Margin="0,0,12,0" Padding="18">
-                            <StackPanel>
-                                <TextBlock Text="Toplam Ürün" Foreground="{StaticResource TextMutedBrush}" />
-                                <TextBlock Text="{Binding ToplamUrun}" FontSize="30" FontWeight="Bold" Foreground="{StaticResource TextDarkBrush}" />
+                    <Grid MinHeight="112">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="8" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="8" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0"
+                                Style="{StaticResource CardBorderStyle}"
+                                Padding="16"
+                                VerticalAlignment="Stretch">
+                            <StackPanel VerticalAlignment="Center">
+                                <TextBlock Text="Toplam Ürün" FontSize="13" Foreground="{StaticResource TextMutedBrush}" />
+                                <TextBlock Margin="0,6,0,0"
+                                           Text="{Binding ToplamUrun}"
+                                           FontSize="28"
+                                           FontWeight="Bold"
+                                           Foreground="{StaticResource TextDarkBrush}" />
                             </StackPanel>
                         </Border>
-                        <Border Style="{StaticResource CardBorderStyle}" Margin="0,0,12,0" Padding="18">
-                            <StackPanel>
-                                <TextBlock Text="Kritik Stok" Foreground="{StaticResource TextMutedBrush}" />
-                                <TextBlock Text="{Binding KritikStok}" FontSize="30" FontWeight="Bold" Foreground="{StaticResource DangerBrush}" />
+                        <Border Grid.Column="2"
+                                Style="{StaticResource CardBorderStyle}"
+                                Padding="16"
+                                VerticalAlignment="Stretch">
+                            <StackPanel VerticalAlignment="Center">
+                                <TextBlock Text="Kritik Stok" FontSize="13" Foreground="{StaticResource TextMutedBrush}" />
+                                <TextBlock Margin="0,6,0,0"
+                                           Text="{Binding KritikStok}"
+                                           FontSize="28"
+                                           FontWeight="Bold"
+                                           Foreground="{StaticResource DangerBrush}" />
                             </StackPanel>
                         </Border>
-                        <Border Style="{StaticResource CardBorderStyle}" Margin="0,0,12,0" Padding="18">
-                            <StackPanel>
-                                <TextBlock Text="Toplam Stok" Foreground="{StaticResource TextMutedBrush}" />
-                                <TextBlock Text="{Binding ToplamStok}" FontSize="30" FontWeight="Bold" Foreground="{StaticResource TextDarkBrush}" />
+                        <Border Grid.Column="4"
+                                Style="{StaticResource CardBorderStyle}"
+                                Padding="16"
+                                VerticalAlignment="Stretch">
+                            <StackPanel VerticalAlignment="Center">
+                                <TextBlock Text="Toplam Stok" FontSize="13" Foreground="{StaticResource TextMutedBrush}" />
+                                <TextBlock Margin="0,6,0,0"
+                                           Text="{Binding ToplamStok}"
+                                           FontSize="28"
+                                           FontWeight="Bold"
+                                           Foreground="{StaticResource TextDarkBrush}" />
                             </StackPanel>
                         </Border>
-                        <Border Style="{StaticResource CardBorderStyle}" Padding="18">
-                            <StackPanel>
-                                <TextBlock Text="Saklama Asistanı" Foreground="{StaticResource TextMutedBrush}" />
-                                <TextBlock Text="{Binding SaklamaAsistaniDurumu}" FontSize="30" FontWeight="Bold" Foreground="{StaticResource PrimaryBrush}" />
-                            </StackPanel>
-                        </Border>
-                    </UniformGrid>
+                    </Grid>
                 </StackPanel>
             </Border>
 
-            <Border Style="{StaticResource CardBorderStyle}" Margin="0,16,0,0">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
+            <Border Style="{StaticResource CardBorderStyle}" Margin="0,10,0,0">
+                <StackPanel>
+                    <TextBlock Text="Hızlı Erişim"
+                               Style="{StaticResource SectionTitleTextStyle}"
+                               FontSize="20" />
+                    <TextBlock Margin="0,4,0,0"
+                               TextWrapping="Wrap"
+                               Foreground="{StaticResource TextMutedBrush}"
+                               FontSize="13"
+                               Text="Sık kullanılan modüllere tek tıkla geçin; sol menü vurgusu güncellenir." />
 
-                    <StackPanel Margin="0,0,14,0">
-                        <TextBlock Text="Hızlı Erişim"
-                                   FontSize="20"
-                                   FontWeight="Bold"
-                                   Foreground="{StaticResource TextDarkBrush}" />
-                        <TextBlock Text="Sol menüden ürün yönetimi ve raporlama ekranlarına geçiş yapabilirsiniz."
-                                   Margin="0,8,0,0"
-                                   TextWrapping="Wrap"
-                                   Foreground="{StaticResource TextMutedBrush}" />
-                    </StackPanel>
-
-                    <StackPanel Grid.Column="1">
-                        <TextBlock Text="WPF Arayüz Durumu"
-                                   FontSize="20"
-                                   FontWeight="Bold"
-                                   Foreground="{StaticResource TextDarkBrush}" />
-                        <TextBlock Text="Bu katman WinForms sürümünü koruyarak modern masaüstü ERP arayüzü için hazırlanmıştır."
-                                   Margin="0,8,0,0"
-                                   TextWrapping="Wrap"
-                                   Foreground="{StaticResource TextMutedBrush}" />
-                    </StackPanel>
-                </Grid>
+                    <UniformGrid Columns="3" Margin="0,10,-6,-6">
+                        <Button Style="{StaticResource DashboardQuickAccessCardButtonStyle}"
+                                Click="HizliErisimUrun_Click">
+                            <StackPanel>
+                                <TextBlock Text="Ürün Yönetimi"
+                                           FontSize="15"
+                                           FontWeight="SemiBold"
+                                           Foreground="{StaticResource TextDarkBrush}" />
+                                <TextBlock Margin="0,6,0,0"
+                                           FontSize="12"
+                                           TextWrapping="Wrap"
+                                           Foreground="{StaticResource TextMutedBrush}"
+                                           Text="Ürün ekleme, güncelleme ve listeleme işlemleri." />
+                            </StackPanel>
+                        </Button>
+                        <Button Style="{StaticResource DashboardQuickAccessCardButtonStyle}"
+                                Click="HizliErisimKategori_Click">
+                            <StackPanel>
+                                <TextBlock Text="Kategori Yönetimi"
+                                           FontSize="15"
+                                           FontWeight="SemiBold"
+                                           Foreground="{StaticResource TextDarkBrush}" />
+                                <TextBlock Margin="0,6,0,0"
+                                           FontSize="12"
+                                           TextWrapping="Wrap"
+                                           Foreground="{StaticResource TextMutedBrush}"
+                                           Text="Ürün gruplarını düzenleyin ve takip edin." />
+                            </StackPanel>
+                        </Button>
+                        <Button Style="{StaticResource DashboardQuickAccessCardButtonStyle}"
+                                Click="HizliErisimStokGiris_Click">
+                            <StackPanel>
+                                <TextBlock Text="Stok Giriş"
+                                           FontSize="15"
+                                           FontWeight="SemiBold"
+                                           Foreground="{StaticResource TextDarkBrush}" />
+                                <TextBlock Margin="0,6,0,0"
+                                           FontSize="12"
+                                           TextWrapping="Wrap"
+                                           Foreground="{StaticResource TextMutedBrush}"
+                                           Text="Depoya yeni stok girişi yapın." />
+                            </StackPanel>
+                        </Button>
+                        <Button Style="{StaticResource DashboardQuickAccessCardButtonStyle}"
+                                Click="HizliErisimStokCikis_Click">
+                            <StackPanel>
+                                <TextBlock Text="Stok Çıkış"
+                                           FontSize="15"
+                                           FontWeight="SemiBold"
+                                           Foreground="{StaticResource TextDarkBrush}" />
+                                <TextBlock Margin="0,6,0,0"
+                                           FontSize="12"
+                                           TextWrapping="Wrap"
+                                           Foreground="{StaticResource TextMutedBrush}"
+                                           Text="Çıkış ve sevkiyat için stok düşürün." />
+                            </StackPanel>
+                        </Button>
+                        <Button Style="{StaticResource DashboardQuickAccessCardButtonStyle}"
+                                Click="HizliErisimKritik_Click">
+                            <StackPanel>
+                                <TextBlock Text="Kritik Stok"
+                                           FontSize="15"
+                                           FontWeight="SemiBold"
+                                           Foreground="{StaticResource TextDarkBrush}" />
+                                <TextBlock Margin="0,6,0,0"
+                                           FontSize="12"
+                                           TextWrapping="Wrap"
+                                           Foreground="{StaticResource TextMutedBrush}"
+                                           Text="Eşik altındaki ürünleri görüntüleyin." />
+                            </StackPanel>
+                        </Button>
+                        <Button Style="{StaticResource DashboardQuickAccessCardButtonStyle}"
+                                Click="HizliErisimRapor_Click">
+                            <StackPanel>
+                                <TextBlock Text="Raporlama"
+                                           FontSize="15"
+                                           FontWeight="SemiBold"
+                                           Foreground="{StaticResource TextDarkBrush}" />
+                                <TextBlock Margin="0,6,0,0"
+                                           FontSize="12"
+                                           TextWrapping="Wrap"
+                                           Foreground="{StaticResource TextMutedBrush}"
+                                           Text="Stok durumunu görsel raporlarla takip edin." />
+                            </StackPanel>
+                        </Button>
+                    </UniformGrid>
+                </StackPanel>
             </Border>
         </StackPanel>
     </ScrollViewer>

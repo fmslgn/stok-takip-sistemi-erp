@@ -6,6 +6,7 @@ namespace StokTakip.Wpf.ViewModels;
 
 /// <summary>
 /// Raporlama ekranında sayısal kartları ve görsel oranları Business katmanından gelen verilerle yönetir.
+/// RaporManager cagrilari Task.Run ile arka planda calistirildigi icin UI thread donmaz.
 /// </summary>
 public class ReportsViewModel : ViewModelBase
 {
@@ -21,7 +22,8 @@ public class ReportsViewModel : ViewModelBase
 
     public ReportsViewModel()
     {
-        YenileCommand = new RelayCommand(_ => RaporlariYukle());
+        // Yenileme islemi veritabani cagrisini UI thread disina tasir.
+        YenileCommand = new AsyncRelayCommand(RaporlariYukleAsync, () => !IsBusy);
     }
 
     public ICommand YenileCommand { get; }
@@ -117,29 +119,45 @@ public class ReportsViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Rapor kartlarını Business katmanındaki RaporManager metotlarıyla güvenli şekilde yükler.
+    /// Rapor kartlarini Business katmanindan async yukler; baglanti sorununda sifir deger ve aciklama mesaji uretir.
     /// </summary>
-    public void RaporlariYukle()
+    public async Task RaporlariYukleAsync()
     {
+        IsBusy = true;
+        DurumMesaji = "Raporlar yükleniyor...";
+
         try
         {
             var raporManager = new RaporManager();
-            ToplamUrun = Math.Max(0, raporManager.ToplamUrunSayisiGetir());
-            KritikStok = Math.Max(0, raporManager.KritikStokUrunSayisiGetir());
-            ToplamStok = Math.Max(0, raporManager.ToplamStokMiktariGetir());
-            DurumMesaji = "Raporlar başarıyla güncellendi.";
-        }
-        catch
-        {
-            // Veri alınamazsa ekran kapanmaz; rapor kartları güvenli varsayılan değerlerle gösterilir.
-            ToplamUrun = 0;
-            KritikStok = 0;
-            ToplamStok = 0;
-            DurumMesaji = "Rapor verileri alınamadı.";
-        }
+            var sonuc = await Task.Run(() =>
+            {
+                try
+                {
+                    return (
+                        Math.Max(0, raporManager.ToplamUrunSayisiGetir()),
+                        Math.Max(0, raporManager.KritikStokUrunSayisiGetir()),
+                        Math.Max(0, raporManager.ToplamStokMiktariGetir()),
+                        true);
+                }
+                catch
+                {
+                    return (0, 0, 0, false);
+                }
+            }).ConfigureAwait(true);
 
-        OranlariGuncelle();
-        SonGuncelleme = $"Son güncelleme: {DateTime.Now:dd.MM.yyyy HH:mm}";
+            ToplamUrun = sonuc.Item1;
+            KritikStok = sonuc.Item2;
+            ToplamStok = sonuc.Item3;
+            DurumMesaji = sonuc.Item4
+                ? "Raporlar başarıyla güncellendi."
+                : "Veritabanı bağlantısı kurulamadı. Lütfen PostgreSQL sunucusunu kontrol edin.";
+        }
+        finally
+        {
+            OranlariGuncelle();
+            SonGuncelleme = $"Son güncelleme: {DateTime.Now:dd.MM.yyyy HH:mm}";
+            IsBusy = false;
+        }
     }
 
     /// <summary>

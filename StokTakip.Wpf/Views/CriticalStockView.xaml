@@ -5,37 +5,51 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <StackPanel>
-                <TextBlock Text="Kritik Stok" FontSize="24" FontWeight="Bold" Foreground="{StaticResource TextDarkBrush}" />
-                <TextBlock Text="Kritik stok seviyesine düşen ürünleri görüntüleyin."
-                           Margin="0,6,0,0"
-                           Foreground="{StaticResource TextMutedBrush}" />
-            </StackPanel>
+            <Grid Margin="0,0,0,12">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock Text="Kritik Stok" Style="{StaticResource SectionTitleTextStyle}" />
+                    <TextBlock Text="Kritik seviyeye düşen ürünleri görüntüleyin."
+                               Margin="0,6,0,0"
+                               FontSize="13"
+                               Foreground="{StaticResource TextMutedBrush}" />
+                </StackPanel>
+                <StackPanel Grid.Column="1"
+                            Orientation="Horizontal"
+                            VerticalAlignment="Center">
+                    <Button Content="PDF Kaydet"
+                            MinWidth="112"
+                            Margin="0,0,10,0"
+                            Style="{StaticResource SecondaryButtonStyle}"
+                            Click="BtnKritikStokPdfKaydet_Click" />
+                    <Button Content="Listele / Yenile"
+                            MinWidth="140"
+                            Style="{StaticResource PrimaryButtonStyle}"
+                            Command="{Binding YenileCommand}" />
+                </StackPanel>
+            </Grid>
 
-            <Button Grid.Row="1"
-                    Content="Listele / Yenile"
-                    Margin="0,18,0,14"
-                    HorizontalAlignment="Left"
-                    Style="{StaticResource PrimaryButtonStyle}"
-                    Click="BtnYenile_Click" />
-
-            <DataGrid Grid.Row="2"
+            <DataGrid Grid.Row="1"
+                      RowBackground="{StaticResource CriticalStockRowSoftBrush}"
+                      AlternatingRowBackground="#FFF8F1"
                       ItemsSource="{Binding KritikUrunler}"
                       AutoGenerateColumns="False"
                       CanUserAddRows="False"
                       IsReadOnly="True">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="60" />
-                    <DataGridTextColumn Header="Ürün Adı" Binding="{Binding UrunAdi}" Width="180" />
-                    <DataGridTextColumn Header="Barkod" Binding="{Binding Barkod}" Width="150" />
-                    <DataGridTextColumn Header="Birim" Binding="{Binding Birim}" Width="90" />
-                    <DataGridTextColumn Header="Stok" Binding="{Binding StokMiktari}" Width="90" />
-                    <DataGridTextColumn Header="Kritik Stok" Binding="{Binding KritikStokSeviyesi}" Width="110" />
-                    <DataGridTextColumn Header="Açıklama" Binding="{Binding Aciklama}" Width="*" />
+                    <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="48" />
+                    <DataGridTextColumn Header="Ürün Adı" Binding="{Binding UrunAdi}" Width="140" />
+                    <DataGridTextColumn Header="Barkod" Binding="{Binding Barkod}" Width="110" />
+                    <DataGridTextColumn Header="Birim" Binding="{Binding Birim}" Width="56" />
+                    <DataGridTextColumn Header="Stok" Binding="{Binding StokMiktari}" Width="64" />
+                    <DataGridTextColumn Header="Kritik Stok" Binding="{Binding KritikStokSeviyesi}" Width="88" />
+                    <DataGridTextColumn Header="Açıklama" Binding="{Binding Aciklama}" Width="*" MinWidth="80" />
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>

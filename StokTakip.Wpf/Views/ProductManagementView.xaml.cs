@@ -1,11 +1,12 @@
 using System.Windows;
 using System.Windows.Controls;
+using StokTakip.Wpf.Helpers;
 using StokTakip.Wpf.ViewModels;
 
 namespace StokTakip.Wpf.Views;
 
 /// <summary>
-/// WPF ürün yönetimi ekranının modern form ve liste iskeletini gösterir.
+/// WPF Ürün Yönetimi ekranında ViewModel bağlaması ve veri yükleme işlemlerini yürütür.
 /// </summary>
 public partial class ProductManagementView : UserControl
 {
@@ -15,24 +16,44 @@ public partial class ProductManagementView : UserControl
     {
         InitializeComponent();
         DataContext = _viewModel;
-
-        // Ürün, kategori ve saklama koşulu listeleri Business katmanından yüklenir.
-        _viewModel.Yukle();
+        Loaded += ProductManagementView_Loaded;
     }
 
-    private void BtnListeYenile_Click(object sender, RoutedEventArgs e)
+    /// <summary>
+    /// Ürün, kategori ve saklama koşulu listelerini UI thread'i kilitlemeden yükler.
+    /// </summary>
+    private async void ProductManagementView_Loaded(object sender, RoutedEventArgs e)
     {
-        // WPF liste yenileme işlemi UI içinde SQL yazmadan manager üzerinden yapılır.
-        _viewModel.Yukle();
+        Loaded -= ProductManagementView_Loaded;
+
+        try
+        {
+            await _viewModel.YukleAsync().ConfigureAwait(true);
+        }
+        catch (Exception ex)
+        {
+            DialogHelper.ShowWarning(
+                $"Ürün yönetimi verileri yüklenirken beklenmeyen bir hata oluştu: {ex.Message}",
+                "Ürün Yönetimi",
+                Window.GetWindow(this));
+        }
     }
 
-    private void BtnIslemIskeleti_Click(object sender, RoutedEventArgs e)
+    /// <summary>Filtrelenmiş ürün listesini ayrı salt okunur pencerede büyütür.</summary>
+    private void BtnUrunListesiBuyut_Click(object sender, RoutedEventArgs e)
     {
-        MessageBox.Show("Bu işlem WPF tarafında sonraki aşamada Business katmanına bağlanacaktır.", "Bilgi", MessageBoxButton.OK, MessageBoxImage.Information);
+        var owner = Window.GetWindow(this);
+        var pencere = new ProductListPreviewWindow(_viewModel.Urunler)
+        {
+            Owner = owner
+        };
+        pencere.Show();
     }
 
-    private void BtnSaklamaAsistani_Click(object sender, RoutedEventArgs e)
+    /// <summary>Ürün yönetiminde görünen (filtrelenmiş) listeyi PDF olarak kaydeder.</summary>
+    private void BtnUrunListesiPdfKaydet_Click(object sender, RoutedEventArgs e)
     {
-        MessageBox.Show("Saklama Asistanı WPF tarafında sonraki aşamada detaylandırılacaktır.", "Saklama Asistanı", MessageBoxButton.OK, MessageBoxImage.Information);
+        var owner = Window.GetWindow(this);
+        PdfExportHelper.UrunListesiniPdfKaydet(owner!, _viewModel.Urunler, "Ürün yönetimi ekranındaki mevcut ürün listesi.");
     }
 }

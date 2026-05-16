@@ -1,5 +1,6 @@
 using System.Windows;
 using System.Windows.Controls;
+using StokTakip.Wpf.Helpers;
 using StokTakip.Wpf.ViewModels;
 
 namespace StokTakip.Wpf.Views;
@@ -15,15 +16,33 @@ public partial class ReportsView : UserControl
     {
         InitializeComponent();
         DataContext = _viewModel;
+        Loaded += ReportsView_Loaded;
+    }
+
+    /// <summary>
+    /// Rapor verilerini UI thread'i kilitlemeden arka planda yukler.
+    /// </summary>
+    private async void ReportsView_Loaded(object sender, RoutedEventArgs e)
+    {
+        Loaded -= ReportsView_Loaded;
 
         try
         {
-            // Rapor ekranı açılır açılmaz değerler Business katmanından güvenli şekilde yüklenir.
-            _viewModel.RaporlariYukle();
+            await _viewModel.RaporlariYukleAsync().ConfigureAwait(true);
         }
-        catch
+        catch (Exception ex)
         {
-            MessageBox.Show("Raporlama ekranı açılırken bir hata oluştu.", "Raporlama", MessageBoxButton.OK, MessageBoxImage.Warning);
+            DialogHelper.ShowWarning(
+                $"Raporlama ekranı açılırken bir hata oluştu: {ex.Message}",
+                "Raporlama",
+                Window.GetWindow(this));
         }
+    }
+
+    /// <summary>Rapor kartlarındaki özet sayıları ve oranları PDF olarak dışa aktarır.</summary>
+    private void BtnRaporOzetiPdfKaydet_Click(object sender, RoutedEventArgs e)
+    {
+        var owner = Window.GetWindow(this);
+        PdfExportHelper.RaporOzetiPdfKaydet(owner!, _viewModel);
     }
 }

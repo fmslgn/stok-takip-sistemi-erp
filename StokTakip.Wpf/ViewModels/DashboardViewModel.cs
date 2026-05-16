@@ -4,11 +4,10 @@ namespace StokTakip.Wpf.ViewModels;
 
 /// <summary>
 /// Ana menu kartlarinda gosterilecek ozet stok degerlerini Business katmanindan yukler.
+/// Agir RaporManager cagrilari Task.Run ile arka planda calistirilarak UI thread donmasi onlenir.
 /// </summary>
 public class DashboardViewModel : ViewModelBase
 {
-    private readonly RaporManager _raporManager = new();
-
     private int _toplamUrun;
     private int _kritikStok;
     private int _toplamStok;
@@ -43,21 +42,37 @@ public class DashboardViewModel : ViewModelBase
         }
     }
 
-    public string SaklamaAsistaniDurumu => "Hazır";
-
-    public void Yukle()
+    /// <summary>
+    /// Dashboard kartlarini veritabanindan async yukler; baglanti hatasinda sifir degerleri gosterir.
+    /// </summary>
+    public async Task YukleAsync()
     {
+        IsBusy = true;
         try
         {
-            ToplamUrun = _raporManager.ToplamUrunSayisiGetir();
-            KritikStok = _raporManager.KritikStokUrunSayisiGetir();
-            ToplamStok = _raporManager.ToplamStokMiktariGetir();
+            var rapor = new RaporManager();
+            var sonuc = await Task.Run(() =>
+            {
+                try
+                {
+                    return (
+                        rapor.ToplamUrunSayisiGetir(),
+                        rapor.KritikStokUrunSayisiGetir(),
+                        rapor.ToplamStokMiktariGetir());
+                }
+                catch
+                {
+                    return (0, 0, 0);
+                }
+            }).ConfigureAwait(true);
+
+            ToplamUrun = sonuc.Item1;
+            KritikStok = sonuc.Item2;
+            ToplamStok = sonuc.Item3;
         }
-        catch
+        finally
         {
-            ToplamUrun = 0;
-            KritikStok = 0;
-            ToplamStok = 0;
+            IsBusy = false;
         }
     }
 }

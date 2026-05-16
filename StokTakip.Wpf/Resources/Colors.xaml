@@ -1,22 +1,52 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Color x:Key="AppBackgroundColor">#F4F7FB</Color>
+    <!-- Genel ERP masaustu paleti: acik gri zemin, beyaz kart, mor-mavi vurgu -->
+    <Color x:Key="AppBackgroundColor">#ECEFF4</Color>
     <Color x:Key="CardBackgroundColor">#FFFFFF</Color>
     <Color x:Key="PrimaryColor">#4F46E5</Color>
+    <Color x:Key="PrimaryDarkColor">#4338CA</Color>
     <Color x:Key="PrimarySoftColor">#EEF2FF</Color>
     <Color x:Key="TextDarkColor">#0F172A</Color>
     <Color x:Key="TextMutedColor">#64748B</Color>
     <Color x:Key="BorderColor">#E2E8F0</Color>
+    <Color x:Key="InputBorderColor">#DDE3EA</Color>
+    <Color x:Key="SidebarHoverColor">#E2E8F0</Color>
+    <!-- Sol menu: aktif mor-mavi, pasif acik -->
+    <Color x:Key="SidebarMenuActiveBackgroundColor">#4F46E5</Color>
+    <Color x:Key="SidebarMenuActiveBorderColor">#4338CA</Color>
+    <Color x:Key="SidebarMenuHoverPassiveColor">#EEF2FF</Color>
+    <Color x:Key="SidebarMenuActiveHoverBackgroundColor">#4338CA</Color>
+    <!-- Cikis butonu -->
+    <Color x:Key="ExitButtonBackgroundColor">#FEE2E2</Color>
+    <Color x:Key="ExitButtonHoverBackgroundColor">#FECACA</Color>
+    <Color x:Key="ExitButtonHoverBorderColor">#F87171</Color>
     <Color x:Key="SuccessColor">#16A34A</Color>
     <Color x:Key="DangerColor">#DC2626</Color>
+    <!-- Kritik stok listesi: cok hafif sicak zemin; rapor cubuklari -->
+    <Color x:Key="CriticalStockRowSoftColor">#FFF7ED</Color>
+    <Color x:Key="ReportBarWarningColor">#FB923C</Color>
+    <Color x:Key="DataGridSelectedRowColor">#EEF2FF</Color>
 
     <SolidColorBrush x:Key="AppBackgroundBrush" Color="{StaticResource AppBackgroundColor}" />
     <SolidColorBrush x:Key="CardBackgroundBrush" Color="{StaticResource CardBackgroundColor}" />
     <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource PrimaryColor}" />
+    <SolidColorBrush x:Key="PrimaryDarkBrush" Color="{StaticResource PrimaryDarkColor}" />
     <SolidColorBrush x:Key="PrimarySoftBrush" Color="{StaticResource PrimarySoftColor}" />
     <SolidColorBrush x:Key="TextDarkBrush" Color="{StaticResource TextDarkColor}" />
     <SolidColorBrush x:Key="TextMutedBrush" Color="{StaticResource TextMutedColor}" />
     <SolidColorBrush x:Key="BorderBrush" Color="{StaticResource BorderColor}" />
+    <SolidColorBrush x:Key="InputBorderBrush" Color="{StaticResource InputBorderColor}" />
+    <SolidColorBrush x:Key="SidebarHoverBrush" Color="{StaticResource SidebarHoverColor}" />
+    <SolidColorBrush x:Key="SidebarMenuActiveBackgroundBrush" Color="{StaticResource SidebarMenuActiveBackgroundColor}" />
+    <SolidColorBrush x:Key="SidebarMenuActiveBorderBrush" Color="{StaticResource SidebarMenuActiveBorderColor}" />
+    <SolidColorBrush x:Key="SidebarMenuHoverPassiveBrush" Color="{StaticResource SidebarMenuHoverPassiveColor}" />
+    <SolidColorBrush x:Key="SidebarMenuActiveHoverBackgroundBrush" Color="{StaticResource SidebarMenuActiveHoverBackgroundColor}" />
+    <SolidColorBrush x:Key="ExitButtonBackgroundBrush" Color="{StaticResource ExitButtonBackgroundColor}" />
+    <SolidColorBrush x:Key="ExitButtonHoverBackgroundBrush" Color="{StaticResource ExitButtonHoverBackgroundColor}" />
+    <SolidColorBrush x:Key="ExitButtonHoverBorderBrush" Color="{StaticResource ExitButtonHoverBorderColor}" />
     <SolidColorBrush x:Key="SuccessBrush" Color="{StaticResource SuccessColor}" />
     <SolidColorBrush x:Key="DangerBrush" Color="{StaticResource DangerColor}" />
+    <SolidColorBrush x:Key="CriticalStockRowSoftBrush" Color="{StaticResource CriticalStockRowSoftColor}" />
+    <SolidColorBrush x:Key="ReportBarWarningBrush" Color="{StaticResource ReportBarWarningColor}" />
+    <SolidColorBrush x:Key="DataGridSelectedRowBrush" Color="{StaticResource DataGridSelectedRowColor}" />
 </ResourceDictionary>

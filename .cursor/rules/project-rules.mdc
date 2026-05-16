@@ -1,0 +1,92 @@
+---
+description: Stok takip ERP (C# masaüstü) proje kuralları — katmanlı mimari, WPF ana arayüz, WinForms koruma, iş akışı ve kod standartları.
+alwaysApply: true
+---
+
+# Stok Takip ERP — Proje Kuralları
+
+Bu kurallar `AGENTS.md` ve `CODEX_PROJECT_RULES.md` ile uyumludur; Cursor ajanı bu depoda çalışırken bunlara uymalıdır.
+
+## Zorunlu kurallar (özet liste)
+
+- Proje C# masaüstü ERP stok takip sistemidir.
+- Yeni ana arayüz StokTakip.Wpf üzerinden geliştirilecektir.
+- StokTakip.WinForms eski çalışan sürüm olarak korunacaktır.
+- WinForms projesi silinmeyecek ve gereksiz yere değiştirilmeyecektir.
+- Katmanlı mimari korunacaktır:
+  - StokTakip.Entities
+  - StokTakip.DataAccess
+  - StokTakip.Business
+  - StokTakip.Wpf
+- WPF UI içinde SQL sorgusu yazılmayacaktır.
+- WPF UI doğrudan DataAccess kullanmayacaktır.
+- WPF UI sadece Business/Manager sınıflarını çağıracaktır.
+- Business katmanı DataAccess katmanını kullanacaktır.
+- DataAccess PostgreSQL bağlantısını yönetecektir.
+- Mevcut çalışan Login, Dashboard, Raporlama ve menü geçişleri bozulmayacaktır.
+- Her işlemden önce ilgili dosyalar taranacaktır.
+- Eksik önemli Türkçe açıklama satırları eklenecektir.
+- Gereksiz yorum kalabalığı yapılmayacaktır.
+- Her geliştirme sonunda dotnet build başarılı kalmalıdır.
+- GitHub’a push işlemi şimdilik yapılmayacaktır.
+- Çalışan aşamalar sadece lokal commit ile kaydedilecektir.
+
+## Proje tanımı ve arayüz stratejisi
+
+- Proje **C# masaüstü ERP stok takip** sistemidir; veritabanı **PostgreSQL** kullanır.
+- **Yeni ana arayüz** `StokTakip.Wpf` üzerinden geliştirilecektir.
+- `StokTakip.WinForms` **eski çalışan sürüm** olarak korunacaktır; WinForms projesi **silinmeyecek** ve gereksiz yere değiştirilmeyecektir.
+- WinForms tarafı için geçerli olan katman ve SQL kuralları (aşağıda) korunur; yeni özellikler öncelikle WPF’e eklenir.
+
+## Katmanlı mimari
+
+Aşağıdaki katmanlar korunacaktır:
+
+- `StokTakip.Entities`
+- `StokTakip.DataAccess`
+- `StokTakip.Business`
+- `StokTakip.Wpf` (yeni ana UI)
+- `StokTakip.WinForms` (mevcut referans / eski sürüm; korunur)
+
+## Veri erişimi ve SQL (WPF ve WinForms UI)
+
+- **WPF UI içinde SQL sorgusu yazılmayacaktır.**
+- **WPF UI doğrudan DataAccess kullanmayacaktır.**
+- **WPF UI yalnızca Business/Manager sınıflarını** çağıracaktır.
+- WinForms içinde doğrudan SQL yazılmayacak; WinForms da yalnızca Business/Manager kullanacaktır.
+- **Business** katmanı **DataAccess** katmanını kullanacaktır.
+- **DataAccess** PostgreSQL bağlantısını yönetecektir.
+- SQL sorguları **parametreli** olacaktır.
+- Bağlantılar mümkün olduğunda **`using`** ile kapatılacaktır.
+
+## Çalışan özellikler ve UI
+
+- Mevcut çalışan **Login**, **Dashboard**, **Raporlama** ve **menü geçişleri** bozulmayacaktır.
+- CODEX/AGENTS kapsamındaki modüller (kategori, ürün, stok giriş/çıkış, kritik stok vb.) çalışır halde korunmalıdır.
+- Mevcut **UI/UX** (form düzeni, renkler, buton yerleşimi, kullanıcı deneyimi) bozulmayacaktır; yeni kontroller mevcut tasarımla uyumlu olacaktır.
+- Form başlıkları ve buton metinleri anlaşılır olmalı; Türkçe karakterler doğru kullanılmalıdır.
+- Kullanıcıya hata/başarı için uygun geri bildirim (ör. MessageBox veya WPF’de eşdeğeri) verilmelidir.
+
+## Saklama koşulu / öneri modülü
+
+- Gerçek API zorunlu değildir; kural tabanlı akıllı öneri kabul edilebilir.
+- Ürün ve kategori adına göre saklama önerisi; Türkçe karakterli/karaktersiz girdileri dikkate alma.
+- Öneriler kullanıcıya anlaşılır Türkçe metinle sunulmalıdır.
+
+## Çalışma disiplini
+
+- **Her işlemden önce** ilgili dosyalar ve klasör yapısı taranacak; ilgili Entity, DataAccess, Business ve UI dosyaları incelenmeden değişiklik yapılmayacaktır.
+- Eksik **önemli Türkçe açıklama** satırları eklenecektir; önemli sınıf, metot ve event’lere gerektiğinde kısa açıklama eklenecektir.
+- **Gereksiz yorum kalabalığı** yapılmayacaktır; her satıra yorum yazılmayacaktır.
+- DbHelper, DAL, Manager ve Entity sınıflarında açıklayıcı yorumlar bulunmalıdır (öğrenci sunumuna uygun, sade dil).
+
+## README ve depo temizliği
+
+- Yeni özellik eklendiğinde `README.md`’ye kısa not eklenebilir; kurulum ve proje amacı bölümleri korunmalıdır.
+- Gereksiz zip, geçici dosya veya gereksiz `bin/obj` commit’i eklenmemelidir.
+
+## Derleme ve Git
+
+- **Her geliştirme sonunda** `dotnet build` **başarılı** kalmalıdır.
+- **GitHub’a push** işlemi **şimdilik yapılmayacaktır.**
+- Çalışan aşamalar **yalnızca lokal commit** ile kaydedilecektir.

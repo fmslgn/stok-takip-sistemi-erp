@@ -1,6 +1,8 @@
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 using StokTakip.Business;
 using StokTakip.Entities;
+using StokTakip.Wpf.Helpers;
 
 namespace StokTakip.Wpf.ViewModels;
 
@@ -11,22 +13,45 @@ public class CriticalStockViewModel : ViewModelBase
 {
     private readonly UrunManager _urunManager = new();
 
+    public CriticalStockViewModel()
+    {
+        // Liste yenileme veritabani cagrisini UI thread disina tasir.
+        YenileCommand = new AsyncRelayCommand(YukleAsync, () => !IsBusy);
+    }
+
+    public ICommand YenileCommand { get; }
+
     public ObservableCollection<Urun> KritikUrunler { get; } = new();
 
-    public void Yukle()
+    /// <summary>
+    /// Kritik stoktaki urunleri async yukler; baglanti hatasinda liste bos kalir.
+    /// </summary>
+    public async Task YukleAsync()
     {
-        KritikUrunler.Clear();
-
+        IsBusy = true;
         try
         {
-            foreach (var urun in _urunManager.GetKritikStoktakiler())
+            var liste = await Task.Run(() =>
+            {
+                try
+                {
+                    return _urunManager.GetKritikStoktakiler().ToList();
+                }
+                catch
+                {
+                    return new List<Urun>();
+                }
+            }).ConfigureAwait(true);
+
+            KritikUrunler.Clear();
+            foreach (var urun in liste)
             {
                 KritikUrunler.Add(urun);
             }
         }
-        catch
+        finally
         {
-            // Bağlantı sorunu varsa ekran boş listeyle çalışmaya devam eder.
+            IsBusy = false;
         }
     }
 }

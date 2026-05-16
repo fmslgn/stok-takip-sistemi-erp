@@ -1,5 +1,7 @@
 using System.Windows;
+using System.Windows.Input;
 using StokTakip.Business;
+using StokTakip.Wpf.Helpers;
 using StokTakip.Entities;
 
 namespace StokTakip.Wpf;
@@ -10,22 +12,29 @@ namespace StokTakip.Wpf;
 public partial class LoginWindow : Window
 {
     private readonly KullaniciManager _kullaniciManager = new();
+    private bool _girisIsleniyor;
 
     public LoginWindow()
     {
         InitializeComponent();
     }
 
-    private void BtnGiris_Click(object sender, RoutedEventArgs e)
+    private async void BtnGiris_Click(object sender, RoutedEventArgs e)
     {
+        if (_girisIsleniyor)
+        {
+            return;
+        }
+
+        GirisYukleniyorDurumunuAyarla(true);
+
         try
         {
             string kullaniciAdi = TxtKullaniciAdi.Text.Trim();
             string sifre = PwdSifre.Password;
 
-            // WPF UI dogrudan SQL yazmaz; giris kontrolunu Business katmanina devreder.
-            Kullanici? kullanici = _kullaniciManager.LoginKontrol(kullaniciAdi, sifre);
-            if (kullanici is null && kullaniciAdi == "admin" && sifre == "1234")
+            Kullanici? kullanici = null;
+            if (kullaniciAdi == "admin" && sifre == "1234")
             {
                 kullanici = new Kullanici
                 {
@@ -36,10 +45,15 @@ public partial class LoginWindow : Window
                     AktifMi = true
                 };
             }
+            else
+            {
+                // Login kontrolu veritabanina gider; UI thread donmamasi icin arka planda calistirilir.
+                kullanici = await Task.Run(() => _kullaniciManager.LoginKontrol(kullaniciAdi, sifre)).ConfigureAwait(true);
+            }
 
             if (kullanici is null)
             {
-                MessageBox.Show("Kullanıcı adı veya şifre hatalı.", "Giriş Başarısız", MessageBoxButton.OK, MessageBoxImage.Warning);
+                DialogHelper.ShowWarning("Kullanıcı adı veya şifre hatalı.", "Giriş Başarısız", this);
                 return;
             }
 
@@ -69,8 +83,28 @@ public partial class LoginWindow : Window
                 return;
             }
 
-            MessageBox.Show($"Giriş yapılırken bir hata oluştu: {ex.Message}", "Hata", MessageBoxButton.OK, MessageBoxImage.Error);
+            DialogHelper.ShowError($"Giriş yapılırken bir hata oluştu: {ex.Message}", owner: this);
         }
+        finally
+        {
+            if (IsLoaded)
+            {
+                GirisYukleniyorDurumunuAyarla(false);
+            }
+        }
+    }
+
+    /// <summary>Giris sirasinda buton metni, imlec ve alan kilidini yonetir.</summary>
+    private void GirisYukleniyorDurumunuAyarla(bool yukleniyor)
+    {
+        _girisIsleniyor = yukleniyor;
+        BtnGiris.IsEnabled = !yukleniyor;
+        BtnCikis.IsEnabled = !yukleniyor;
+        TxtKullaniciAdi.IsEnabled = !yukleniyor;
+        PwdSifre.IsEnabled = !yukleniyor;
+        BtnGiris.Content = yukleniyor ? "Yükleniyor..." : "Giriş Yap";
+        TxtGirisDurumu.Visibility = yukleniyor ? Visibility.Visible : Visibility.Collapsed;
+        Cursor = yukleniyor ? Cursors.Wait : Cursors.Arrow;
     }
 
     private void BtnCikis_Click(object sender, RoutedEventArgs e)

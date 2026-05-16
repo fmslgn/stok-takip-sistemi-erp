@@ -2,6 +2,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Threading;
+using StokTakip.Wpf.Helpers;
+using QuestPDF.Infrastructure;
 
 namespace StokTakip.Wpf;
 
@@ -15,6 +17,15 @@ public partial class App : Application
         DispatcherUnhandledException += App_DispatcherUnhandledException;
     }
 
+    /// <summary>
+    /// QuestPDF topluluk lisansını uygulama başında ayarlar; PDF üretimi öncesinde zorunludur.
+    /// </summary>
+    protected override void OnStartup(StartupEventArgs e)
+    {
+        QuestPDF.Settings.License = LicenseType.Community;
+        base.OnStartup(e);
+    }
+
     private void App_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
     {
         // Global hata yakalama, beklenmeyen WPF hatalarında uygulamanın kapanmasını engeller.
@@ -23,7 +34,7 @@ public partial class App : Application
         Console.WriteLine(hataDetayi);
         HataLogunaYaz(hataDetayi);
 
-        MessageBox.Show("Beklenmeyen bir hata oluştu.", "Hata", MessageBoxButton.OK, MessageBoxImage.Error);
+        DialogHelper.ShowError("Beklenmeyen bir hata oluştu.");
         e.Handled = true;
     }
 

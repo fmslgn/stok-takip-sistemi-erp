@@ -6,6 +6,7 @@ namespace StokTakip.Wpf.ViewModels;
 
 /// <summary>
 /// Stok çıkış ekranında ürünleri ve çıkış hareketlerini Business katmanından yükler.
+/// Veri cekme islemleri Task.Run ile arka planda yapilir.
 /// </summary>
 public class StockExitViewModel : ViewModelBase
 {
@@ -15,46 +16,82 @@ public class StockExitViewModel : ViewModelBase
     public ObservableCollection<Urun> Urunler { get; } = new();
     public ObservableCollection<StokCikis> StokCikislari { get; } = new();
 
-    public void Yukle()
+    /// <summary>
+    /// Urun ve stok cikis listelerini async yukler; baglanti hatasinda listeler bos kalir.
+    /// </summary>
+    /// <param name="isBusyYonet">False ise IsBusy bayragi dis katman tarafindan yonetilir.</param>
+    public async Task YukleAsync(bool isBusyYonet = true)
     {
-        Urunler.Clear();
-        StokCikislari.Clear();
+        if (isBusyYonet)
+        {
+            IsBusy = true;
+        }
 
         try
         {
-            foreach (var urun in _urunManager.GetAll())
+            var sonuc = await Task.Run(() =>
+            {
+                try
+                {
+                    return (_urunManager.GetAll().ToList(), _stokCikisManager.GetAll().ToList());
+                }
+                catch
+                {
+                    return (new List<Urun>(), new List<StokCikis>());
+                }
+            }).ConfigureAwait(true);
+
+            Urunler.Clear();
+            foreach (var urun in sonuc.Item1)
             {
                 Urunler.Add(urun);
             }
 
-            foreach (var hareket in _stokCikisManager.GetAll())
+            StokCikislari.Clear();
+            foreach (var hareket in sonuc.Item2)
             {
                 StokCikislari.Add(hareket);
             }
         }
-        catch
+        finally
         {
-            // Veri alınamazsa ekran form iskeletiyle çalışmaya devam eder.
+            if (isBusyYonet)
+            {
+                IsBusy = false;
+            }
         }
     }
 
-    public void StokCikisiKaydet(Urun? urun, int miktar, string aciklama, DateTime tarih)
+    /// <summary>
+    /// Stok cikisi kaydeder ve listeyi yeniden yukler.
+    /// </summary>
+    public async Task StokCikisiKaydetAsync(Urun? urun, int miktar, string aciklama, DateTime tarih)
     {
         if (urun is null)
         {
-            throw new ArgumentException("Ürün seçilmelidir.");
+            throw new ArgumentException("Lütfen ürün seçiniz.");
         }
 
-        // Yetersiz stok kontrolü ve stok azaltma Business katmanındaki manager içinde yapılır.
-        _stokCikisManager.Add(new StokCikis
+        IsBusy = true;
+        try
         {
-            UrunId = urun.Id,
-            KullaniciId = 1,
-            Miktar = miktar,
-            Aciklama = aciklama,
-            CikisTarihi = tarih
-        });
+            await Task.Run(() =>
+            {
+                _stokCikisManager.Add(new StokCikis
+                {
+                    UrunId = urun.Id,
+                    KullaniciId = 1,
+                    Miktar = miktar,
+                    Aciklama = aciklama,
+                    CikisTarihi = tarih
+                });
+            }).ConfigureAwait(true);
 
-        Yukle();
+            await YukleAsync(isBusyYonet: false).ConfigureAwait(true);
+        }
+        finally
+        {
+            IsBusy = false;
+        }
     }
 }

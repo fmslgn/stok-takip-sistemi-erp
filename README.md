@@ -63,6 +63,20 @@ Bu modül, kullanıcı tarafından girilen ürün adı ve kategori bilgisine gö
 
 Login sonrası kullanıcıyı karşılayan Ana Menü ekranında sistem modüllerine hızlı erişim ve temel özet kartları bulunur.
 
+## WPF Liste Büyütme ve PDF Çıktı
+
+WPF arayüzünde ürün listesi büyütülebilir pencereyle görüntülenebilir hale getirilmiştir. Ürün, kullanıcı, kategori, stok giriş, stok çıkış, kritik stok ve raporlama ekranlarındaki listeler PDF olarak kaydedilebilir.
+
+PDF üretimi için `StokTakip.Wpf` projesine **QuestPDF** NuGet paketi eklenmiştir (topluluk lisansı).
+
+## WPF Ana Menü Hızlı Erişim
+
+Ana Menü ekranına kullanıcıların Ürün Yönetimi, Kategori Yönetimi, Stok Giriş, Stok Çıkış, Kritik Stok ve Raporlama ekranlarına hızlı geçiş yapabilmesi için hızlı erişim kartları eklenmiştir.
+
+## WPF arayüzünde Saklama Asistanı ve dashboard sadeleştirme
+
+WPF arayüzünde Saklama Asistanı modülü kaldırılmış, dashboard ekranı sadeleştirilmiştir. Sol menü, ana menü özet kartları ve hızlı erişimde bu modüle yönlendirme bulunmaz; Business katmanındaki saklama önerisi sınıfları korunur.
+
 ## Ana Menü ve Saklama Önerisi UI Düzenlemesi
 
 Uygulamada login sonrası kullanıcıyı karşılayan Ana Menü / Dashboard ekranı yer alır. Ürün Yönetimi ekranında saklama koşulu önerisi ve öneri revize alanları daha okunabilir şekilde düzenlenmiştir.
@@ -81,7 +95,7 @@ Raporlama ekranında toplam ürün, kritik stok ve toplam stok bilgileri sayısa
 
 ## Saklama Asistanı Chatbot
 
-Ürün Yönetimi ekranında yer alan chat ikonu ile Saklama Asistanı açılır. Kullanıcı ürün adı, kategori ve barkod bilgisine göre saklama önerisi alabilir; öneriyi daha kısa, daha detaylı veya güvenlik uyarısı içerecek şekilde chatbot üzerinden tartışabilir. Sistem API key gerektirmeden kural tabanlı akıllı cevap mantığıyla çalışır.
+WPF Ürün Yönetimi ekranından açılan Saklama Asistanı sohbet arayüzü kaldırılmıştır. Kural tabanlı saklama önerisi iş mantığı Business katmanında durmaya devam eder; WinForms tarafındaki ilgili formlar korunur.
 
 ## Ürün Yönetimi Ekranı UI Düzeni
 
@@ -93,7 +107,11 @@ Projeye modern masaüstü ERP arayüzü için `StokTakip.Wpf` katmanı eklenmiş
 
 ## WPF Modül Ekranları
 
-`StokTakip.Wpf` projesine Kullanıcı Yönetimi, Kategori Yönetimi, Stok Giriş, Stok Çıkış, Kritik Stok ve Saklama Asistanı ekranları eklenmiştir. WPF arayüzü Business katmanı üzerinden çalışacak şekilde tasarlanmıştır. WinForms sürümü eski çalışan arayüz olarak korunmuştur.
+`StokTakip.Wpf` projesine Kullanıcı Yönetimi, Kategori Yönetimi, Stok Giriş, Stok Çıkış, Kritik Stok ve Raporlama ekranları eklenmiştir. WPF arayüzü Business katmanı üzerinden çalışacak şekilde tasarlanmıştır. WinForms sürümü eski çalışan arayüz olarak korunmuştur.
+
+## WPF Ürün Yönetimi
+
+WPF Ürün Yönetimi ekranı Business katmanı üzerinden ürün listeleme, ekleme, güncelleme, silme, temizleme ve filtreleme işlemlerini destekleyecek şekilde geliştirilmiştir.
 
 ## Veritabani
 

@@ -1,6 +1,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using StokTakip.Entities;
+using StokTakip.Wpf.Helpers;
 using StokTakip.Wpf.ViewModels;
 
 namespace StokTakip.Wpf.Views;
@@ -17,27 +18,49 @@ public partial class StockEntryView : UserControl
         InitializeComponent();
         DataContext = _viewModel;
         DpTarih.SelectedDate = DateTime.Today;
-        _viewModel.Yukle();
+        Loaded += StockEntryView_Loaded;
     }
 
-    private void BtnKaydet_Click(object sender, RoutedEventArgs e)
+    private async void StockEntryView_Loaded(object sender, RoutedEventArgs e)
+    {
+        Loaded -= StockEntryView_Loaded;
+
+        try
+        {
+            await _viewModel.YukleAsync().ConfigureAwait(true);
+        }
+        catch (Exception ex)
+        {
+            DialogHelper.ShowWarning($"Stok giriş verileri yüklenirken hata: {ex.Message}", "Stok Giriş", Window.GetWindow(this));
+        }
+    }
+
+    private async void BtnKaydet_Click(object sender, RoutedEventArgs e)
     {
         try
         {
-            if (!int.TryParse(TxtMiktar.Text, out int miktar))
+            var owner = Window.GetWindow(this);
+
+            // Placeholder secili degilken kayit engellenir.
+            if (CmbUrun.SelectedItem is not Urun seciliUrun)
             {
-                MessageBox.Show("Giriş miktarı sayısal olmalıdır.", "Uyarı", MessageBoxButton.OK, MessageBoxImage.Warning);
+                DialogHelper.ShowWarning("Lütfen ürün seçiniz.", owner: owner);
                 return;
             }
 
-            // Kayıt işlemi WPF içinde SQL yazmadan StokGirisManager üzerinden yürür.
-            _viewModel.StokGirisiKaydet(CmbUrun.SelectedItem as Urun, miktar, TxtAciklama.Text, DpTarih.SelectedDate ?? DateTime.Now);
-            MessageBox.Show("Stok girişi kaydedildi.", "Başarılı", MessageBoxButton.OK, MessageBoxImage.Information);
+            if (!int.TryParse(TxtMiktar.Text, out int miktar))
+            {
+                DialogHelper.ShowWarning("Giriş miktarı sayısal olmalıdır.", owner: owner);
+                return;
+            }
+
+            await _viewModel.StokGirisiKaydetAsync(seciliUrun, miktar, TxtAciklama.Text, DpTarih.SelectedDate ?? DateTime.Now).ConfigureAwait(true);
+            DialogHelper.ShowSuccess("Stok girişi kaydedildi.", owner: Window.GetWindow(this));
             Temizle();
         }
         catch (Exception ex)
         {
-            MessageBox.Show(ex.Message, "Stok Giriş Hatası", MessageBoxButton.OK, MessageBoxImage.Warning);
+            DialogHelper.ShowWarning(ex.Message, "Stok Giriş Hatası", Window.GetWindow(this));
         }
     }
 
@@ -52,5 +75,12 @@ public partial class StockEntryView : UserControl
         TxtMiktar.Clear();
         TxtAciklama.Clear();
         DpTarih.SelectedDate = DateTime.Today;
+    }
+
+    /// <summary>Stok giriş hareketleri listesini (DataGrid kaynağı) PDF olarak dışa aktarır.</summary>
+    private void BtnStokGirisHareketleriPdfKaydet_Click(object sender, RoutedEventArgs e)
+    {
+        var owner = Window.GetWindow(this);
+        PdfExportHelper.StokGirisHareketleriniPdfKaydet(owner!, _viewModel.StokGirisleri);
     }
 }

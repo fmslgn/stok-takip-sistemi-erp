@@ -6,7 +6,7 @@
         Height="560"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize">
-    <Grid Background="{StaticResource AppBackgroundBrush}">
+    <Grid Background="{DynamicResource AppBackgroundBrush}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1.1*" />
             <ColumnDefinition Width="0.9*" />
@@ -16,21 +16,21 @@
             <TextBlock Text="SYA Stok Takip Sistemi"
                        FontSize="32"
                        FontWeight="Bold"
-                       Foreground="{StaticResource TextDarkBrush}" />
+                       Foreground="{DynamicResource TextDarkBrush}" />
             <TextBlock Text="Kurumsal stok takip giriş ekranı"
                        Margin="0,12,0,0"
                        FontSize="16"
-                       Foreground="{StaticResource TextMutedBrush}" />
+                       Foreground="{DynamicResource TextMutedBrush}" />
             <Border Style="{StaticResource CardBorderStyle}" Margin="0,36,0,0" Padding="20">
                 <StackPanel>
                     <TextBlock Text="ERP stok yönetimi"
                                FontSize="18"
                                FontWeight="SemiBold"
-                               Foreground="{StaticResource TextDarkBrush}" />
+                               Foreground="{DynamicResource TextDarkBrush}" />
                     <TextBlock Text="Ürün, stok, kritik seviye ve rapor modüllerine modern masaüstü arayüzünden erişin."
                                Margin="0,8,0,0"
                                TextWrapping="Wrap"
-                               Foreground="{StaticResource TextMutedBrush}" />
+                               Foreground="{DynamicResource TextMutedBrush}" />
                 </StackPanel>
             </Border>
         </StackPanel>
@@ -44,10 +44,10 @@
                 <TextBlock Text="Giriş Yap"
                            FontSize="24"
                            FontWeight="Bold"
-                           Foreground="{StaticResource TextDarkBrush}" />
+                           Foreground="{DynamicResource TextDarkBrush}" />
                 <TextBlock Text="Kullanıcı bilgilerinizi giriniz."
                            Margin="0,6,0,24"
-                           Foreground="{StaticResource TextMutedBrush}" />
+                           Foreground="{DynamicResource TextMutedBrush}" />
 
                 <TextBlock Text="Kullanıcı adı" Style="{StaticResource FormFieldLabelStyle}" />
                 <TextBox x:Name="TxtKullaniciAdi" Margin="0,0,0,16" Text="admin" />
@@ -60,7 +60,7 @@
                            Visibility="Collapsed"
                            Margin="0,0,0,12"
                            FontSize="12"
-                           Foreground="{StaticResource PrimaryBrush}" />
+                           Foreground="{DynamicResource PrimaryBrush}" />
 
                 <Button x:Name="BtnGiris"
                         Content="Giriş Yap"

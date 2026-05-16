@@ -7,7 +7,7 @@
         MinWidth="1180"
         MinHeight="720"
         WindowStartupLocation="CenterScreen">
-    <Grid Background="{StaticResource AppBackgroundBrush}">
+    <Grid Background="{DynamicResource AppBackgroundBrush}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="288" />
             <ColumnDefinition Width="*" />
@@ -16,8 +16,8 @@
         <!-- Sol sidebar: marka, menu ve kullanici alani -->
         <Border Grid.Column="0"
                 Margin="16,16,12,16"
-                Background="{StaticResource CardBackgroundBrush}"
-                BorderBrush="{StaticResource BorderBrush}"
+                Background="{DynamicResource SidebarBackgroundBrush}"
+                BorderBrush="{DynamicResource BorderBrush}"
                 BorderThickness="1"
                 CornerRadius="16"
                 Padding="0">
@@ -33,29 +33,34 @@
                     <Border Height="4"
                             Width="40"
                             HorizontalAlignment="Left"
-                            Background="{StaticResource PrimaryBrush}"
+                            Background="{DynamicResource PrimaryBrush}"
                             CornerRadius="2"
                             Margin="0,0,0,12" />
                     <TextBlock Text="SYA"
                                FontSize="26"
                                FontWeight="Bold"
-                               Foreground="{StaticResource TextDarkBrush}" />
+                               Foreground="{DynamicResource TextDarkBrush}" />
                     <TextBlock Text="Stoklarını düzenle, işini kolaylaştır."
                                Margin="0,6,0,0"
                                FontSize="13"
                                LineHeight="18"
                                TextWrapping="Wrap"
-                               Foreground="{StaticResource TextMutedBrush}" />
+                               Foreground="{DynamicResource TextMutedBrush}" />
                 </StackPanel>
 
                 <Border DockPanel.Dock="Bottom"
-                        BorderBrush="{StaticResource BorderBrush}"
+                        BorderBrush="{DynamicResource BorderBrush}"
                         BorderThickness="0,1,0,0"
                         Padding="20,14">
                     <StackPanel>
+                        <Button x:Name="BtnToggleTheme"
+                                Content="Koyu Tema"
+                                Margin="0,0,0,10"
+                                Style="{StaticResource SecondaryButtonStyle}"
+                                Click="BtnToggleTheme_Click" />
                         <TextBlock Text="{Binding AktifKullaniciBilgisi}"
                                    FontSize="12"
-                                   Foreground="{StaticResource TextMutedBrush}"
+                                   Foreground="{DynamicResource TextMutedBrush}"
                                    TextWrapping="Wrap"
                                    Margin="0,0,0,10" />
                         <Button x:Name="BtnExit"
@@ -71,7 +76,7 @@
                         <TextBlock Text="MENÜ"
                                    FontSize="11"
                                    FontWeight="SemiBold"
-                                   Foreground="{StaticResource TextMutedBrush}"
+                                   Foreground="{DynamicResource TextMutedBrush}"
                                    Margin="8,4,8,6" />
                         <Button x:Name="BtnNavDashboard"
                                 Content="Ana Menü"
@@ -128,23 +133,23 @@
                                    Text="Ana Menü"
                                    FontSize="22"
                                    FontWeight="Bold"
-                                   Foreground="{StaticResource TextDarkBrush}" />
+                                   Foreground="{DynamicResource TextDarkBrush}" />
                         <TextBlock x:Name="TxtSayfaAciklamasi"
                                    Text="Stok durumunuzu ve modüllere hızlı erişimi buradan takip edin."
                                    Margin="0,4,0,0"
                                    FontSize="13"
                                    TextWrapping="Wrap"
-                                   Foreground="{StaticResource TextMutedBrush}" />
+                                   Foreground="{DynamicResource TextMutedBrush}" />
                     </StackPanel>
                     <Border Grid.Column="1"
-                            Background="{StaticResource PrimarySoftBrush}"
+                            Background="{DynamicResource PrimarySoftBrush}"
                             CornerRadius="10"
                             Padding="12,6"
                             VerticalAlignment="Center">
                         <TextBlock Text="WPF"
                                    FontSize="12"
                                    FontWeight="Bold"
-                                   Foreground="{StaticResource PrimaryBrush}" />
+                                   Foreground="{DynamicResource PrimaryBrush}" />
                     </Border>
                 </Grid>
             </Border>

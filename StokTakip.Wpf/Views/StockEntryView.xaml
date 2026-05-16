@@ -1,7 +1,8 @@
 <UserControl x:Class="StokTakip.Wpf.Views.StockEntryView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:helpers="clr-namespace:StokTakip.Wpf.Helpers">
+             xmlns:helpers="clr-namespace:StokTakip.Wpf.Helpers"
+             xmlns:controls="clr-namespace:StokTakip.Wpf.Controls">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="380" />
@@ -15,7 +16,7 @@
                 <TextBlock Text="Depoya giren ürün miktarlarını kaydedin."
                            Margin="0,6,0,16"
                            FontSize="13"
-                           Foreground="{StaticResource TextMutedBrush}" />
+                           Foreground="{DynamicResource TextMutedBrush}" />
 
                 <TextBlock Text="Ürün Seçimi" Style="{StaticResource FormFieldLabelStyle}" />
                 <ComboBox x:Name="CmbUrun"
@@ -36,7 +37,7 @@
                          VerticalContentAlignment="Top" />
 
                 <TextBlock Text="Tarih" Style="{StaticResource FormFieldLabelStyle}" />
-                <DatePicker x:Name="DpTarih" Margin="0,0,0,16" />
+                <controls:ThemedDatePicker x:Name="DpTarih" Margin="0,0,0,16" />
 
                 <Button Content="Stok Girişi Kaydet"
                         MinHeight="38"

@@ -22,11 +22,11 @@
                     <TextBlock Text="Ana Menü"
                                FontSize="26"
                                FontWeight="Bold"
-                               Foreground="{StaticResource TextDarkBrush}" />
+                               Foreground="{DynamicResource TextDarkBrush}" />
                     <TextBlock Text="Stoklarını düzenle, işini kolaylaştır."
                                Margin="0,4,0,14"
                                FontSize="14"
-                               Foreground="{StaticResource TextMutedBrush}" />
+                               Foreground="{DynamicResource TextMutedBrush}" />
 
                     <Grid MinHeight="112">
                         <Grid.ColumnDefinitions>
@@ -41,12 +41,12 @@
                                 Padding="16"
                                 VerticalAlignment="Stretch">
                             <StackPanel VerticalAlignment="Center">
-                                <TextBlock Text="Toplam Ürün" FontSize="13" Foreground="{StaticResource TextMutedBrush}" />
+                                <TextBlock Text="Toplam Ürün" FontSize="13" Foreground="{DynamicResource TextMutedBrush}" />
                                 <TextBlock Margin="0,6,0,0"
                                            Text="{Binding ToplamUrun}"
                                            FontSize="28"
                                            FontWeight="Bold"
-                                           Foreground="{StaticResource TextDarkBrush}" />
+                                           Foreground="{DynamicResource TextDarkBrush}" />
                             </StackPanel>
                         </Border>
                         <Border Grid.Column="2"
@@ -54,12 +54,12 @@
                                 Padding="16"
                                 VerticalAlignment="Stretch">
                             <StackPanel VerticalAlignment="Center">
-                                <TextBlock Text="Kritik Stok" FontSize="13" Foreground="{StaticResource TextMutedBrush}" />
+                                <TextBlock Text="Kritik Stok" FontSize="13" Foreground="{DynamicResource TextMutedBrush}" />
                                 <TextBlock Margin="0,6,0,0"
                                            Text="{Binding KritikStok}"
                                            FontSize="28"
                                            FontWeight="Bold"
-                                           Foreground="{StaticResource DangerBrush}" />
+                                           Foreground="{DynamicResource DangerBrush}" />
                             </StackPanel>
                         </Border>
                         <Border Grid.Column="4"
@@ -67,12 +67,12 @@
                                 Padding="16"
                                 VerticalAlignment="Stretch">
                             <StackPanel VerticalAlignment="Center">
-                                <TextBlock Text="Toplam Stok" FontSize="13" Foreground="{StaticResource TextMutedBrush}" />
+                                <TextBlock Text="Toplam Stok" FontSize="13" Foreground="{DynamicResource TextMutedBrush}" />
                                 <TextBlock Margin="0,6,0,0"
                                            Text="{Binding ToplamStok}"
                                            FontSize="28"
                                            FontWeight="Bold"
-                                           Foreground="{StaticResource TextDarkBrush}" />
+                                           Foreground="{DynamicResource TextDarkBrush}" />
                             </StackPanel>
                         </Border>
                     </Grid>
@@ -86,7 +86,7 @@
                                FontSize="20" />
                     <TextBlock Margin="0,4,0,0"
                                TextWrapping="Wrap"
-                               Foreground="{StaticResource TextMutedBrush}"
+                               Foreground="{DynamicResource TextMutedBrush}"
                                FontSize="13"
                                Text="Sık kullanılan modüllere tek tıkla geçin; sol menü vurgusu güncellenir." />
 
@@ -97,11 +97,11 @@
                                 <TextBlock Text="Ürün Yönetimi"
                                            FontSize="15"
                                            FontWeight="SemiBold"
-                                           Foreground="{StaticResource TextDarkBrush}" />
+                                           Foreground="{DynamicResource TextDarkBrush}" />
                                 <TextBlock Margin="0,6,0,0"
                                            FontSize="12"
                                            TextWrapping="Wrap"
-                                           Foreground="{StaticResource TextMutedBrush}"
+                                           Foreground="{DynamicResource TextMutedBrush}"
                                            Text="Ürün ekleme, güncelleme ve listeleme işlemleri." />
                             </StackPanel>
                         </Button>
@@ -111,11 +111,11 @@
                                 <TextBlock Text="Kategori Yönetimi"
                                            FontSize="15"
                                            FontWeight="SemiBold"
-                                           Foreground="{StaticResource TextDarkBrush}" />
+                                           Foreground="{DynamicResource TextDarkBrush}" />
                                 <TextBlock Margin="0,6,0,0"
                                            FontSize="12"
                                            TextWrapping="Wrap"
-                                           Foreground="{StaticResource TextMutedBrush}"
+                                           Foreground="{DynamicResource TextMutedBrush}"
                                            Text="Ürün gruplarını düzenleyin ve takip edin." />
                             </StackPanel>
                         </Button>
@@ -125,11 +125,11 @@
                                 <TextBlock Text="Stok Giriş"
                                            FontSize="15"
                                            FontWeight="SemiBold"
-                                           Foreground="{StaticResource TextDarkBrush}" />
+                                           Foreground="{DynamicResource TextDarkBrush}" />
                                 <TextBlock Margin="0,6,0,0"
                                            FontSize="12"
                                            TextWrapping="Wrap"
-                                           Foreground="{StaticResource TextMutedBrush}"
+                                           Foreground="{DynamicResource TextMutedBrush}"
                                            Text="Depoya yeni stok girişi yapın." />
                             </StackPanel>
                         </Button>
@@ -139,11 +139,11 @@
                                 <TextBlock Text="Stok Çıkış"
                                            FontSize="15"
                                            FontWeight="SemiBold"
-                                           Foreground="{StaticResource TextDarkBrush}" />
+                                           Foreground="{DynamicResource TextDarkBrush}" />
                                 <TextBlock Margin="0,6,0,0"
                                            FontSize="12"
                                            TextWrapping="Wrap"
-                                           Foreground="{StaticResource TextMutedBrush}"
+                                           Foreground="{DynamicResource TextMutedBrush}"
                                            Text="Çıkış ve sevkiyat için stok düşürün." />
                             </StackPanel>
                         </Button>
@@ -153,11 +153,11 @@
                                 <TextBlock Text="Kritik Stok"
                                            FontSize="15"
                                            FontWeight="SemiBold"
-                                           Foreground="{StaticResource TextDarkBrush}" />
+                                           Foreground="{DynamicResource TextDarkBrush}" />
                                 <TextBlock Margin="0,6,0,0"
                                            FontSize="12"
                                            TextWrapping="Wrap"
-                                           Foreground="{StaticResource TextMutedBrush}"
+                                           Foreground="{DynamicResource TextMutedBrush}"
                                            Text="Eşik altındaki ürünleri görüntüleyin." />
                             </StackPanel>
                         </Button>
@@ -167,11 +167,11 @@
                                 <TextBlock Text="Raporlama"
                                            FontSize="15"
                                            FontWeight="SemiBold"
-                                           Foreground="{StaticResource TextDarkBrush}" />
+                                           Foreground="{DynamicResource TextDarkBrush}" />
                                 <TextBlock Margin="0,6,0,0"
                                            FontSize="12"
                                            TextWrapping="Wrap"
-                                           Foreground="{StaticResource TextMutedBrush}"
+                                           Foreground="{DynamicResource TextMutedBrush}"
                                            Text="Stok durumunu görsel raporlarla takip edin." />
                             </StackPanel>
                         </Button>

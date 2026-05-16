@@ -1,0 +1,139 @@
+<UserControl x:Class="StokTakip.Wpf.Controls.ThemedDatePicker"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Name="Root"
+             MinHeight="40"
+             Height="40"
+             FontFamily="Segoe UI"
+             FontSize="13">
+    <Grid>
+        <!-- Tek parca input: yalnizca dis cerceve -->
+        <Border x:Name="InputChrome"
+                Background="{DynamicResource InputBackgroundBrush}"
+                BorderBrush="{DynamicResource InputBorderBrush}"
+                BorderThickness="1"
+                CornerRadius="6"
+                SnapsToDevicePixels="True">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="34" />
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Name="TxtTarihGosterim"
+                           Grid.Column="0"
+                           Margin="12,0,4,0"
+                           VerticalAlignment="Center"
+                           Foreground="{DynamicResource InputForegroundBrush}"
+                           TextTrimming="CharacterEllipsis" />
+                <Button x:Name="BtnTakvim"
+                        Grid.Column="1"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Focusable="False"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        Cursor="Hand"
+                        Click="BtnTakvim_Click">
+                    <Viewbox Width="16"
+                             Height="16"
+                             HorizontalAlignment="Center"
+                             VerticalAlignment="Center">
+                        <Canvas Width="16" Height="16">
+                            <Rectangle Width="12"
+                                       Height="11"
+                                       Canvas.Left="2"
+                                       Canvas.Top="3"
+                                       RadiusX="1.5"
+                                       RadiusY="1.5"
+                                       Stroke="{DynamicResource InputGlyphForegroundBrush}"
+                                       StrokeThickness="1.2"
+                                       Fill="Transparent" />
+                            <Rectangle Width="12"
+                                       Height="2"
+                                       Canvas.Left="2"
+                                       Canvas.Top="3"
+                                       Fill="{DynamicResource InputGlyphForegroundBrush}" />
+                            <Rectangle Width="1.5"
+                                       Height="3"
+                                       Canvas.Left="5"
+                                       Canvas.Top="1"
+                                       Fill="{DynamicResource InputGlyphForegroundBrush}" />
+                            <Rectangle Width="1.5"
+                                       Height="3"
+                                       Canvas.Left="9.5"
+                                       Canvas.Top="1"
+                                       Fill="{DynamicResource InputGlyphForegroundBrush}" />
+                        </Canvas>
+                    </Viewbox>
+                </Button>
+            </Grid>
+        </Border>
+        <Popup x:Name="TakvimPopup"
+               AllowsTransparency="True"
+               Placement="Bottom"
+               PlacementTarget="{Binding ElementName=InputChrome}"
+               StaysOpen="False"
+               VerticalOffset="4"
+               PopupAnimation="Fade"
+               Closed="TakvimPopup_Closed">
+            <Border Background="{DynamicResource CalendarPopupBackgroundBrush}"
+                    BorderBrush="{DynamicResource CalendarPopupBorderBrush}"
+                    BorderThickness="1"
+                    CornerRadius="8"
+                    Padding="0"
+                    MinWidth="280">
+                <StackPanel>
+                    <!-- Ay basligi ve oklar -->
+                    <Border Background="{DynamicResource CalendarHeaderBackgroundBrush}"
+                            CornerRadius="7,7,0,0"
+                            Padding="4,6">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="36" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="36" />
+                            </Grid.ColumnDefinitions>
+                            <Button x:Name="BtnOncekiAy"
+                                    Grid.Column="0"
+                                    Style="{StaticResource CalendarNavigationButtonStyle}"
+                                    Content="&#x2039;"
+                                    FontSize="18"
+                                    FontWeight="Bold"
+                                    MinWidth="32"
+                                    MinHeight="28"
+                                    Click="BtnOncekiAy_Click" />
+                            <Button x:Name="BtnBaslik"
+                                    Grid.Column="1"
+                                    Style="{StaticResource CalendarHeaderButtonStyle}"
+                                    Click="BtnBaslik_Click">
+                                <TextBlock x:Name="TxtAyYil"
+                                           FontSize="14"
+                                           FontWeight="SemiBold"
+                                           IsHitTestVisible="False"
+                                           Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" />
+                            </Button>
+                            <Button x:Name="BtnSonrakiAy"
+                                    Grid.Column="2"
+                                    Style="{StaticResource CalendarNavigationButtonStyle}"
+                                    Content="&#x203A;"
+                                    FontSize="18"
+                                    FontWeight="Bold"
+                                    MinWidth="32"
+                                    MinHeight="28"
+                                    Click="BtnSonrakiAy_Click" />
+                        </Grid>
+                    </Border>
+                    <!-- Gun adlari -->
+                    <UniformGrid x:Name="GunAdlariPanel"
+                                 Rows="1"
+                                 Columns="7"
+                                 Margin="6,8,6,4" />
+                    <!-- Gun / ay / yil secim alani (code-behind doldurur) -->
+                    <Grid x:Name="IcerikGrid"
+                          Margin="6,0,6,8"
+                          ShowGridLines="False" />
+                </StackPanel>
+            </Border>
+        </Popup>
+    </Grid>
+</UserControl>

@@ -121,7 +121,7 @@
 
                             <TextBlock Text="{Binding DurumMesaji}"
                                        Margin="0,12,0,0"
-                                       Foreground="{StaticResource TextMutedBrush}"
+                                       Foreground="{DynamicResource TextMutedBrush}"
                                        FontSize="13"
                                        TextWrapping="Wrap" />
                         </StackPanel>

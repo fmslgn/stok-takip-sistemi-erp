@@ -1,0 +1,140 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- Koyu tema paleti -->
+    <Color x:Key="AppBackgroundColor">#0F172A</Color>
+    <Color x:Key="CardBackgroundColor">#1E293B</Color>
+    <Color x:Key="SidebarBackgroundColor">#111827</Color>
+    <Color x:Key="PrimaryColor">#6366F1</Color>
+    <Color x:Key="PrimaryDarkColor">#4F46E5</Color>
+    <Color x:Key="PrimarySoftColor">#312E81</Color>
+    <Color x:Key="TextDarkColor">#F8FAFC</Color>
+    <Color x:Key="TextMutedColor">#CBD5E1</Color>
+    <Color x:Key="BorderColor">#334155</Color>
+    <Color x:Key="InputBorderColor">#475569</Color>
+    <Color x:Key="InputBackgroundColor">#1E293B</Color>
+    <Color x:Key="InputForegroundColor">#F8FAFC</Color>
+    <Color x:Key="InputHoverBorderColor">#64748B</Color>
+    <Color x:Key="InputGlyphForegroundColor">#CBD5E1</Color>
+    <Color x:Key="InputSelectionColor">#4F46E5</Color>
+    <Color x:Key="InputSelectionTextColor">#FFFFFF</Color>
+    <Color x:Key="PlaceholderForegroundColor">#94A3B8</Color>
+    <Color x:Key="ComboBoxDropDownBackgroundColor">#1E293B</Color>
+    <Color x:Key="SidebarHoverColor">#334155</Color>
+    <Color x:Key="SidebarMenuPassiveBackgroundColor">#1E293B</Color>
+    <Color x:Key="SidebarMenuActiveBackgroundColor">#6366F1</Color>
+    <Color x:Key="SidebarMenuActiveBorderColor">#4F46E5</Color>
+    <Color x:Key="SidebarMenuHoverPassiveColor">#334155</Color>
+    <Color x:Key="SidebarMenuActiveHoverBackgroundColor">#4F46E5</Color>
+    <Color x:Key="ExitButtonBackgroundColor">#450A0A</Color>
+    <Color x:Key="ExitButtonHoverBackgroundColor">#7F1D1D</Color>
+    <Color x:Key="ExitButtonHoverBorderColor">#F87171</Color>
+    <Color x:Key="ExitButtonBorderColor">#991B1B</Color>
+    <Color x:Key="DangerSecondaryButtonBorderColor">#991B1B</Color>
+    <Color x:Key="SuccessColor">#4ADE80</Color>
+    <Color x:Key="DangerColor">#F87171</Color>
+    <Color x:Key="OnPrimaryForegroundColor">#FFFFFF</Color>
+    <Color x:Key="CriticalStockRowSoftColor">#422006</Color>
+    <Color x:Key="CriticalStockRowAlternatingColor">#331C09</Color>
+    <Color x:Key="ReportBarWarningColor">#FB923C</Color>
+    <Color x:Key="DataGridSelectedRowColor">#312E81</Color>
+    <Color x:Key="DataGridAlternatingRowColor">#111827</Color>
+    <Color x:Key="DataGridGridLineColor">#334155</Color>
+    <Color x:Key="ReportProgressTrackColor">#334155</Color>
+    <Color x:Key="ReportProgressWarningTrackColor">#422006</Color>
+    <Color x:Key="DialogSuccessBadgeColor">#14532D</Color>
+    <Color x:Key="DialogSuccessForegroundColor">#4ADE80</Color>
+    <Color x:Key="DialogWarningBadgeColor">#422006</Color>
+    <Color x:Key="DialogWarningForegroundColor">#FB923C</Color>
+    <Color x:Key="DialogErrorBadgeColor">#450A0A</Color>
+    <Color x:Key="DialogErrorForegroundColor">#F87171</Color>
+    <Color x:Key="DialogShadowColor">#0F172A</Color>
+    <!-- ThemedDatePicker / takvim popup (koyu tema) -->
+    <Color x:Key="CalendarPopupBackgroundColor">#1E293B</Color>
+    <Color x:Key="CalendarPopupBorderColor">#64748B</Color>
+    <Color x:Key="CalendarBackgroundColor">#1E293B</Color>
+    <Color x:Key="CalendarHeaderBackgroundColor">#111827</Color>
+    <Color x:Key="CalendarForegroundColor">#F8FAFC</Color>
+    <Color x:Key="CalendarTextColor">#F8FAFC</Color>
+    <Color x:Key="CalendarMutedForegroundColor">#94A3B8</Color>
+    <Color x:Key="CalendarMutedTextColor">#94A3B8</Color>
+    <Color x:Key="CalendarInactiveForegroundColor">#64748B</Color>
+    <Color x:Key="CalendarSelectedBackgroundColor">#6366F1</Color>
+    <Color x:Key="CalendarSelectedForegroundColor">#FFFFFF</Color>
+    <Color x:Key="CalendarSelectedTextColor">#FFFFFF</Color>
+    <Color x:Key="CalendarHoverBackgroundColor">#334155</Color>
+    <Color x:Key="CalendarTodayBorderColor">#818CF8</Color>
+    <Color x:Key="CalendarNavButtonForegroundColor">#F8FAFC</Color>
+
+    <SolidColorBrush x:Key="AppBackgroundBrush" Color="{StaticResource AppBackgroundColor}" />
+    <SolidColorBrush x:Key="CardBackgroundBrush" Color="{StaticResource CardBackgroundColor}" />
+    <SolidColorBrush x:Key="SidebarBackgroundBrush" Color="{StaticResource SidebarBackgroundColor}" />
+    <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource PrimaryColor}" />
+    <SolidColorBrush x:Key="PrimaryDarkBrush" Color="{StaticResource PrimaryDarkColor}" />
+    <SolidColorBrush x:Key="PrimarySoftBrush" Color="{StaticResource PrimarySoftColor}" />
+    <SolidColorBrush x:Key="TextDarkBrush" Color="{StaticResource TextDarkColor}" />
+    <SolidColorBrush x:Key="TextMutedBrush" Color="{StaticResource TextMutedColor}" />
+    <SolidColorBrush x:Key="BorderBrush" Color="{StaticResource BorderColor}" />
+    <SolidColorBrush x:Key="InputBorderBrush" Color="{StaticResource InputBorderColor}" />
+    <SolidColorBrush x:Key="InputBackgroundBrush" Color="{StaticResource InputBackgroundColor}" />
+    <SolidColorBrush x:Key="InputForegroundBrush" Color="{StaticResource InputForegroundColor}" />
+    <SolidColorBrush x:Key="InputHoverBorderBrush" Color="{StaticResource InputHoverBorderColor}" />
+    <SolidColorBrush x:Key="InputGlyphForegroundBrush" Color="{StaticResource InputGlyphForegroundColor}" />
+    <SolidColorBrush x:Key="InputSelectionBrush" Color="{StaticResource InputSelectionColor}" />
+    <SolidColorBrush x:Key="InputSelectionTextBrush" Color="{StaticResource InputSelectionTextColor}" />
+    <SolidColorBrush x:Key="PlaceholderForegroundBrush" Color="{StaticResource PlaceholderForegroundColor}" />
+    <SolidColorBrush x:Key="ComboBoxDropDownBackgroundBrush" Color="{StaticResource ComboBoxDropDownBackgroundColor}" />
+    <SolidColorBrush x:Key="ComboBoxItemHoverBrush" Color="{StaticResource PrimarySoftColor}" />
+    <SolidColorBrush x:Key="ComboBoxItemSelectedBrush" Color="{StaticResource PrimaryColor}" />
+    <SolidColorBrush x:Key="SidebarHoverBrush" Color="{StaticResource SidebarHoverColor}" />
+    <SolidColorBrush x:Key="SidebarMenuPassiveBackgroundBrush" Color="{StaticResource SidebarMenuPassiveBackgroundColor}" />
+    <SolidColorBrush x:Key="SidebarMenuActiveBackgroundBrush" Color="{StaticResource SidebarMenuActiveBackgroundColor}" />
+    <SolidColorBrush x:Key="SidebarMenuActiveBorderBrush" Color="{StaticResource SidebarMenuActiveBorderColor}" />
+    <SolidColorBrush x:Key="SidebarMenuHoverPassiveBrush" Color="{StaticResource SidebarMenuHoverPassiveColor}" />
+    <SolidColorBrush x:Key="SidebarMenuActiveHoverBackgroundBrush" Color="{StaticResource SidebarMenuActiveHoverBackgroundColor}" />
+    <SolidColorBrush x:Key="ExitButtonBackgroundBrush" Color="{StaticResource ExitButtonBackgroundColor}" />
+    <SolidColorBrush x:Key="ExitButtonHoverBackgroundBrush" Color="{StaticResource ExitButtonHoverBackgroundColor}" />
+    <SolidColorBrush x:Key="ExitButtonHoverBorderBrush" Color="{StaticResource ExitButtonHoverBorderColor}" />
+    <SolidColorBrush x:Key="ExitButtonBorderBrush" Color="{StaticResource ExitButtonBorderColor}" />
+    <SolidColorBrush x:Key="DangerSecondaryButtonBorderBrush" Color="{StaticResource DangerSecondaryButtonBorderColor}" />
+    <SolidColorBrush x:Key="SuccessBrush" Color="{StaticResource SuccessColor}" />
+    <SolidColorBrush x:Key="DangerBrush" Color="{StaticResource DangerColor}" />
+    <SolidColorBrush x:Key="OnPrimaryForegroundBrush" Color="{StaticResource OnPrimaryForegroundColor}" />
+    <SolidColorBrush x:Key="CriticalStockRowSoftBrush" Color="{StaticResource CriticalStockRowSoftColor}" />
+    <SolidColorBrush x:Key="CriticalStockRowAlternatingBrush" Color="{StaticResource CriticalStockRowAlternatingColor}" />
+    <SolidColorBrush x:Key="ReportBarWarningBrush" Color="{StaticResource ReportBarWarningColor}" />
+    <SolidColorBrush x:Key="DataGridSelectedRowBrush" Color="{StaticResource DataGridSelectedRowColor}" />
+    <SolidColorBrush x:Key="DataGridAlternatingRowBackgroundBrush" Color="{StaticResource DataGridAlternatingRowColor}" />
+    <SolidColorBrush x:Key="DataGridHorizontalGridLinesBrush" Color="{StaticResource DataGridGridLineColor}" />
+    <SolidColorBrush x:Key="ReportProgressTrackBrush" Color="{StaticResource ReportProgressTrackColor}" />
+    <SolidColorBrush x:Key="ReportProgressWarningTrackBrush" Color="{StaticResource ReportProgressWarningTrackColor}" />
+    <SolidColorBrush x:Key="DialogSuccessBadgeBrush" Color="{StaticResource DialogSuccessBadgeColor}" />
+    <SolidColorBrush x:Key="DialogSuccessForegroundBrush" Color="{StaticResource DialogSuccessForegroundColor}" />
+    <SolidColorBrush x:Key="DialogWarningBadgeBrush" Color="{StaticResource DialogWarningBadgeColor}" />
+    <SolidColorBrush x:Key="DialogWarningForegroundBrush" Color="{StaticResource DialogWarningForegroundColor}" />
+    <SolidColorBrush x:Key="DialogErrorBadgeBrush" Color="{StaticResource DialogErrorBadgeColor}" />
+    <SolidColorBrush x:Key="DialogErrorForegroundBrush" Color="{StaticResource DialogErrorForegroundColor}" />
+    <SolidColorBrush x:Key="DialogShadowBrush" Color="{StaticResource DialogShadowColor}" />
+    <SolidColorBrush x:Key="CalendarPopupBackgroundBrush" Color="{StaticResource CalendarPopupBackgroundColor}" />
+    <SolidColorBrush x:Key="CalendarPopupBorderBrush" Color="{StaticResource CalendarPopupBorderColor}" />
+    <SolidColorBrush x:Key="CalendarBackgroundBrush" Color="{StaticResource CalendarBackgroundColor}" />
+    <SolidColorBrush x:Key="CalendarHeaderBackgroundBrush" Color="{StaticResource CalendarHeaderBackgroundColor}" />
+    <SolidColorBrush x:Key="CalendarForegroundBrush" Color="{StaticResource CalendarForegroundColor}" />
+    <SolidColorBrush x:Key="CalendarTextBrush" Color="{StaticResource CalendarTextColor}" />
+    <SolidColorBrush x:Key="CalendarMutedForegroundBrush" Color="{StaticResource CalendarMutedForegroundColor}" />
+    <SolidColorBrush x:Key="CalendarMutedTextBrush" Color="{StaticResource CalendarMutedTextColor}" />
+    <SolidColorBrush x:Key="CalendarInactiveForegroundBrush" Color="{StaticResource CalendarInactiveForegroundColor}" />
+    <SolidColorBrush x:Key="CalendarSelectedBackgroundBrush" Color="{StaticResource CalendarSelectedBackgroundColor}" />
+    <SolidColorBrush x:Key="CalendarSelectedForegroundBrush" Color="{StaticResource CalendarSelectedForegroundColor}" />
+    <SolidColorBrush x:Key="CalendarSelectedTextBrush" Color="{StaticResource CalendarSelectedTextColor}" />
+    <SolidColorBrush x:Key="CalendarHoverBackgroundBrush" Color="{StaticResource CalendarHoverBackgroundColor}" />
+    <SolidColorBrush x:Key="CalendarTodayBorderBrush" Color="{StaticResource CalendarTodayBorderColor}" />
+    <SolidColorBrush x:Key="CalendarNavButtonForegroundBrush" Color="{StaticResource CalendarNavButtonForegroundColor}" />
+
+    <SolidColorBrush x:Key="{x:Static SystemColors.WindowBrushKey}" Color="{StaticResource InputBackgroundColor}" />
+    <SolidColorBrush x:Key="{x:Static SystemColors.WindowTextBrushKey}" Color="{StaticResource InputForegroundColor}" />
+    <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="{StaticResource InputBackgroundColor}" />
+    <SolidColorBrush x:Key="{x:Static SystemColors.ControlLightBrushKey}" Color="{StaticResource InputBackgroundColor}" />
+    <SolidColorBrush x:Key="{x:Static SystemColors.ControlTextBrushKey}" Color="{StaticResource InputForegroundColor}" />
+    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="{StaticResource PrimaryColor}" />
+    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="{StaticResource OnPrimaryForegroundColor}" />
+</ResourceDictionary>

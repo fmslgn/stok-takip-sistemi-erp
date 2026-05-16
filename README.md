@@ -69,6 +69,10 @@ WPF arayüzünde ürün listesi büyütülebilir pencereyle görüntülenebilir 
 
 PDF üretimi için `StokTakip.Wpf` projesine **QuestPDF** NuGet paketi eklenmiştir (topluluk lisansı).
 
+## WPF Açık/Koyu Tema Desteği
+
+WPF arayüzüne açık ve koyu tema desteği eklenmiştir. Kullanıcı uygulama içinden tema değiştirebilir ve seçilen tema tercihi sonraki açılışlarda korunur.
+
 ## WPF Ana Menü Hızlı Erişim
 
 Ana Menü ekranına kullanıcıların Ürün Yönetimi, Kategori Yönetimi, Stok Giriş, Stok Çıkış, Kritik Stok ve Raporlama ekranlarına hızlı geçiş yapabilmesi için hızlı erişim kartları eklenmiştir.

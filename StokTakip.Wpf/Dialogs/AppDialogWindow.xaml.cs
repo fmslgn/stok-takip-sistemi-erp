@@ -30,18 +30,18 @@ public partial class AppDialogWindow : Window
         switch (kind)
         {
             case AppDialogKind.Success:
-                IconBadge.Background = new SolidColorBrush(Color.FromRgb(220, 252, 231));
-                IconText.Foreground = new SolidColorBrush(Color.FromRgb(22, 163, 74));
+                IconBadge.Background = (Brush)FindResource("DialogSuccessBadgeBrush");
+                IconText.Foreground = (Brush)FindResource("DialogSuccessForegroundBrush");
                 IconText.Text = "✓";
                 break;
             case AppDialogKind.Warning:
-                IconBadge.Background = new SolidColorBrush(Color.FromRgb(255, 237, 213));
-                IconText.Foreground = new SolidColorBrush(Color.FromRgb(234, 88, 12));
+                IconBadge.Background = (Brush)FindResource("DialogWarningBadgeBrush");
+                IconText.Foreground = (Brush)FindResource("DialogWarningForegroundBrush");
                 IconText.Text = "!";
                 break;
             case AppDialogKind.Error:
-                IconBadge.Background = new SolidColorBrush(Color.FromRgb(254, 226, 226));
-                IconText.Foreground = new SolidColorBrush(Color.FromRgb(220, 38, 38));
+                IconBadge.Background = (Brush)FindResource("DialogErrorBadgeBrush");
+                IconText.Foreground = (Brush)FindResource("DialogErrorForegroundBrush");
                 IconText.Text = "✕";
                 break;
             case AppDialogKind.Confirm:

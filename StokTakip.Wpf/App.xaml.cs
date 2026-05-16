@@ -24,6 +24,8 @@ public partial class App : Application
     {
         QuestPDF.Settings.License = LicenseType.Community;
         base.OnStartup(e);
+        // Styles yuklendikten sonra kayitli tema sozlugu eklenir.
+        ThemeManager.Initialize();
     }
 
     private void App_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)

@@ -40,7 +40,22 @@ public partial class MainWindow : Window
             BtnNavReports
         };
 
+        TemaButonMetniniGuncelle();
+        ThemeManager.ThemeChanged += (_, _) => Dispatcher.Invoke(TemaButonMetniniGuncelle);
+
         ShowDashboard();
+    }
+
+    /// <summary>Acik/koyu tema gecisini tetikler; tercih ThemeManager ile kaydedilir.</summary>
+    private void BtnToggleTheme_Click(object sender, RoutedEventArgs e)
+    {
+        ThemeManager.ToggleTheme();
+        TemaButonMetniniGuncelle();
+    }
+
+    private void TemaButonMetniniGuncelle()
+    {
+        BtnToggleTheme.Content = ThemeManager.ToggleButtonText;
     }
 
     public string AktifKullaniciBilgisi =>

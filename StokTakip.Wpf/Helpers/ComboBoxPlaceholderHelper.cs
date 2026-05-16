@@ -89,12 +89,12 @@ public static class ComboBoxPlaceholderHelper
             IsHitTestVisible = false,
             VerticalAlignment = VerticalAlignment.Center,
             HorizontalAlignment = HorizontalAlignment.Left,
-            Margin = new Thickness(13, 0, 30, 0),
+            Margin = new Thickness(12, 0, 42, 0),
             FontSize = comboBox.FontSize > 0 ? comboBox.FontSize : 13,
             FontFamily = comboBox.FontFamily,
-            Foreground = Application.Current?.TryFindResource("TextMutedBrush") as Brush
-                         ?? new SolidColorBrush(Color.FromRgb(0x64, 0x74, 0x8B))
         };
+        // Tema degisiminde renk DynamicResource ile guncellenir
+        placeholder.SetResourceReference(TextBlock.ForegroundProperty, "PlaceholderForegroundBrush");
 
         kapsayici.Children.Add(placeholder);
         SetPlaceholderTextBlock(comboBox, placeholder);

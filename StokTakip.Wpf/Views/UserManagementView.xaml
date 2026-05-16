@@ -16,7 +16,7 @@
                            Margin="0,6,0,16"
                            FontSize="13"
                            TextWrapping="Wrap"
-                           Foreground="{StaticResource TextMutedBrush}" />
+                           Foreground="{DynamicResource TextMutedBrush}" />
 
                 <TextBlock Text="Kullanıcı Adı" Style="{StaticResource FormFieldLabelStyle}" />
                 <TextBox Text="{Binding KullaniciAdi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,12" />
@@ -49,7 +49,7 @@
                 <TextBlock Text="{Binding DurumMesaji}"
                            Margin="0,12,0,0"
                            FontSize="13"
-                           Foreground="{StaticResource TextMutedBrush}"
+                           Foreground="{DynamicResource TextMutedBrush}"
                            TextWrapping="Wrap" />
             </StackPanel>
         </Border>

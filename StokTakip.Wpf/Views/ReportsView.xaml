@@ -24,7 +24,7 @@
                     <TextBlock Text="Stok durumunu sayısal ve görsel raporlarla takip edin."
                                Margin="0,6,0,0"
                                FontSize="13"
-                               Foreground="{StaticResource TextMutedBrush}" />
+                               Foreground="{DynamicResource TextMutedBrush}" />
                 </StackPanel>
             </Border>
 
@@ -38,20 +38,20 @@
                 </Grid.ColumnDefinitions>
                 <Border Grid.Column="0" Style="{StaticResource CardBorderStyle}" Padding="16" MinHeight="100" VerticalAlignment="Stretch">
                     <StackPanel VerticalAlignment="Center">
-                        <TextBlock Text="Toplam Ürün" FontSize="13" Foreground="{StaticResource TextMutedBrush}" />
-                        <TextBlock Text="{Binding ToplamUrun}" Margin="0,6,0,0" FontSize="30" FontWeight="Bold" Foreground="{StaticResource TextDarkBrush}" />
+                        <TextBlock Text="Toplam Ürün" FontSize="13" Foreground="{DynamicResource TextMutedBrush}" />
+                        <TextBlock Text="{Binding ToplamUrun}" Margin="0,6,0,0" FontSize="30" FontWeight="Bold" Foreground="{DynamicResource TextDarkBrush}" />
                     </StackPanel>
                 </Border>
                 <Border Grid.Column="2" Style="{StaticResource CardBorderStyle}" Padding="16" MinHeight="100" VerticalAlignment="Stretch">
                     <StackPanel VerticalAlignment="Center">
-                        <TextBlock Text="Kritik Stok" FontSize="13" Foreground="{StaticResource TextMutedBrush}" />
-                        <TextBlock Text="{Binding KritikStok}" Margin="0,6,0,0" FontSize="30" FontWeight="Bold" Foreground="{StaticResource DangerBrush}" />
+                        <TextBlock Text="Kritik Stok" FontSize="13" Foreground="{DynamicResource TextMutedBrush}" />
+                        <TextBlock Text="{Binding KritikStok}" Margin="0,6,0,0" FontSize="30" FontWeight="Bold" Foreground="{DynamicResource DangerBrush}" />
                     </StackPanel>
                 </Border>
                 <Border Grid.Column="4" Style="{StaticResource CardBorderStyle}" Padding="16" MinHeight="100" VerticalAlignment="Stretch">
                     <StackPanel VerticalAlignment="Center">
-                        <TextBlock Text="Toplam Stok" FontSize="13" Foreground="{StaticResource TextMutedBrush}" />
-                        <TextBlock Text="{Binding ToplamStok}" Margin="0,6,0,0" FontSize="30" FontWeight="Bold" Foreground="{StaticResource PrimaryBrush}" />
+                        <TextBlock Text="Toplam Stok" FontSize="13" Foreground="{DynamicResource TextMutedBrush}" />
+                        <TextBlock Text="{Binding ToplamStok}" Margin="0,6,0,0" FontSize="30" FontWeight="Bold" Foreground="{DynamicResource PrimaryBrush}" />
                     </StackPanel>
                 </Border>
             </Grid>
@@ -71,7 +71,7 @@
                                    Margin="0,6,0,16"
                                    FontSize="13"
                                    TextWrapping="Wrap"
-                                   Foreground="{StaticResource TextMutedBrush}" />
+                                   Foreground="{DynamicResource TextMutedBrush}" />
 
                         <TextBlock Text="Kritik Stok Oranı" Style="{StaticResource FormFieldLabelStyle}" />
                         <Grid Margin="0,4,0,14">
@@ -88,7 +88,7 @@
                                        HorizontalAlignment="Right"
                                        VerticalAlignment="Center"
                                        FontSize="13"
-                                       Foreground="{StaticResource TextMutedBrush}" />
+                                       Foreground="{DynamicResource TextMutedBrush}" />
                         </Grid>
 
                         <TextBlock Text="Normal Ürün Dağılımı" Style="{StaticResource FormFieldLabelStyle}" />
@@ -106,18 +106,18 @@
                                        HorizontalAlignment="Right"
                                        VerticalAlignment="Center"
                                        FontSize="13"
-                                       Foreground="{StaticResource TextMutedBrush}" />
+                                       Foreground="{DynamicResource TextMutedBrush}" />
                         </Grid>
 
                         <TextBlock Text="Toplam Stok Miktarı" Style="{StaticResource FormFieldLabelStyle}" />
-                        <Border Background="{StaticResource PrimarySoftBrush}"
+                        <Border Background="{DynamicResource PrimarySoftBrush}"
                                 CornerRadius="12"
                                 Padding="16"
                                 Margin="0,6,0,0">
                             <TextBlock Text="{Binding ToplamStok}"
                                        FontSize="28"
                                        FontWeight="Bold"
-                                       Foreground="{StaticResource PrimaryBrush}" />
+                                       Foreground="{DynamicResource PrimaryBrush}" />
                         </Border>
                     </StackPanel>
                 </Border>
@@ -130,7 +130,7 @@
                                    Margin="0,6,0,16"
                                    FontSize="13"
                                    TextWrapping="Wrap"
-                                   Foreground="{StaticResource TextMutedBrush}" />
+                                   Foreground="{DynamicResource TextMutedBrush}" />
                         <Button Content="Raporları Getir / Yenile"
                                 MinHeight="38"
                                 Style="{StaticResource PrimaryButtonStyle}"
@@ -144,11 +144,11 @@
                                    Margin="0,16,0,4"
                                    FontWeight="SemiBold"
                                    FontSize="13"
-                                   Foreground="{StaticResource TextDarkBrush}"
+                                   Foreground="{DynamicResource TextDarkBrush}"
                                    TextWrapping="Wrap" />
                         <TextBlock Text="{Binding SonGuncelleme}"
                                    FontSize="12"
-                                   Foreground="{StaticResource TextMutedBrush}"
+                                   Foreground="{DynamicResource TextMutedBrush}"
                                    TextWrapping="Wrap" />
                     </StackPanel>
                 </Border>

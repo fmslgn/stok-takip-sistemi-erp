@@ -1,5 +1,6 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- Varsayilan acik palet (tasarim referansi). Calisan tema: Resources/Themes/LightTheme.xaml ve DarkTheme.xaml -->
     <!-- Genel ERP masaustu paleti: acik gri zemin, beyaz kart, mor-mavi vurgu -->
     <Color x:Key="AppBackgroundColor">#ECEFF4</Color>
     <Color x:Key="CardBackgroundColor">#FFFFFF</Color>

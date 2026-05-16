@@ -18,7 +18,7 @@
                     <TextBlock Text="Kritik seviyeye düşen ürünleri görüntüleyin."
                                Margin="0,6,0,0"
                                FontSize="13"
-                               Foreground="{StaticResource TextMutedBrush}" />
+                               Foreground="{DynamicResource TextMutedBrush}" />
                 </StackPanel>
                 <StackPanel Grid.Column="1"
                             Orientation="Horizontal"
@@ -36,8 +36,8 @@
             </Grid>
 
             <DataGrid Grid.Row="1"
-                      RowBackground="{StaticResource CriticalStockRowSoftBrush}"
-                      AlternatingRowBackground="#FFF8F1"
+                      RowBackground="{DynamicResource CriticalStockRowSoftBrush}"
+                      AlternatingRowBackground="{DynamicResource CriticalStockRowAlternatingBrush}"
                       ItemsSource="{Binding KritikUrunler}"
                       AutoGenerateColumns="False"
                       CanUserAddRows="False"

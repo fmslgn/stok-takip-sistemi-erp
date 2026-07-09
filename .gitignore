@@ -427,3 +427,16 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+# Cursor local files
+.cursor/
+.cursor/**
+
+# Codex local files
+.codex/
+.codex/**
+codex/
+codex/**
+
+# Local AI assistant project files
+AGENTS.md
+CODEX_PROJECT_RULES.md
